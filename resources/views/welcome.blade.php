@@ -11,10 +11,16 @@
     <nav class="bg-white shadow-sm p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-pink-600">🌸 Bloomify</a>
-            <ul class="flex space-x-6 font-medium text-gray-600">
-                <li><a href="#" class="hover:text-pink-500 transition">Beranda</a></li>
+            <ul class="flex space-x-6 font-medium text-gray-600 items-center">
+                <li><a href="/" class="hover:text-pink-500 transition">Beranda</a></li>
                 <li><a href="#" class="hover:text-pink-500 transition">Katalog</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Login</a></li>
+                
+                @auth
+                    <li><a href="{{ url('/dashboard') }}" class="font-bold text-pink-600 hover:text-pink-800 transition">Dashboard</a></li>
+                @else
+                    <li><a href="{{ route('login') }}" class="hover:text-pink-500 transition">Login</a></li>
+                    <li><a href="{{ route('register') }}" class="bg-pink-100 text-pink-600 px-4 py-2 rounded-full hover:bg-pink-200 transition">Register</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
