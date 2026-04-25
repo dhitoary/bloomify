@@ -8,9 +8,31 @@ Bloomify adalah platform e-commerce untuk pemesanan buket bunga. Proyek ini dike
 
 | Anggota | Role | Fokus Utama |
 | :--- | :--- | :--- |
-| **Dhito** | Fullstack dan Admin | Infrastruktur, Admin Panel (Filament), dan Integrasi Midtrans. |
+| **Dhito** | Fullstack Integrasi dan Admin | Infrastruktur, Admin Panel (Filament), dan Integrasi Midtrans. |
 | **Cindy** | Frontend UI/UX dan Marketing | Desain Katalog Frontend dan Strategi Digital Marketing. |
 | **Surya** | Frontend System Logic Marketplace | Flowchart, Business Logic, dan Sistem Keranjang Belanja. |
+
+---
+
+## Manajemen Version Control (Git Branching)
+
+Untuk menjaga stabilitas sistem, seluruh anggota tim diwajibkan menggunakan sistem *branching* dengan aturan berikut:
+
+1.  **Branch Utama (`master`):**
+    Berisi kode yang sudah stabil dan berjalan dengan baik. Dilarang melakukan *push* kode yang belum selesai atau masih *error* ke dalam branch ini.
+
+2.  **Branch Fitur:**
+    Setiap anggota yang akan mengerjakan modul baru harus membuat *branch* baru dari `master` dengan format penamaan `feature/nama-fitur`.
+    * Dhito: `feature/midtrans-payment` `feature/admin-dashboard`
+    * Cindy: `feature/ui-katalog`
+    * Surya: `feature/cart-system`
+
+3.  **Alur Kerja Standar:**
+    * Perbarui lokal repositori sebelum bekerja: `git pull origin master`
+    * Pindah atau buat branch baru: `git checkout -b feature/nama-fitur`
+    * Lakukan *commit* secara berkala.
+    * *Push* ke branch masing-masing: `git push origin feature/nama-fitur`
+    * Lakukan koordinasi untuk melakukan *Merge* kode ke `master`.
 
 ---
 
