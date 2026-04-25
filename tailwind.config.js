@@ -14,6 +14,19 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                // Lazy Days Pastel Color Palette - Enhanced & Vibrant
+                'bloom': {
+                    'teal': '#6B9A94',      // Darker teal - primary
+                    'teal-light': '#97B3AE', // Light teal - accent
+                    'mint': '#8FCB9E',       // More vibrant mint
+                    'mint-light': '#C8E6D7', // Light mint
+                    'cream': '#F5DDD0',      // Warmer cream
+                    'coral': '#E89B94',      // More saturated coral
+                    'taupe': '#9D8B7E',      // Darker taupe
+                    'ivory': '#FAF8F5',      // Slightly warmer ivory
+                },
+            },
         },
     },
 

@@ -29,8 +29,10 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#6B9A94'),
+                'gray' => Color::Gray,
             ])
+            ->brandName('Bloomify Admin')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -57,3 +59,4 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
+
