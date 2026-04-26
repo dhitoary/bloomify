@@ -5,11 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration
 {
     /**
-     * Run the migrations - SKIPPED (moved to 2026_04_19_115854)
+     * Run the migrations - SKIPPED (duplicate of 2026_04_19_115858_create_order_items_table.php)
      */
     public function up(): void
     {
-        // Intentionally left empty - duplicate file
+        // Intentionally left empty - order_items table already created in 2026_04_19_115858
     }
 
     /**
