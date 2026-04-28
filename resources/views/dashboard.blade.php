@@ -1,138 +1,126 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div>
-            <h2 class="font-semibold text-xl text-bloom-teal leading-tight">
-                {{ __('Dashboard Pengguna') }}
-            </h2>
-            <p class="text-gray-600 text-sm mt-1">Selamat datang kembali, {{ Auth::user()->name }}!</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Bloomify</title>
+    @vite('resources/css/app.css')
+</head>
+<body class="bg-stone-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-5">
+            <a href="/" class="text-2xl font-semibold text-stone-900">Bloomify</a>
+            <ul class="flex space-x-8 font-medium text-stone-700 items-center">
+                <li><a href="/" class="hover:text-rose-600 transition">Beranda</a></li>
+                <li><a href="{{ route('products.index') }}" class="hover:text-rose-600 transition">Katalog</a></li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="hover:text-rose-600 transition">Logout</button>
+                    </form>
+                </li>
+            </ul>
         </div>
-    </x-slot>
+    </nav>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Welcome Card -->
-            <div class="bg-gradient-to-r from-bloom-teal to-bloom-teal-light rounded-lg shadow-md overflow-hidden mb-8">
-                <div class="p-8 text-white">
-                    <h3 class="text-2xl font-bold mb-2">Selamat Datang di Bloomify</h3>
-                    <p class="text-bloom-cream">Jelajahi koleksi bunga premium kami dan temukan yang sempurna untuk orang terkasih Anda.</p>
-                </div>
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto py-16 px-6">
+        <!-- Header -->
+        <div class="mb-16">
+            <h1 class="text-5xl font-light text-stone-900 mb-3">Dashboard</h1>
+            <p class="text-stone-600 text-lg font-light">Selamat datang, <span class="text-rose-600">{{ Auth::user()->name }}</span></p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Pesanan Saya -->
+            <div class="bg-white rounded-lg p-6 border border-stone-200 hover:shadow-lg transition">
+                <p class="text-stone-600 text-sm font-medium uppercase tracking-wide mb-4">Pesanan Saya</p>
+                <p class="text-4xl font-light text-stone-900">0</p>
+                <p class="text-stone-500 text-sm mt-3 font-light">Belum ada pesanan</p>
             </div>
 
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-bloom-teal">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm font-medium">Pesanan Saya</p>
-                            <p class="text-3xl font-bold text-bloom-teal">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-bloom-mint-light rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-bloom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-bloom-coral">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm font-medium">Keranjang Saya</p>
-                            <p class="text-3xl font-bold text-bloom-coral">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-bloom-cream rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-bloom-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-bloom-mint">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm font-medium">Total Belanja</p>
-                            <p class="text-3xl font-bold text-bloom-mint">Rp 0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-bloom-mint-light rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-bloom-mint" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+            <!-- Keranjang Saya -->
+            <div class="bg-white rounded-lg p-6 border border-stone-200 hover:shadow-lg transition">
+                <p class="text-stone-600 text-sm font-medium uppercase tracking-wide mb-4">Keranjang Saya</p>
+                <p class="text-4xl font-light text-stone-900">0</p>
+                <p class="text-stone-500 text-sm mt-3 font-light">Item dalam keranjang</p>
             </div>
 
-            <!-- Products Section -->
-            <div class="mb-12">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-bloom-teal">Produk Terbaru</h3>
-                    <a href="{{ route('products.index') }}" class="text-bloom-teal hover:text-bloom-coral font-semibold transition">
-                        Lihat Semua →
-                    </a>
-                </div>
+            <!-- Total Belanja -->
+            <div class="bg-white rounded-lg p-6 border border-stone-200 hover:shadow-lg transition">
+                <p class="text-stone-600 text-sm font-medium uppercase tracking-wide mb-4">Total Belanja</p>
+                <p class="text-4xl font-light text-stone-900">Rp 0</p>
+                <p class="text-stone-500 text-sm mt-3 font-light">Tahun ini</p>
+            </div>
+        </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    @php
-                        $products = \App\Models\Product::where('stock', '>', 0)
-                            ->orderBy('created_at', 'desc')
-                            ->limit(4)
-                            ->get();
-                    @endphp
+        <!-- Featured Products -->
+        <div class="mb-16">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-light text-stone-900">Produk Rekomendasi</h2>
+                <a href="{{ route('products.index') }}" class="text-rose-600 hover:text-rose-700 font-medium transition">
+                    Lihat Semua
+                </a>
+            </div>
 
-                    @forelse($products as $product)
-                        <a href="{{ route('products.show', $product->slug) }}" class="group">
-                            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105">
-                                <div class="relative overflow-hidden h-48 bg-bloom-cream">
-                                    @if($product->image)
-                                        <img src="{{ asset('storage/' . $product->image) }}" 
-                                             alt="{{ $product->name }}" 
-                                             class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center text-gray-400">
-                                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="p-4">
-                                    <h4 class="font-semibold text-gray-900 mb-1 line-clamp-2">{{ $product->name }}</h4>
-                                    <p class="text-2xl font-bold text-bloom-coral">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                    <span class="text-xs text-gray-500">Stok: {{ $product->stock }}</span>
-                                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @php
+                    $products = \App\Models\Product::where('stock', '>', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->limit(4)
+                        ->get();
+                @endphp
+
+                @forelse($products as $product)
+                    <a href="{{ route('products.show', $product->slug) }}" class="group">
+                        <div class="bg-white rounded-lg border border-stone-200 overflow-hidden hover:shadow-md transition duration-300">
+                            <div class="relative overflow-hidden h-48 bg-stone-100">
+                                @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" 
+                                         alt="{{ $product->name }}" 
+                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center text-stone-300 text-4xl font-light">🌸</div>
+                                @endif
                             </div>
-                        </a>
-                    @empty
-                        <div class="col-span-full text-center py-8">
-                            <p class="text-gray-500">Belum ada produk tersedia</p>
+                            <div class="p-4">
+                                <h4 class="font-medium text-stone-900 mb-3 line-clamp-2 group-hover:text-rose-600 transition text-sm">{{ $product->name }}</h4>
+                                <p class="text-rose-600 font-medium text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="text-stone-500 text-xs mt-2 font-light">Stok: {{ $product->stock }} unit</p>
+                            </div>
                         </div>
-                    @endforelse
-                </div>
+                    </a>
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-stone-500 text-lg font-light">Belum ada produk tersedia</p>
+                    </div>
+                @endforelse
             </div>
+        </div>
 
-            <!-- Account Section -->
-            <div class="bg-white rounded-lg shadow-md p-8">
-                <h3 class="text-2xl font-bold text-bloom-teal mb-6">Akun Saya</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Profile Section -->
+        <div class="bg-white rounded-lg border border-stone-200 overflow-hidden">
+            <div class="px-8 py-6 border-b border-stone-200">
+                <h2 class="text-2xl font-light text-stone-900">Profil Saya</h2>
+            </div>
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-3">Informasi Profil</h4>
-                        <p class="text-gray-700 mb-2"><strong>Nama:</strong> {{ Auth::user()->name }}</p>
-                        <p class="text-gray-700 mb-4"><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                        <a href="{{ route('profile.edit') }}" class="inline-block bg-bloom-teal text-white px-6 py-2 rounded-lg hover:bg-bloom-teal-light transition">
-                            Edit Profil
-                        </a>
+                        <p class="text-stone-600 text-xs font-semibold uppercase mb-3">Nama</p>
+                        <p class="text-2xl font-light text-stone-900">{{ Auth::user()->name }}</p>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-3">Bantuan & Dukungan</h4>
-                        <ul class="space-y-2 text-gray-700">
-                            <li><a href="#" class="text-bloom-teal hover:underline">Pertanyaan Umum</a></li>
-                            <li><a href="#" class="text-bloom-teal hover:underline">Kebijakan Pengiriman</a></li>
-                            <li><a href="#" class="text-bloom-teal hover:underline">Hubungi Customer Service</a></li>
-                        </ul>
+                        <p class="text-stone-600 text-xs font-semibold uppercase mb-3">Email</p>
+                        <p class="text-2xl font-light text-stone-900">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
+                <a href="{{ route('profile.edit') }}" class="text-rose-600 hover:text-rose-700 font-medium transition">
+                    Edit Profil
+                </a>
             </div>
         </div>
     </div>
-</x-app-layout>
+</body>
+</html>

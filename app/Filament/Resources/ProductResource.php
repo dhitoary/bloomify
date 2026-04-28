@@ -82,10 +82,10 @@ class ProductResource extends Resource
                             ->image()
                             ->disk('public')
                             ->directory('products')
-                            ->maxSize(5120) // 5MB
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(5120)
                             ->imageResizeMode('cover')
-                            ->imageCropAspectRatio('16 / 9'),
+                            ->imageCropAspectRatio('16 / 9')
+                            ->nullable(),
                     ]),
             ]);
     }

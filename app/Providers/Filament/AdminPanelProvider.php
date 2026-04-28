@@ -25,12 +25,16 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('admin-panel')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->colors([
-                'primary' => Color::hex('#6B9A94'),
-                'gray' => Color::Gray,
+                'primary' => Color::hex('#6B5B8C'),      // Deep purple (dari palette)
+                'danger' => Color::hex('#E89B94'),       // Coral (dari palette)
+                'gray' => Color::hex('#D4C5D0'),         // Mauve (dari palette)
+                'info' => Color::hex('#97B3AE'),         // Teal light (dari palette)
+                'success' => Color::hex('#8FCB9E'),      // Mint (dari palette)
+                'warning' => Color::hex('#A5A9D4'),      // Lavender (dari palette)
             ])
             ->brandName('Bloomify Admin')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

@@ -19,16 +19,18 @@ class DatabaseSeeder extends Seeder
     {
         // Create admin user
         User::factory()->create([
-            'name' => 'Admin Bloomify',
-            'email' => 'admin@bloomify.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
+            'is_admin' => true,
         ]);
 
-        // Create test user
+        // Create regular user
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
+            'name' => 'Dhito',
+            'email' => 'Dhito@gmail.com',
+            'password' => bcrypt('pe'),
+            'is_admin' => false,
         ]);
 
         // Create categories
