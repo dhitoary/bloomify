@@ -31,36 +31,83 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="bg-stone-50 min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 px-6 py-20">
-            <!-- Left Content -->
-            <div class="flex flex-col justify-center">
-                <p class="text-rose-600 text-sm font-medium uppercase tracking-widest mb-6">Bunga Premium</p>
-                <h1 class="text-6xl lg:text-7xl font-light text-stone-900 mb-6 leading-tight">
-                    Sampaikan Perasaanmu dengan Bunga
-                </h1>
-                <p class="text-lg text-stone-600 font-light mb-10 max-w-md">
-                    Koleksi buket bunga premium untuk setiap momen spesial. Dibuat dengan cinta untuk orang terkasih Anda.
-                </p>
-                <div class="flex gap-4">
-                    <a href="{{ route('products.index') }}" class="bg-rose-600 hover:bg-rose-700 text-white font-medium py-3 px-8 rounded transition duration-300">
-                        Mulai Belanja
-                    </a>
-                    <a href="#tentang" class="border border-stone-300 hover:border-rose-600 text-stone-900 hover:text-rose-600 font-medium py-3 px-8 rounded transition duration-300">
-                        Pelajari Lebih
-                    </a>
+    <!-- Hero Section Carousel -->
+    <div class="relative w-full bg-stone-50 py-8">
+        <div class="max-w-6xl mx-auto px-6">
+            <!-- Carousel Container -->
+            <div class="relative w-full bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer" style="aspect-ratio: 16 / 9;" onclick="window.location.href='{{ route('products.index') }}'">
+                <div id="carousel" class="flex transition-transform duration-500 ease-out h-full pointer-events-none" style="transform: translateX(0%);">
+                    <!-- Slide 1 -->
+                    <div class="w-full h-full flex-shrink-0">
+                        <img src="{{ asset('images/hero/premium-flowers.png') }}" alt="Premium Flowers 1" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="w-full h-full flex-shrink-0">
+                        <img src="{{ asset('images/hero/premium-flowers-2.png') }}" alt="Premium Flowers 2" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="w-full h-full flex-shrink-0">
+                        <img src="{{ asset('images/hero/premium-flowers-3.png') }}" alt="Premium Flowers 3" class="w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Image -->
-            <div class="hidden lg:flex items-center justify-center">
-                <div class="w-full h-96 bg-stone-100 rounded-lg flex items-center justify-center text-stone-400 text-6xl font-light">
-                    🌸
-                </div>
+            <!-- Previous Button -->
+            <button id="prevBtn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-stone-900 p-3 rounded-full shadow-lg transition z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Next Button -->
+            <button id="nextBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-stone-900 p-3 rounded-full shadow-lg transition z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+
+            <!-- Dots Indicator -->
+            <div class="flex gap-2 justify-center mt-4">
+                <button class="indicator-dot active w-2 h-2 bg-stone-400 rounded-full transition" data-index="0"></button>
+                <button class="indicator-dot w-2 h-2 bg-stone-200 rounded-full transition" data-index="1"></button>
+                <button class="indicator-dot w-2 h-2 bg-stone-200 rounded-full transition" data-index="2"></button>
             </div>
         </div>
     </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.indicator-dot');
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function goToSlide(n) {
+            currentSlide = (n + totalSlides) % totalSlides;
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('bg-stone-400');
+                    dot.classList.remove('bg-stone-200');
+                } else {
+                    dot.classList.remove('bg-stone-400');
+                    dot.classList.add('bg-stone-200');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index)));
+        });
+    </script>
 
     <!-- Features Section -->
     <section id="tentang" class="py-24 bg-white">

@@ -14,6 +14,21 @@
             <a href="/" class="text-2xl font-semibold text-stone-900">Bloomify</a>
             <ul class="flex space-x-8 font-medium text-stone-700 items-center">
                 <li><a href="/" class="hover:text-rose-600 transition">Beranda</a></li>
+                
+                <!-- Profile Dropdown -->
+                <li class="relative group">
+                    <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-3 hover:text-rose-600 transition py-2 px-3 rounded-lg hover:bg-stone-50">
+                        <div class="w-9 h-9 bg-gradient-to-br from-rose-500 to-rose-600 rounded-full flex items-center justify-center text-white font-semibold text-sm overflow-hidden">
+                            @if(Auth::user()->profile_picture)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile" class="w-full h-full object-cover">
+                            @else
+                                {{ substr(Auth::user()->name, 0, 1) }}
+                            @endif
+                        </div>
+                        <span class="text-sm">{{ Auth::user()->name }}</span>
+                    </a>
+                </li>
+
                 <li>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
@@ -34,11 +49,11 @@
 
         <!-- Tab Navigation -->
         <div class="mb-12 flex space-x-8 border-b border-stone-300">
-            <button onclick="showTab('overview')" class="tab-btn active pb-4 font-medium text-stone-900 border-b-2 border-rose-600 hover:text-rose-600 transition">Overview</button>
-            <button onclick="showTab('products')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Produk</button>
-            <button onclick="showTab('categories')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Kategori</button>
-            <button onclick="showTab('orders')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Pesanan</button>
-            <button onclick="showTab('users')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Pengguna</button>
+            <button onclick="showTab(event, 'overview')" class="tab-btn active pb-4 font-medium text-stone-900 border-b-2 border-rose-600 hover:text-rose-600 transition">Overview</button>
+            <button onclick="showTab(event, 'products')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Produk</button>
+            <button onclick="showTab(event, 'categories')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Kategori</button>
+            <button onclick="showTab(event, 'orders')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Pesanan</button>
+            <button onclick="showTab(event, 'users')" class="tab-btn pb-4 font-medium text-stone-500 hover:text-stone-700 transition">Pengguna</button>
         </div>
 
         <!-- Overview Tab -->
@@ -320,89 +335,106 @@
     </div>
 
     <script>
-        // Tab functionality
-        function showTab(tabName) {
+        // Tab functionality - Fixed version
+        function showTab(event, tabName) {
+            event.preventDefault();
+            
+            // Hide all tabs
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.add('hidden'));
             
+            // Reset all buttons
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('border-b-2', 'border-rose-600', 'text-stone-900');
                 btn.classList.add('text-stone-500');
             });
             
-            document.getElementById(tabName).classList.remove('hidden');
-            event.target.classList.remove('text-stone-500');
-            event.target.classList.add('text-stone-900', 'border-b-2', 'border-rose-600');
+            // Show selected tab
+            const selectedTab = document.getElementById(tabName);
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+            
+            // Highlight selected button
+            const button = event.currentTarget;
+            if (button) {
+                button.classList.remove('text-stone-500');
+                button.classList.add('text-stone-900', 'border-b-2', 'border-rose-600');
+            }
         }
 
         // Sales Chart
-        const salesCtx = document.getElementById('salesChart').getContext('2d');
-        new Chart(salesCtx, {
-            type: 'line',
-            data: {
-                labels: ['Hari 1', 'Hari 2', 'Hari 3', 'Hari 4', 'Hari 5', 'Hari 6', 'Hari 7'],
-                datasets: [{
-                    label: 'Penjualan (Rp)',
-                    data: {{ json_encode($salesData ?? []) }},
-                    borderColor: '#E11D48',
-                    backgroundColor: 'rgba(225, 29, 72, 0.08)',
-                    tension: 0.3,
-                    fill: true,
-                    pointRadius: 5,
-                    pointBackgroundColor: '#E11D48',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    borderWidth: 2,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+        const salesCtx = document.getElementById('salesChart');
+        if (salesCtx) {
+            new Chart(salesCtx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Hari 1', 'Hari 2', 'Hari 3', 'Hari 4', 'Hari 5', 'Hari 6', 'Hari 7'],
+                    datasets: [{
+                        label: 'Penjualan (Rp)',
+                        data: {{ json_encode($salesData ?? []) }},
+                        borderColor: '#E11D48',
+                        backgroundColor: 'rgba(225, 29, 72, 0.08)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#E11D48',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        borderWidth: 2,
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { color: '#999', font: { size: 11 } },
-                        border: { display: false }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
-                    x: {
-                        ticks: { color: '#999', font: { size: 11 } },
-                        border: { display: false }
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#999', font: { size: 11 } },
+                            border: { display: false }
+                        },
+                        x: {
+                            ticks: { color: '#999', font: { size: 11 } },
+                            border: { display: false }
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         // Category Chart
-        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-        const catSalesData = {{ json_encode($categorySales ?? []) }};
-        new Chart(categoryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: catSalesData.map(cat => cat.name),
-                datasets: [{
-                    data: catSalesData.map(cat => cat.count),
-                    backgroundColor: ['#E11D48', '#F43F5E', '#FBBF24', '#DDD6FE', '#C084FC', '#A78BFA'],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#666', font: { size: 12, weight: '500' }, padding: 15 }
+        const categoryCtx = document.getElementById('categoryChart');
+        if (categoryCtx) {
+            const catSalesData = {{ json_encode($categorySales ?? []) }};
+            new Chart(categoryCtx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: catSalesData.map(cat => cat.name),
+                    datasets: [{
+                        data: catSalesData.map(cat => cat.count),
+                        backgroundColor: ['#E11D48', '#F43F5E', '#FBBF24', '#DDD6FE', '#C084FC', '#A78BFA'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#666', font: { size: 12, weight: '500' }, padding: 15 }
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     </script>
 </body>
 </html>
