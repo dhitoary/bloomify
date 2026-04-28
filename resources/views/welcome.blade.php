@@ -109,7 +109,69 @@
         });
     </script>
 
-    <!-- Features Section -->
+    <!-- Featured Products Section -->
+    <section class="py-16 bg-stone-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <p class="text-rose-600 text-sm font-medium uppercase tracking-widest mb-4">Koleksi Terbaru</p>
+                <h2 class="text-4xl font-light text-stone-900 mb-3">Produk Pilihan</h2>
+                <p class="text-stone-600 font-light">Temukan buket bunga indah untuk setiap momen spesial Anda</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                @forelse($featuredProducts ?? [] as $product)
+                    <a href="{{ route('products.show', $product->slug) }}" class="group">
+                        <div class="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition h-full flex flex-col">
+                            <!-- Product Image -->
+                            <div class="relative overflow-hidden h-48 bg-stone-100">
+                                @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center text-stone-400">
+                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Product Info -->
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h3 class="font-medium text-stone-900 mb-1 line-clamp-2 text-sm">{{ $product->name }}</h3>
+                                @if($product->category)
+                                    <p class="text-xs text-stone-500 mb-2">{{ $product->category->name }}</p>
+                                @endif
+                                <p class="text-xs text-stone-600 font-light mb-3 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                
+                                <div class="border-t border-stone-100 pt-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-light text-stone-900">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                        <span class="text-xs font-medium px-2 py-1 rounded-full {{ $product->stock > 0 ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-red-50 text-red-700 border border-red-200' }}">
+                                            {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-stone-500 font-light">Belum ada produk</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center">
+                <a href="{{ route('products.index') }}" class="inline-block bg-rose-600 hover:bg-rose-700 text-white font-medium py-3 px-12 rounded-lg transition duration-300">
+                    Lihat Semua Produk →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
     <section id="tentang" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -204,14 +266,6 @@
                 </div>
             </div>
             <div class="border-t border-stone-800 pt-8 text-center font-light">
-                <p>&copy; 2026 Bloomify. Semua hak dilindungi.</p>
-            </div>
-        </div>
-    </footer>
-
-</body>
-</html>
-            <div class="border-t border-gray-700 pt-8 text-center">
                 <p>&copy; 2026 Bloomify. Semua hak dilindungi.</p>
             </div>
         </div>
