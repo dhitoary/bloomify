@@ -21,6 +21,12 @@ Route::middleware(['auth', 'verified', 'is_admin'])->prefix('admin-dashboard')->
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/edit', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+    
+    // Products CRUD
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    
+    // Categories CRUD
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
 });
 
 Route::middleware('auth')->group(function () {

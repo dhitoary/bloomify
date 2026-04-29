@@ -13,9 +13,51 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <!-- Profile Picture Section -->
+        <div class="pb-6 border-b border-gray-200">
+            <h3 class="text-base font-medium text-gray-900 mb-4">{{ __('Profile Picture') }}</h3>
+            
+            <div class="flex items-center gap-6">
+                <!-- Current Profile Picture -->
+                <div class="flex-shrink-0">
+                    @if($user->profile_picture)
+                        <img 
+                            src="{{ asset('storage/' . $user->profile_picture) }}?t={{ time() }}" 
+                            alt="{{ $user->name }}'s profile picture"
+                            class="w-24 h-24 rounded-xl object-cover border-2 border-bloom-mint-light shadow-md"
+                        />
+                    @else
+                        <div class="w-24 h-24 rounded-xl flex items-center justify-center text-white font-semibold text-3xl overflow-hidden border-2 border-bloom-mint-light shadow-md bg-gradient-to-br from-bloom-teal to-bloom-coral">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                        </div>
+                    @endif
+                    <p class="text-xs text-gray-500 mt-2 text-center">Current Photo</p>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="flex-grow">
+                    <x-input-label for="profile_picture" :value="__('Upload Photo')" />
+                    <input 
+                        type="file" 
+                        id="profile_picture" 
+                        name="profile_picture" 
+                        accept="image/*" 
+                        class="mt-1 block w-full text-sm text-gray-600
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-medium
+                        file:bg-bloom-cream file:text-bloom-teal
+                        hover:file:bg-bloom-mint-light file:cursor-pointer"
+                    >
+                    <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
+                    <p class="text-xs text-gray-500 mt-2">{{ __('Format: JPG, PNG, WebP (Max 5MB)') }}</p>
+                </div>
+            </div>
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />

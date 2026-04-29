@@ -83,8 +83,6 @@ class ProductResource extends Resource
                             ->disk('public')
                             ->directory('products')
                             ->maxSize(5120)
-                            ->imageResizeMode('cover')
-                            ->imageCropAspectRatio('16 / 9')
                             ->nullable(),
                     ]),
             ]);
