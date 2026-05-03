@@ -1,6 +1,6 @@
 # Bloomify - E-Commerce Toko Bunga
 
-Bloomify adalah platform e-commerce untuk pemesanan buket bunga. Proyek ini dikembangkan menggunakan Laravel 11, Tailwind CSS v4, dan Filament PHP untuk manajemen backend.
+Bloomify adalah platform e-commerce untuk pemesanan buket bunga. Proyek ini dikembangkan menggunakan Laravel 11, Tailwind CSS v4, dan Custom Admin Dashboard untuk manajemen backend.
 
 ---
 
