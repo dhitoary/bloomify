@@ -16,7 +16,7 @@ Selamat datang di **Bloomify** - Toko Bunga Online yang dilengkapi dengan Admin 
 ### Prasyarat
 - PHP >= 8.1
 - Composer
-- MySQL/MariaDB
+- PostgreSQL >= 12
 - Node.js & NPM
 
 ### Langkah Instalasi
@@ -35,15 +35,17 @@ php artisan key:generate
 ```
 
 3. **Konfigurasi Database**
-Edit file `.env` dan sesuaikan:
+Edit file `.env` dan sesuaikan konfigurasi PostgreSQL Anda:
 ```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=bloomify
-DB_USERNAME=root
-DB_PASSWORD=
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1          # Host PostgreSQL (sesuaikan jika berbeda)
+DB_PORT=5432               # Port default PostgreSQL
+DB_DATABASE=db_bloomify       # Nama database (buat terlebih dahulu)
+DB_USERNAME=postgres       # Username PostgreSQL (sesuaikan)
+DB_PASSWORD=               # Password PostgreSQL (isi dengan password Anda)
 ```
+
+**Catatan**: Pastikan database `bloomify` sudah dibuat di PostgreSQL sebelum menjalankan migrasi.
 
 4. **Jalankan Migrasi & Seeder**
 ```bash
