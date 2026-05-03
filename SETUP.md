@@ -1,10 +1,10 @@
 # Panduan Setup & Penggunaan Bloomify
 
-Selamat datang di **Bloomify** - Toko Bunga Online yang dilengkapi dengan Admin Panel yang powerful menggunakan Filament.
+Selamat datang di **Bloomify** - Toko Bunga Online yang dilengkapi dengan Admin Dashboard yang powerful.
 
 ## 📋 Daftar Isi
 1. [Instalasi & Setup](#instalasi--setup)
-2. [Admin Panel](#admin-panel)
+2. [Admin Dashboard](#admin-dashboard)
 3. [Fitur Utama](#fitur-utama)
 4. [Panduan Pengguna](#panduan-pengguna)
 5. [Troubleshooting](#troubleshooting)
@@ -72,19 +72,20 @@ Aplikasi akan berjalan di `http://localhost:8000`
 
 ---
 
-## 🔐 Admin Panel
+## 🔐 Admin Dashboard
 
-### Akses Admin Panel
-- **URL**: `http://localhost:8000/admin`
-- **Email**: `admin@bloomify.com`
-- **Password**: `password`
+### Akses Admin Dashboard
+- **URL**: `http://localhost:8000/admin-dashboard`
+- Persyaratan: Akun dengan role admin
+- Gunakan sistem autentikasi Laravel yang sudah ada
 
 ### Dashboard Admin
-Dashboard menampilkan statistik penting:
+Dashboard admin menampilkan statistik penting:
 - Total Produk
 - Total Kategori
 - Stok Total
-- Total Pesanan
+
+Dari dashboard, admin dapat mengakses menu untuk mengelola produk dan kategori.
 
 ---
 
@@ -147,13 +148,13 @@ Produk akan langsung muncul di halaman katalog publik jika stok > 0.
 - Deskripsi lengkap
 - Status ketersediaan
 - Produk serupa dari kategori yang sama
-- Tombol tambah ke keranjang
+- Tombol tambah ke keranjang (🚧 Dalam pengembangan)
 
 #### 4. **Dashboard Pengguna** (`/dashboard`)
-- Statistik pesanan & keranjang
 - Tampilan produk terbaru
 - Manajemen profil
 - Link ke halaman katalog
+- (🚧 Statistik pesanan & keranjang: dalam pengembangan)
 
 ---
 
@@ -174,7 +175,7 @@ Bloomify menggunakan **Tailwind CSS** dengan palet warna Bloom yang elegan:
 ## 🔄 Alur Data
 
 ### Saat Admin Menambah Produk:
-1. Admin login ke `/admin`
+1. Admin login ke `/admin-dashboard`
 2. Buka menu **Produk** → **Tambah Produk**
 3. Isi informasi produk + upload gambar
 4. Klik **Simpan**
@@ -186,7 +187,7 @@ Bloomify menggunakan **Tailwind CSS** dengan palet warna Bloom yang elegan:
 3. Melihat semua produk yang ditambahkan admin
 4. Bisa filter berdasarkan kategori
 5. Klik produk untuk melihat detail
-6. Bisa tambah ke keranjang (fitur pembayaran: coming soon)
+6. Tombol tambah ke keranjang (🚧 fitur pembayaran: dalam pengembangan)
 
 ---
 
@@ -196,10 +197,13 @@ Bloomify menggunakan **Tailwind CSS** dengan palet warna Bloom yang elegan:
 bloomify/
 ├── app/
 │   ├── Filament/
-│   │   ├── Resources/         # Admin Panel Resources
-│   │   ├── Pages/            # Admin Pages
-│   │   └── Widgets/          # Dashboard Widgets
-│   ├── Http/Controllers/      # Public Controllers
+│   │   ├── Resources/         # Filament Resources (ProductResource, CategoryResource)
+│   │   ├── Pages/            # Filament Pages
+│   │   └── Widgets/          # Filament Widgets
+│   ├── Http/
+│   │   ├── Controllers/      # Public & Admin Controllers
+│   │   ├── Middleware/       # Custom Middleware (is_admin)
+│   │   └── Requests/         # Form Requests
 │   └── Models/               # Database Models
 ├── database/
 │   ├── migrations/           # Database Schemas

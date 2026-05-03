@@ -78,35 +78,39 @@ Untuk menjaga stabilitas sistem, seluruh anggota tim diwajibkan menggunakan sist
 
 ## Tech Stack dan Fitur
 
-* **Backend:** Laravel 11 dengan database PostgreSQL.
+* **Backend:** Laravel 11 dengan database MySQL/MariaDB.
 * **Frontend:** Tailwind CSS v4 dengan build tool Vite.
-* **Admin Panel:** Filament PHP v3 (Dapat diakses melalui URL /admin).
-* **Payment Gateway:** Midtrans Snap (Mode Sandbox untuk pengujian).
+* **Admin Panel:** Custom Admin Dashboard (Diakses melalui URL `/admin-dashboard`).
+* **Authentication:** Laravel Breeze dengan sistem role admin
 * **UI Components:** Custom components mengikuti Bloom color palette.
 
 ---
 
 ## Fitur-Fitur Marketplace
 
-### Customer Features (Frontend)
+### Customer Features (Frontend) - Sudah Diimplementasikan ✅
 - **Katalog Produk**: Menampilkan buket bunga dengan filter kategori
-- **Search & Filter**: Pencarian berdasarkan nama, kategori, harga
 - **Product Details**: Informasi lengkap produk dengan foto berkualitas
+- **Filter Kategori**: Browse produk berdasarkan kategori
+- **User Dashboard**: Dashboard untuk pengguna yang sudah login
+- **User Profile**: Kelola profil pengguna
+
+### Customer Features - Dalam Pengembangan 🚧
 - **Shopping Cart**: Keranjang belanja dengan update real-time
 - **Checkout**: Proses checkout dengan shipping info
 - **Payment Gateway**: Integrasi Midtrans untuk berbagai metode pembayaran
 - **Order History**: Riwayat pembelian dan status order
-- **User Profile**: Kelola profil, alamat pengiriman, preferensi
-- **Discount System**: Automatic discount berdasarkan promo admin
-- **Voucher**: Apply voucher code untuk additional discount
 
-### Admin Features (Filament Dashboard)
-- **Product Management**: CRUD untuk buket bunga dengan foto
+### Admin Features - Sudah Diimplementasikan ✅
+- **Product Management**: CRUD lengkap untuk buket bunga dengan foto
 - **Category Management**: Kelola kategori produk
+- **Dashboard Admin**: Statistik produk dan kategori
+- **Stock Management**: Monitor stok produk
+
+### Admin Features - Dalam Pengembangan 🚧
 - **Order Management**: Tracking dan management pesanan
 - **Discount Management**: Buat dan kelola promo discount
 - **Voucher Management**: Create dan manage voucher codes
-- **Stock Management**: Monitor stok produk yang ready
 - **Analytics**: Dashboard untuk metrics penjualan dan traffic
 
 ---
@@ -134,9 +138,15 @@ Setelah melakukan pull dari repository, jalankan perintah berikut secara berurut
     php artisan migrate
     ```
 3.  **Pembuatan Akun Admin:**
-    Gunakan perintah berikut untuk membuat akun akses ke dashboard admin:
+    Admin account dapat dibuat melalui database seeders atau manual via command:
     ```bash
-    php artisan make:filament-user
+    php artisan tinker
+    >>> $user = new \App\Models\User();
+    >>> $user->name = 'Admin Name';
+    >>> $user->email = 'admin@bloomify.com';
+    >>> $user->password = bcrypt('password');
+    >>> $user->is_admin = true;
+    >>> $user->save();
     ```
 4.  **Menjalankan Aplikasi:**
     Jalankan server Laravel dan Vite secara bersamaan:
@@ -147,7 +157,22 @@ Setelah melakukan pull dari repository, jalankan perintah berikut secara berurut
 
 ## Integrasi Pembayaran
 
-Konfigurasi API Key Midtrans tersedia pada file .env. Pastikan nilai MIDTRANS_IS_PRODUCTION tetap pada status false untuk keperluan pengembangan dan pengujian.
+Konfigurasi API Key Midtrans tersedia pada file .env. Saat ini fitur pembayaran masih dalam pengembangan.
+
+**Status**: 🚧 Dalam Pengembangan - Integrasi Midtrans untuk payment gateway akan segera ditambahkan.
+
+---
+
+## Akses Admin Dashboard
+
+- **URL**: `http://localhost:8000/admin-dashboard` 
+- **Persyaratan**: Akun dengan role admin
+- **Login**: Gunakan sistem autentikasi Laravel yang sudah ada
+
+Setelah login sebagai admin, Anda dapat:
+- Mengelola kategori produk
+- Menambah, edit, atau hapus produk
+- Melihat dashboard dengan statistik produk dan kategori
 
 ---
 
@@ -184,6 +209,30 @@ Gunakan custom color names di Tailwind:
 <div class="text-bloom-teal-light">...</div>
 <div class="bg-bloom-mint">...</div>
 ```
+
+---
+
+## Daftar Route
+
+### Public Routes
+- `GET /` - Halaman beranda
+- `GET /katalog` - Katalog produk
+- `GET /produk/{slug}` - Detail produk
+- `GET /kategori/{slug}` - Filter produk berdasarkan kategori
+- `GET /dashboard` - Dashboard pengguna (authenticated)
+
+### Admin Routes
+- `GET /admin-dashboard` - Admin dashboard (authenticated + admin role)
+- `GET /admin-dashboard/products` - Daftar produk (admin)
+- `POST /admin-dashboard/products` - Tambah produk (admin)
+- `GET /admin-dashboard/products/{id}/edit` - Edit produk (admin)
+- `PUT /admin-dashboard/products/{id}` - Update produk (admin)
+- `DELETE /admin-dashboard/products/{id}` - Hapus produk (admin)
+- `GET /admin-dashboard/categories` - Daftar kategori (admin)
+- `POST /admin-dashboard/categories` - Tambah kategori (admin)
+- `GET /admin-dashboard/categories/{id}/edit` - Edit kategori (admin)
+- `PUT /admin-dashboard/categories/{id}` - Update kategori (admin)
+- `DELETE /admin-dashboard/categories/{id}` - Hapus kategori (admin)
 
 ---
 
