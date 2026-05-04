@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is_admin' => \App\Http\Middleware\IsAdmin::class,
         ]);
+        // Exclude Midtrans notification from CSRF verification
+        $middleware->validateCsrfTokens(except: [
+            'payment/notification',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

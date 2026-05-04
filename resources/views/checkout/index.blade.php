@@ -1,126 +1,204 @@
 <x-app-layout>
-    <div class="py-12 bg-white">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-12 bg-gradient-to-b from-white to-gray-50">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <!-- Page Header -->
-            <div class="mb-8">
-                <h1 class="text-4xl font-light text-gray-900">Checkout</h1>
-                <p class="text-gray-600 font-light">Selesaikan pembelian Anda</p>
+            <div class="mb-12">
+                <h1 class="text-5xl font-light text-gray-900 mb-2">Checkout</h1>
+                <p class="text-gray-600 font-light text-lg">Selesaikan pembelian Anda dengan aman</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Checkout Form -->
-                <div class="lg:col-span-2">
-                    <form action="{{ route('checkout.submit') }}" method="POST" class="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <form id="checkoutForm" action="{{ route('checkout.submit') }}" method="POST" class="space-y-6">
                         @csrf
 
-                        <!-- Order Items Summary -->
-                        <div class="mb-8 pb-8 border-b border-gray-200">
-                            <h2 class="text-xl font-semibold text-gray-900 mb-4">Ringkasan Pesanan</h2>
-                            <div class="space-y-3">
+                        <!-- Order Items Summary Card -->
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-bloom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                                Ringkasan Pesanan
+                            </h2>
+                            <div class="space-y-4">
                                 @foreach($cartItems as $item)
-                                    <div class="flex justify-between text-gray-700">
-                                        <div>
-                                            <p class="font-medium">{{ $item->product->name }}</p>
-                                            <p class="text-sm text-gray-600">Qty: {{ $item->quantity }}</p>
+                                    <div class="flex items-start justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+                                        <div class="flex-1">
+                                            <p class="font-semibold text-gray-900">{{ $item->product->name }}</p>
+                                            <p class="text-sm text-gray-600 mt-1">
+                                                {{ $item->quantity }}x × Rp {{ number_format($item->product->price, 0, ',', '.') }}
+                                            </p>
                                         </div>
-                                        <p class="font-semibold text-bloom-teal">Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
+                                        <p class="font-bold text-bloom-teal text-lg">
+                                            Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
+                                        </p>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
 
-                        <!-- Shipping Information -->
-                        <div class="mb-8 pb-8 border-b border-gray-200">
-                            <h2 class="text-xl font-semibold text-gray-900 mb-4">Informasi Pengiriman</h2>
+                        <!-- Shipping Information Card -->
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-bloom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                Alamat Pengiriman
+                            </h2>
 
-                            <div class="mb-4">
-                                <label for="shipping_address" class="block text-sm font-medium text-gray-700 mb-2">Alamat Pengiriman</label>
-                                <textarea id="shipping_address" name="shipping_address" rows="4" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900" 
-                                    placeholder="Jalan, No. Rumah, RT/RW, Kota, Provinsi, Kode Pos" required>{{ old('shipping_address', $user->address ?? '') }}</textarea>
-                                @error('shipping_address')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                                @if(!$user->address)
-                                    <p class="text-xs text-amber-600 mt-2">💡 Anda dapat mengatur alamat default di <a href="{{ route('profile.edit') }}" class="font-medium hover:underline">profil</a></p>
-                                @endif
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
-                                <input type="tel" id="phone" name="phone" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900" 
-                                    placeholder="+62 812 XXXX XXXX" required value="{{ old('phone', $user->phone ?? '') }}">
-                                @error('phone')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-2">Kota</label>
-                                    <input type="text" id="city" name="city" 
-                                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900" 
-                                        placeholder="Jakarta, Bandung, dll" value="{{ old('city', $user->city ?? '') }}">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="md:col-span-2">
+                                    <label for="shipping_address" class="block text-sm font-semibold text-gray-700 mb-3">Alamat Lengkap</label>
+                                    <textarea id="shipping_address" name="shipping_address" rows="3" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900 placeholder-gray-500" 
+                                        placeholder="Contoh: Jl. Merdeka No. 123, Blok A" required>{{ old('shipping_address', $user->address ?? '') }}</textarea>
+                                    @error('shipping_address')
+                                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
+
                                 <div>
-                                    <label for="postal_code" class="block text-sm font-medium text-gray-700 mb-2">Kode Pos</label>
+                                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-3">Nomor Telepon</label>
+                                    <input type="tel" id="phone" name="phone" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900 placeholder-gray-500" 
+                                        placeholder="+62 812 3456 7890" required value="{{ old('phone', $user->phone ?? '') }}">
+                                    @error('phone')
+                                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="city" class="block text-sm font-semibold text-gray-700 mb-3">Kota / Kabupaten</label>
+                                    <select id="city" name="city" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900" required>
+                                        <option value="">Pilih Kota...</option>
+                                        @php
+                                            $zones = config('shipping.zones');
+                                        @endphp
+                                        @foreach($zones as $cityName => $details)
+                                            <option value="{{ $cityName }}" {{ old('city', $user->city ?? '') === $cityName ? 'selected' : '' }}>
+                                                {{ $cityName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('city')
+                                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="postal_code" class="block text-sm font-semibold text-gray-700 mb-3">Kode Pos</label>
                                     <input type="text" id="postal_code" name="postal_code" 
-                                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900 placeholder-gray-500" 
                                         placeholder="12345" value="{{ old('postal_code', $user->postal_code ?? '') }}">
                                 </div>
                             </div>
+                        </div>
 
-                            <div>
-                                <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Catatan (Opsional)</label>
-                                <textarea id="notes" name="notes" rows="3" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900" 
-                                    placeholder="Contoh: Tolong bungkus kado, beri kartu ucapan, dll">{{ old('notes') }}</textarea>
+                        <!-- Shipping Method Card -->
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-bloom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                </svg>
+                                Pilih Kurir & Layanan
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <label for="courier" class="block text-sm font-semibold text-gray-700 mb-3">Kurir Pengiriman</label>
+                                    <select id="courier" name="courier" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900" required>
+                                        <option value="">Pilih Kurir...</option>
+                                        @foreach($couriers as $courierCode => $courierData)
+                                            <option value="{{ $courierCode }}">
+                                                {{ $courierData['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('courier')
+                                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="service" class="block text-sm font-semibold text-gray-700 mb-3">Tipe Layanan</label>
+                                    <select id="service" name="service" 
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900" required disabled>
+                                        <option value="">Pilih Kurir terlebih dahulu</option>
+                                    </select>
+                                    @error('service')
+                                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Shipping Info Display -->
+                            <div id="shippingInfo" class="hidden p-4 bg-gradient-to-r from-bloom-teal/10 to-bloom-mint/10 rounded-xl border border-bloom-teal/20">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="text-xs text-gray-600 font-semibold mb-1">Estimasi Tiba</p>
+                                        <p id="shippingEstimate" class="text-lg font-semibold text-bloom-teal">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-600 font-semibold mb-1">Biaya Pengiriman</p>
+                                        <p id="shippingCostDisplay" class="text-lg font-semibold text-bloom-coral">-</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Payment Information -->
-                        <div class="mb-8">
-                            <h2 class="text-xl font-semibold text-gray-900 mb-4">Metode Pembayaran</h2>
-                            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                <p class="text-sm text-gray-700 mb-3">Metode pembayaran akan ditampilkan setelah konfirmasi pesanan.</p>
-                                <p class="text-xs text-gray-600">Pembayaran melalui: Transfer Bank, E-Wallet, atau COD (Sesuai kesepakatan)</p>
-                            </div>
+                        <!-- Notes Card -->
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                            <label for="notes" class="block text-sm font-semibold text-gray-700 mb-3">Catatan Tambahan (Opsional)</label>
+                            <textarea id="notes" name="notes" rows="3" 
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900 placeholder-gray-500" 
+                                placeholder="Contoh: Tolong bungkus kado, jangan sampai basah, dll">{{ old('notes') }}</textarea>
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white font-semibold py-3 rounded-lg transition duration-300">
-                            Konfirmasi Pesanan
+                        <button type="submit" class="w-full bg-gradient-to-r from-bloom-teal to-bloom-mint hover:from-bloom-teal/90 hover:to-bloom-mint/90 text-white font-bold py-4 rounded-xl transition duration-300 transform hover:scale-105 active:scale-95 shadow-lg">
+                            Lanjutkan ke Pembayaran
                         </button>
                     </form>
                 </div>
 
                 <!-- Order Summary Sidebar -->
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 sticky top-20">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Total Pesanan</h2>
+                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 sticky top-24 h-fit">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6 text-bloom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Total Pesanan
+                        </h2>
 
-                        <div class="space-y-3 mb-6">
+                        <div class="space-y-4 mb-8 pb-8 border-b border-gray-200">
                             <div class="flex justify-between text-gray-600 font-light">
-                                <span>Subtotal</span>
-                                <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+                                <span>Subtotal Barang</span>
+                                <span id="subtotalDisplay" class="font-semibold text-gray-900">Rp {{ number_format($total, 0, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between text-gray-600 font-light">
-                                <span>Ongkos Kirim</span>
-                                <span class="text-bloom-coral">Hubungi kami</span>
+                                <span>Biaya Pengiriman</span>
+                                <span id="shippingCostSidebar" class="font-semibold text-bloom-coral">Rp 0</span>
                             </div>
                         </div>
 
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex justify-between text-lg font-semibold text-gray-900">
-                                <span>Total</span>
-                                <span class="text-bloom-teal">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-gray-900">Total Bayar</span>
+                                <span id="totalDisplay" class="text-3xl font-black bg-gradient-to-r from-bloom-teal to-bloom-mint bg-clip-text text-transparent">
+                                    Rp {{ number_format($total, 0, ',', '.') }}
+                                </span>
                             </div>
                         </div>
 
-                        <div class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <p class="text-xs text-gray-600">
-                                <strong>Catatan:</strong> Ongkos kirim akan dikonfirmasi oleh tim kami setelah menerima pesanan Anda.
+                        <div class="p-4 bg-gradient-to-br from-bloom-teal/5 to-bloom-mint/5 rounded-xl border border-bloom-teal/20">
+                            <p class="text-xs text-gray-700 leading-relaxed">
+                                <strong>✓ Aman & Terpercaya</strong><br>
+                                Pembayaran terenkripsi dan data Anda aman
                             </p>
                         </div>
                     </div>
@@ -128,4 +206,79 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript for Dynamic Shipping -->
+    <script>
+        const couriers = @json($couriers);
+        let subtotal = {{ $total }};
+        let currentShippingCost = 0;
+
+        // Update service dropdown when courier changes
+        document.getElementById('courier').addEventListener('change', function() {
+            const serviceSelect = document.getElementById('service');
+            serviceSelect.innerHTML = '<option value="">Pilih Layanan...</option>';
+            
+            if (this.value && couriers[this.value]) {
+                const services = couriers[this.value].services;
+                Object.keys(services).forEach(serviceCode => {
+                    const option = document.createElement('option');
+                    option.value = serviceCode;
+                    option.textContent = services[serviceCode].name;
+                    serviceSelect.appendChild(option);
+                });
+                serviceSelect.disabled = false;
+            } else {
+                serviceSelect.disabled = true;
+            }
+            
+            // Reset shipping info
+            document.getElementById('shippingInfo').classList.add('hidden');
+            updateTotal();
+        });
+
+        // Calculate shipping cost when city or service changes
+        document.getElementById('service').addEventListener('change', calculateShipping);
+        document.getElementById('city').addEventListener('change', calculateShipping);
+
+        function calculateShipping() {
+            const city = document.getElementById('city').value;
+            const courier = document.getElementById('courier').value;
+            const service = document.getElementById('service').value;
+
+            if (!city || !courier || !service) {
+                document.getElementById('shippingInfo').classList.add('hidden');
+                currentShippingCost = 0;
+                updateTotal();
+                return;
+            }
+
+            // Fetch shipping cost
+            fetch(`{{ route('checkout.shipping-cost') }}?city=${city}&courier=${courier}&service=${service}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentShippingCost = data.cost;
+                        document.getElementById('shippingEstimate').textContent = data.estimate;
+                        document.getElementById('shippingCostDisplay').textContent = data.formatted_cost;
+                        document.getElementById('shippingCostSidebar').textContent = data.formatted_cost;
+                        document.getElementById('shippingInfo').classList.remove('hidden');
+                        updateTotal();
+                    } else {
+                        alert(data.message);
+                        document.getElementById('shippingInfo').classList.add('hidden');
+                        currentShippingCost = 0;
+                        updateTotal();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Gagal menghitung ongkos kirim. Silakan coba lagi.');
+                });
+        }
+
+        function updateTotal() {
+            const total = subtotal + currentShippingCost;
+            document.getElementById('totalDisplay').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
+        }
+    </script>
 </x-app-layout>
