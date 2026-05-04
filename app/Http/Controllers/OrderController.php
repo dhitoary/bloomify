@@ -18,7 +18,7 @@ class OrderController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $order->load('items.product');
+        $order->load('items.product', 'payment');
 
         return view('orders.show', compact('order'));
     }

@@ -11,10 +11,14 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_number',
+        'order_id',
+        'customer_name',
+        'customer_phone',
         'status',
         'total_price',
         'shipping_address',
         'notes',
+        'snap_token',
     ];
 
     protected $casts = [
@@ -31,5 +35,10 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }

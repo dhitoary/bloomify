@@ -2,6 +2,7 @@
     <div class="py-12 bg-bloom-ivory">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Success Message -->
+            @if(session('success'))
             <div class="mb-8 bg-green-50 border border-green-200 rounded-lg p-6">
                 <div class="flex items-start gap-3">
                     <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -9,10 +10,17 @@
                     </svg>
                     <div>
                         <h3 class="text-lg font-semibold text-green-800">Pesanan Berhasil Dibuat!</h3>
-                        <p class="text-green-700 text-sm mt-1">Terima kasih telah berbelanja di Bloomify. Tim kami akan segera memproses pesanan Anda.</p>
+                        <p class="text-green-700 text-sm mt-1">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
+            @endif
+
+            @if(session('info'))
+            <div class="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-blue-700 text-sm">{{ session('info') }}</p>
+            </div>
+            @endif
 
             <!-- Order Details Card -->
             <div class="bg-white rounded-lg border border-bloom-mint-light shadow-sm p-8 mb-8">
@@ -35,6 +43,33 @@
                                     {{ ucfirst($order->status) }}
                                 </span>
                             </div>
+
+                            {{-- Payment Status Badge --}}
+                            @if($order->payment)
+                            <div>
+                                <p class="text-sm text-gray-600">Status Pembayaran</p>
+                                @php
+                                    $paymentStatus = $order->payment->status;
+                                    $badgeClass = match($paymentStatus) {
+                                        'success'  => 'bg-green-100 text-green-700',
+                                        'pending'  => 'bg-yellow-100 text-yellow-700',
+                                        'failed'   => 'bg-red-100 text-red-700',
+                                        'expired'  => 'bg-gray-100 text-gray-600',
+                                        default    => 'bg-gray-100 text-gray-600',
+                                    };
+                                    $paymentLabel = match($paymentStatus) {
+                                        'success'  => 'Lunas',
+                                        'pending'  => 'Menunggu Pembayaran',
+                                        'failed'   => 'Gagal',
+                                        'expired'  => 'Kedaluwarsa',
+                                        default    => ucfirst($paymentStatus),
+                                    };
+                                @endphp
+                                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full {{ $badgeClass }}">
+                                    {{ $paymentLabel }}
+                                </span>
+                            </div>
+                            @endif
                         </div>
                     </div>
 
@@ -72,20 +107,46 @@
 
                 <!-- Order Total -->
                 <div class="space-y-3">
-                    <div class="flex justify-between text-gray-600">
-                        <span>Subtotal</span>
-                        <span>Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
-                    </div>
-                    <div class="flex justify-between text-gray-600">
-                        <span>Ongkos Kirim</span>
-                        <span class="text-bloom-coral">Akan dikonfirmasi</span>
-                    </div>
                     <div class="border-t border-bloom-mint-light pt-3 flex justify-between text-xl font-semibold">
                         <span>Total Pesanan</span>
                         <span class="text-bloom-teal">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>
+
+            {{-- Payment Action Card --}}
+            @php
+                $isPaid = $order->payment && $order->payment->status === 'success';
+                $canPay = $order->status === 'pending' && !$isPaid;
+            @endphp
+
+            @if($canPay)
+            <div class="bg-gradient-to-r from-bloom-teal/10 to-bloom-mint/10 rounded-xl border border-bloom-mint-light p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Selesaikan Pembayaran</h3>
+                        <p class="text-sm text-gray-600 mt-1">Bayar pesanan Anda dengan aman melalui Midtrans — kartu kredit, transfer bank, atau dompet digital.</p>
+                    </div>
+                    <a href="{{ route('payment.show', $order->id) }}"
+                       class="flex items-center gap-2 bg-bloom-teal hover:bg-bloom-teal/90 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg whitespace-nowrap">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                        Bayar Sekarang
+                    </a>
+                </div>
+            </div>
+            @elseif($isPaid)
+            <div class="bg-green-50 rounded-xl border border-green-100 p-6 mb-8 flex items-center gap-4">
+                <svg class="w-8 h-8 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                    <p class="font-semibold text-green-800">Pembayaran Lunas</p>
+                    <p class="text-sm text-green-600">Pesanan Anda sedang diproses oleh tim Bloomify.</p>
+                </div>
+            </div>
+            @endif
 
             <!-- Next Steps -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -97,9 +158,9 @@
                         <h3 class="font-semibold text-gray-900">Langkah Selanjutnya</h3>
                     </div>
                     <ol class="text-sm text-gray-700 space-y-2 ml-9">
-                        <li>1. Tim kami akan menghubungi untuk konfirmasi pengiriman</li>
-                        <li>2. Pastikan alamat dan nomor telepon Anda benar</li>
-                        <li>3. Kami akan memproses pesanan dalam 1-2 jam kerja</li>
+                        <li>1. Selesaikan pembayaran melalui tombol "Bayar Sekarang"</li>
+                        <li>2. Tim kami akan menghubungi untuk konfirmasi pengiriman</li>
+                        <li>3. Pesanan akan diproses dalam 1-2 jam kerja</li>
                     </ol>
                 </div>
 
