@@ -41,10 +41,12 @@ class DashboardController extends Controller
         
         // Sales data (7 days)
         $salesData = [];
+        $salesLabels = [];
         for ($i = 6; $i >= 0; $i--) {
-            $date = now()->subDays($i)->toDateString();
-            $sales = Order::whereDate('created_at', $date)->sum('total_price');
+            $date = now()->subDays($i);
+            $sales = Order::whereDate('created_at', $date->toDateString())->sum('total_price');
             $salesData[] = $sales;
+            $salesLabels[] = $date->format('d M');
         }
 
         // Category sales data
@@ -72,6 +74,7 @@ class DashboardController extends Controller
             'orders' => $orders,
             'users' => $users,
             'salesData' => $salesData,
+            'salesLabels' => $salesLabels,
             'categorySales' => $categorySales,
         ]);
     }

@@ -94,12 +94,91 @@
                     <h2 class="text-xl font-semibold text-gray-900 mb-4">Produk yang Dipesan</h2>
                     <div class="space-y-4">
                         @foreach($order->items as $item)
-                            <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                                <div>
-                                    <h3 class="font-semibold text-gray-900">{{ $item->product->name }}</h3>
-                                    <p class="text-sm text-gray-600">Qty: {{ $item->quantity }} × Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-bloom-teal/30 transition-all duration-300">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex gap-4">
+                                        <div class="w-16 h-16 bg-white rounded-xl border border-gray-100 overflow-hidden flex-shrink-0">
+                                            @if($item->product->image_url)
+                                                <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center bg-bloom-cream text-bloom-teal">
+                                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h3 class="font-bold text-gray-900 text-lg">{{ $item->product->name }}</h3>
+                                            <p class="text-sm text-gray-500 font-medium">Qty: {{ $item->quantity }} × Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                    <p class="font-bold text-bloom-teal text-xl">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</p>
                                 </div>
-                                <p class="font-semibold text-bloom-teal text-lg">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</p>
+
+                                {{-- Review Section --}}
+                                @if($order->status === 'completed' || $order->status === 'delivered')
+                                    @php
+                                        $hasReview = \App\Models\Review::where('order_id', $order->id)
+                                            ->where('product_id', $item->product_id)
+                                            ->first();
+                                    @endphp
+
+                                    <div class="mt-4 pt-4 border-t border-gray-200">
+                                        @if(!$hasReview)
+                                            <div x-data="{ rating: 0, hover: 0 }" class="bg-white p-4 rounded-xl border border-bloom-mint-light shadow-sm">
+                                                <h4 class="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
+                                                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                                    Bagikan Pengalaman Anda
+                                                </h4>
+                                                <form action="{{ route('reviews.store') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                                    <input type="hidden" name="product_id" value="{{ $item->product_id }}">
+                                                    <input type="hidden" name="rating" :value="rating">
+                                                    
+                                                    <div class="flex items-center gap-1 mb-4">
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            <button type="button" 
+                                                                @click="rating = {{ $i }}" 
+                                                                @mouseenter="hover = {{ $i }}" 
+                                                                @mouseleave="hover = 0"
+                                                                class="focus:outline-none transition-transform active:scale-125">
+                                                                <svg class="w-8 h-8 transition-colors" 
+                                                                    :class="(hover || rating) >= {{ $i }} ? 'text-yellow-400' : 'text-gray-200'"
+                                                                    fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                </svg>
+                                                            </button>
+                                                        @endfor
+                                                        <span class="ml-2 text-sm font-medium text-gray-500" x-text="rating > 0 ? rating + '/5' : 'Pilih rating'"></span>
+                                                    </div>
+
+                                                    <textarea name="comment" 
+                                                        class="w-full text-sm border-gray-200 rounded-xl p-3 focus:ring-bloom-teal focus:border-bloom-teal transition-all mb-4" 
+                                                        placeholder="Ceritakan kualitas produk ini..."
+                                                        rows="2"></textarea>
+                                                    
+                                                    <button type="submit" 
+                                                        ::disabled="rating === 0"
+                                                        class="w-full bg-bloom-teal text-white font-bold py-2 rounded-xl text-sm hover:bg-bloom-teal/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm">
+                                                        Kirim Ulasan
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <div class="bg-green-50 p-4 rounded-xl border border-green-100">
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <div class="flex text-yellow-400">
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            <svg class="w-4 h-4 {{ $i <= $hasReview->rating ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                                        @endfor
+                                                    </div>
+                                                    <span class="text-xs font-bold text-green-700">✓ Ulasan Terkirim</span>
+                                                </div>
+                                                <p class="text-sm text-gray-600 italic">"{{ $hasReview->comment }}"</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>

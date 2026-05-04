@@ -47,9 +47,24 @@
                     </div>
 
                     <!-- Product Title -->
-                    <h1 class="text-3xl font-light text-gray-900 mb-6 leading-tight">
+                    <h1 class="text-3xl font-light text-gray-900 mb-2 leading-tight">
                         {{ $product->name }}
                     </h1>
+
+                    <!-- Rating Summary -->
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="flex text-yellow-400">
+                            @php $avg = $product->averageRating(); @endphp
+                            @for($i = 1; $i <= 5; $i++)
+                                <svg class="w-4 h-4 {{ $i <= round($avg) ? 'fill-current' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            @endfor
+                        </div>
+                        <span class="text-sm font-bold text-gray-900">{{ number_format($avg, 1) }}</span>
+                        <span class="text-gray-300">|</span>
+                        <a href="#ulasan" class="text-sm text-gray-500 hover:text-bloom-teal transition">{{ $product->totalReviews() }} Ulasan</a>
+                    </div>
 
                     <!-- Price & Stock Section -->
                     <div class="mb-6 pb-6 border-b border-gray-200">
@@ -160,6 +175,90 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div id="ulasan" class="mb-20">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <p class="text-sm font-semibold text-bloom-teal mb-2 uppercase tracking-widest">Suara Pelanggan</p>
+                    <h2 class="text-4xl font-light text-gray-900">Ulasan Pembeli</h2>
+                </div>
+            </div>
+
+            @if($product->reviews->count() > 0)
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <!-- Rating Snapshot -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-bloom-cream/30 border border-bloom-mint/20 rounded-2xl p-8 sticky top-8">
+                            <p class="text-gray-600 text-sm mb-2">Rating Rata-rata</p>
+                            <div class="flex items-end gap-3 mb-6">
+                                <span class="text-6xl font-light text-gray-900 leading-none">{{ number_format($product->averageRating(), 1) }}</span>
+                                <div class="flex flex-col">
+                                    <div class="flex text-yellow-400 mb-1">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <svg class="w-5 h-5 {{ $i <= round($product->averageRating()) ? 'fill-current' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                        @endfor
+                                    </div>
+                                    <span class="text-sm text-gray-500 font-medium">Dari {{ $product->totalReviews() }} Ulasan</span>
+                                </div>
+                            </div>
+
+                            <!-- Rating Bars -->
+                            <div class="space-y-3">
+                                @for($i = 5; $i >= 1; $i--)
+                                    @php 
+                                        $count = $product->reviews->where('rating', $i)->count();
+                                        $percent = $product->totalReviews() > 0 ? ($count / $product->totalReviews()) * 100 : 0;
+                                    @endphp
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs font-bold text-gray-600 w-2">{{ $i }}</span>
+                                        <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-yellow-400 rounded-full" style="width: {{ $percent }}%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-400 w-8">{{ $count }}</span>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review List -->
+                    <div class="lg:col-span-2 space-y-8">
+                        @foreach($product->reviews()->latest()->get() as $review)
+                            <div class="pb-8 border-b border-gray-100 last:border-0">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-bloom-teal/10 rounded-full flex items-center justify-center text-bloom-teal font-bold text-sm">
+                                            {{ substr($review->user->name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-gray-900">{{ $review->user->name }}</h4>
+                                            <p class="text-xs text-gray-400">{{ $review->created_at->diffForHumans() }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex text-yellow-400">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <svg class="w-4 h-4 {{ $i <= $review->rating ? 'fill-current' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 font-light leading-relaxed">
+                                    {{ $review->comment }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-12 text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Belum Ada Ulasan</h3>
+                    <p class="text-gray-500 font-light">Jadilah yang pertama memberikan ulasan untuk produk ini!</p>
+                </div>
+            @endif
         </div>
 
         <!-- Related Products Section -->
