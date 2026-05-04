@@ -47,4 +47,16 @@ class Product extends Model
     {
         return $this->stock > 0;
     }
+
+    public function reviews(): HasMany {
+    return $this->hasMany(Review::class);
+}
+
+public function averageRating(): float {
+    return $this->reviews()->avg('rating') ?? 0;
+}
+
+public function totalReviews(): int {
+    return $this->reviews()->count();
+}
 }

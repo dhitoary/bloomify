@@ -5,12 +5,21 @@
 
 <div class="bg-bloom-ivory min-h-screen" x-data="{ activeTab: 'overview' }">
     <!-- Header Section -->
-    <div class="bg-white border-b border-bloom-mint-light py-12 mb-12">
+    <div class="bg-white border-b border-bloom-mint-light py-12 mb-8">
         <div class="max-w-7xl mx-auto px-6">
             <h1 class="text-5xl font-light text-gray-900 mb-3">Dashboard Admin</h1>
             <p class="text-gray-600 font-light text-lg">Selamat datang, <span class="text-bloom-teal">{{ Auth::user()->name }}</span></p>
         </div>
     </div>
+
+    @if(session('success'))
+        <div class="max-w-7xl mx-auto px-6 mb-8">
+            <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl flex items-center gap-3 shadow-sm">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-6 pb-20">
@@ -61,13 +70,17 @@
                 <!-- Sales Chart -->
                 <div class="bg-white rounded-lg p-8 border border-bloom-mint-light">
                     <h2 class="text-xl font-light text-gray-900 mb-6">Penjualan 7 Hari Terakhir</h2>
-                    <canvas id="salesChart" height="70"></canvas>
+                    <div class="relative h-72 w-full">
+                        <canvas id="salesChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Category Chart -->
                 <div class="bg-white rounded-lg p-8 border border-bloom-mint-light">
                     <h2 class="text-xl font-light text-gray-900 mb-6">Kategori Terlaris</h2>
-                    <canvas id="categoryChart" height="70"></canvas>
+                    <div class="relative h-72 w-full">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -85,6 +98,7 @@
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Total</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Tanggal</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,17 +109,31 @@
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                                     <td class="px-8 py-4 text-sm">
                                         <span class="px-3 py-1 rounded-full text-xs font-medium 
-                                            {{ $order->status === 'completed' ? 'bg-green-50 text-green-700' : 
-                                               ($order->status === 'pending' ? 'bg-yellow-50 text-yellow-700' : 
-                                               'bg-red-50 text-red-700') }}">
+                                            {{ in_array($order->status, ['completed', 'delivered']) ? 'bg-green-50 text-green-700' : 
+                                               (in_array($order->status, ['pending', 'shipped']) ? 'bg-yellow-50 text-yellow-700' : 
+                                               (in_array($order->status, ['confirmed']) ? 'bg-blue-50 text-blue-700' : 'bg-red-50 text-red-700')) }}">
                                             {{ ucfirst($order->status) }}
                                         </span>
                                     </td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $order->created_at->format('d M Y') }}</td>
+                                    <td class="px-8 py-4 text-sm">
+                                        <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="flex items-center gap-2">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-teal focus:border-bloom-teal" onchange="this.form.submit()">
+                                                <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                                <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                                <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                                <option value="completed" {{ $order->status === 'completed' ? 'selected' : '' }}>Completed</option>
+                                                <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                            </select>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pesanan</td>
+                                    <td colspan="6" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pesanan</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -231,6 +259,7 @@
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Total</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Tanggal</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -241,17 +270,31 @@
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                                     <td class="px-8 py-4 text-sm">
                                         <span class="px-3 py-1 rounded-full text-xs font-medium 
-                                            {{ $order->status === 'completed' ? 'bg-green-50 text-green-700' : 
-                                               ($order->status === 'pending' ? 'bg-yellow-50 text-yellow-700' : 
-                                               'bg-red-50 text-red-700') }}">
+                                            {{ in_array($order->status, ['completed', 'delivered']) ? 'bg-green-50 text-green-700' : 
+                                               (in_array($order->status, ['pending', 'shipped']) ? 'bg-yellow-50 text-yellow-700' : 
+                                               (in_array($order->status, ['confirmed']) ? 'bg-blue-50 text-blue-700' : 'bg-red-50 text-red-700')) }}">
                                             {{ ucfirst($order->status) }}
                                         </span>
                                     </td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $order->created_at->format('d M Y') }}</td>
+                                    <td class="px-8 py-4 text-sm">
+                                        <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="flex items-center gap-2">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-teal focus:border-bloom-teal" onchange="this.form.submit()">
+                                                <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                                <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                                <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                                <option value="completed" {{ $order->status === 'completed' ? 'selected' : '' }}>Completed</option>
+                                                <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                            </select>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pesanan</td>
+                                    <td colspan="6" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pesanan</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -313,76 +356,108 @@
 </div>
 
 <script>
-    // Sales Chart
-    const salesCtx = document.getElementById('salesChart');
-    if (salesCtx) {
-        new Chart(salesCtx.getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: ['Hari 1', 'Hari 2', 'Hari 3', 'Hari 4', 'Hari 5', 'Hari 6', 'Hari 7'],
-                datasets: [{
-                    label: 'Penjualan (Rp)',
-                    data: {{ json_encode($salesData ?? []) }},
-                    borderColor: '#E89B94',
-                    backgroundColor: 'rgba(232, 155, 148, 0.08)',
-                    tension: 0.3,
-                    fill: true,
-                    pointRadius: 5,
-                    pointBackgroundColor: '#E89B94',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    borderWidth: 2,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart');
+        if (salesCtx) {
+            new Chart(salesCtx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: {!! json_encode($salesLabels ?? ['Hari 1', 'Hari 2', 'Hari 3', 'Hari 4', 'Hari 5', 'Hari 6', 'Hari 7']) !!},
+                    datasets: [{
+                        label: 'Penjualan (Rp)',
+                        data: {{ json_encode($salesData ?? []) }},
+                        borderColor: '#E89B94',
+                        backgroundColor: 'rgba(232, 155, 148, 0.08)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#E89B94',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        borderWidth: 2,
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { color: '#999', font: { size: 11 } },
-                        border: { display: false }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Penting agar chart bisa menyesuaikan dengan tinggi container
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
                     },
-                    x: {
-                        ticks: { color: '#999', font: { size: 11 } },
-                        border: { display: false }
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { 
+                                color: '#999', 
+                                font: { size: 11 },
+                                callback: function(value) {
+                                    return 'Rp ' + (value / 1000) + 'k'; // Format lebih ringkas
+                                }
+                            },
+                            border: { display: false }
+                        },
+                        x: {
+                            ticks: { color: '#999', font: { size: 11 } },
+                            border: { display: false }
+                        }
                     }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    // Category Chart
-    const categoryCtx = document.getElementById('categoryChart');
-    if (categoryCtx) {
-        const catSalesData = {{ json_encode($categorySales ?? []) }};
-        new Chart(categoryCtx.getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: catSalesData.map(cat => cat.name),
-                datasets: [{
-                    data: catSalesData.map(cat => cat.count),
-                    backgroundColor: ['#E89B94', '#6B9A94', '#8FCB9E', '#FBBF24', '#DDD6FE', '#C084FC'],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#666', font: { size: 12, weight: '500' }, padding: 15 }
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart');
+        if (categoryCtx) {
+            const catSalesData = {!! json_encode($categorySales ?? []) !!};
+            if (catSalesData.length > 0) {
+                new Chart(categoryCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: catSalesData.map(cat => cat.name),
+                        datasets: [{
+                            data: catSalesData.map(cat => cat.count),
+                            backgroundColor: ['#E89B94', '#6B9A94', '#8FCB9E', '#FBBF24', '#DDD6FE', '#C084FC'],
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#666', font: { size: 12, weight: '500' }, padding: 15 }
+                            }
+                        }
                     }
-                }
+                });
+            } else {
+                // Tampilkan pesan kosong jika tidak ada produk
+                categoryCtx.style.display = 'none';
+                const parent = categoryCtx.parentElement;
+                const p = document.createElement('p');
+                p.className = "text-center text-gray-500 font-light mt-4";
+                p.innerText = "Belum ada data kategori";
+                parent.appendChild(p);
             }
-        });
-    }
+        }
+    });
 </script>
 @endsection
