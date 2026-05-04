@@ -58,9 +58,20 @@ class PaymentController extends Controller
         }
 
         try {
-            // Prepare transaction data
+            // Jika sudah ada token, langsung gunakan kembali (jangan buat baru untuk order_id yang sama)
+            if ($order->snap_token) {
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $order->snap_token,
+                ]);
+            }
+
+            // Prepare transaction data. Tambahkan timestamp agar order_id selalu unik di Midtrans
+            // untuk mengatasi error "transaction_details.order_id has already been taken" pada retry
+            $midtransOrderId = $order->order_number . '-' . time();
+            
             $transactionDetails = [
-                'order_id' => $order->order_number,
+                'order_id' => $midtransOrderId,
                 'gross_amount' => $order->total_price,
             ];
 
@@ -93,6 +104,9 @@ class PaymentController extends Controller
 
             $snapToken = Snap::getSnapToken($payload);
 
+            // Simpan token ke database untuk dipakai nanti jika user buka ulang atau close popup
+            $order->update(['snap_token' => $snapToken]);
+
             return response()->json([
                 'success' => true,
                 'snap_token' => $snapToken,
@@ -116,10 +130,17 @@ class PaymentController extends Controller
         try {
             $transactionStatus = $notif->transaction_status;
             $transactionId = $notif->transaction_id;
-            $orderId = $notif->order_id;
+            
+            // Dapatkan order_id dari notif (contoh: ORD-123456-1777895000)
+            $midtransOrderId = $notif->order_id;
+            
+            // Hapus suffix timestamp untuk mencari di database kita
+            // Asumsi format asli adalah ORD-timestamp (2 bagian), jadi kita ambil bagian 0 dan 1
+            $parts = explode('-', $midtransOrderId);
+            $orderNumber = $parts[0] . '-' . $parts[1];
 
             // Find order by order_number
-            $order = Order::where('order_number', $orderId)->firstOrFail();
+            $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
             // Get or create payment record
             $payment = Payment::firstOrCreate(
@@ -162,9 +183,30 @@ class PaymentController extends Controller
     /**
      * Handle payment finish callback
      */
-    public function finish($orderId)
+    public function finish(Request $request, $orderId)
     {
         $order = Order::findOrFail($orderId);
+        
+        // Fallback update status (berguna jika webhook tidak bisa masuk karena localhost)
+        if ($request->has('transaction_status') && $order->status === 'pending') {
+            $transactionStatus = $request->transaction_status;
+            
+            $payment = Payment::firstOrCreate(
+                ['order_id' => $order->id],
+                [
+                    'amount' => $order->total_price,
+                    'status' => 'pending',
+                ]
+            );
+
+            if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+                $payment->update([
+                    'status' => 'success',
+                    'paid_at' => now(),
+                ]);
+                $order->update(['status' => 'confirmed']);
+            }
+        }
         
         return view('payment.finish', compact('order'));
     }

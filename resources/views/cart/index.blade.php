@@ -1,6 +1,24 @@
 <x-app-layout>
     <div class="py-12 bg-bloom-ivory">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Flash Messages -->
+            @if(session('info'))
+            <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3">
+                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-blue-700 text-sm">{{ session('info') }}</p>
+            </div>
+            @endif
+            @if(session('error'))
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-red-700 text-sm">{{ session('error') }}</p>
+            </div>
+            @endif
+
             <!-- Page Header -->
             <div class="mb-8">
                 <h1 class="text-4xl font-light text-gray-900">Keranjang Belanja</h1>
@@ -64,7 +82,7 @@
 
                                             <!-- Price -->
                                             <div class="text-right">
-                                                <p class="text-sm text-gray-600 font-light">Rp {{ number_format($item->product->price, 0, ',', '.') }} x {{ $item->quantity }}</p>
+                                                <p class="text-sm text-gray-600 font-light item-unit-price" data-price="{{ $item->product->price }}">Rp {{ number_format($item->product->price, 0, ',', '.') }} x <span class="item-qty-display">{{ $item->quantity }}</span></p>
                                                 <p class="text-lg font-semibold text-bloom-teal item-total" data-price="{{ $item->product->price }}" data-qty="{{ $item->quantity }}">Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
                                             </div>
 
@@ -142,25 +160,61 @@
     <script>
         function decreaseQty(btn) {
             const input = btn.parentElement.querySelector('input[name="quantity"]');
-            if (input.value > 1) {
+            if (parseInt(input.value) > 1) {
                 input.value = parseInt(input.value) - 1;
+                syncItemTotal(input);
+                updateTotal();
             }
         }
 
         function increaseQty(btn) {
             const input = btn.parentElement.querySelector('input[name="quantity"]');
             input.value = parseInt(input.value) + 1;
+            syncItemTotal(input);
+            updateTotal();
+        }
+
+        // Sinkronkan item-total dan display qty berdasarkan input qty terbaru
+        function syncItemTotal(input) {
+            // Naik ke card item (.p-6)
+            const card = input.closest('.p-6');
+            if (!card) return;
+
+            const itemTotal = card.querySelector('.item-total');
+            const unitPriceEl = card.querySelector('[data-price]');
+            const qtyDisplay = card.querySelector('.item-qty-display');
+
+            if (!itemTotal || !unitPriceEl) return;
+
+            const price = parseInt(unitPriceEl.dataset.price) || 0;
+            const qty   = parseInt(input.value) || 1;
+            const total = price * qty;
+
+            // Update data-qty agar updateTotal() bisa membacanya
+            itemTotal.dataset.qty = qty;
+
+            // Update tampilan harga per item
+            itemTotal.textContent = 'Rp ' + total.toLocaleString('id-ID');
+
+            // Update teks qty di samping harga satuan
+            if (qtyDisplay) qtyDisplay.textContent = qty;
         }
 
         function updateTotal() {
             let total = 0;
             document.querySelectorAll('.cart-checkbox:checked').forEach(checkbox => {
-                const row = checkbox.closest('[data-price]') || checkbox.closest('.p-6');
-                const itemTotal = row.querySelector('.item-total');
-                if (itemTotal) {
-                    const priceStr = itemTotal.textContent.replace(/Rp\s+|\.|-/g, '').trim();
-                    total += parseInt(priceStr) || 0;
-                }
+                const card = checkbox.closest('.p-6');
+                if (!card) return;
+
+                const itemTotal = card.querySelector('.item-total');
+                if (!itemTotal) return;
+
+                const price = parseInt(itemTotal.dataset.price) || 0;
+                // Cek qty dari input quantity (sudah diubah user) atau dari data-qty awal
+                const qtyInput = card.querySelector('input[name="quantity"]');
+                const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : (parseInt(itemTotal.dataset.qty) || 1);
+
+                total += price * qty;
             });
 
             document.getElementById('subtotal').textContent = 'Rp ' + total.toLocaleString('id-ID');

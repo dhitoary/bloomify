@@ -28,6 +28,10 @@ Route::middleware(['auth', 'verified'])->prefix('keranjang')->name('cart.')->gro
 // Checkout Routes (only for authenticated users, not admin)
 Route::middleware(['auth', 'verified'])->prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/create', [\App\Http\Controllers\CheckoutController::class, 'create'])->name('create');
+    // Fallback: jika user akses GET /checkout/create (misal back button), redirect ke keranjang
+    Route::get('/create', function () {
+        return redirect()->route('cart.index')->with('info', 'Silakan pilih produk dari keranjang untuk checkout.');
+    });
     Route::get('/', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('index');
     Route::post('/submit', [\App\Http\Controllers\CheckoutController::class, 'submit'])->name('submit');
     Route::get('/shipping-cost', [\App\Http\Controllers\CheckoutController::class, 'getShippingCost'])->name('shipping-cost');

@@ -1,4 +1,22 @@
 <x-app-layout>
+    <!-- Tambahkan CSS TomSelect untuk dropdown interaktif -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap4.min.css" rel="stylesheet">
+    
+    <style>
+        /* Penyesuaian style agar sesuai dengan desain Tailwind kita */
+        .ts-control {
+            border: 1px solid #e5e7eb !important;
+            padding: 0.75rem 1rem !important;
+            border-radius: 0.75rem !important;
+            font-size: 1rem !important;
+            box-shadow: none !important;
+        }
+        .ts-control.focus {
+            border-color: #5eead4 !important; /* bloom-teal/50 */
+            box-shadow: 0 0 0 2px rgba(94, 234, 212, 0.5) !important;
+        }
+    </style>
+
     <div class="py-12 bg-gradient-to-b from-white to-gray-50">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <!-- Page Header -->
@@ -6,6 +24,25 @@
                 <h1 class="text-5xl font-light text-gray-900 mb-2">Checkout</h1>
                 <p class="text-gray-600 font-light text-lg">Selesaikan pembelian Anda dengan aman</p>
             </div>
+
+            {{-- Flash Messages --}}
+            @if(session('error'))
+                <div class="mb-8 bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+                    <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-red-700 text-sm font-medium">{{ session('error') }}</p>
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="mb-8 bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-green-700 text-sm font-medium">{{ session('success') }}</p>
+                </div>
+            @endif
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Checkout Form -->
@@ -71,11 +108,12 @@
 
                                 <div>
                                     <label for="city" class="block text-sm font-semibold text-gray-700 mb-3">Kota / Kabupaten</label>
-                                    <select id="city" name="city" 
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bloom-teal/50 focus:border-bloom-teal text-gray-900" required>
+                                    <select id="city" name="city" placeholder="Ketik nama kota... (Cth: Lampung)">
                                         <option value="">Pilih Kota...</option>
                                         @php
                                             $zones = config('shipping.zones');
+                                            // Urutkan kota sesuai abjad agar lebih mudah dicari
+                                            ksort($zones);
                                         @endphp
                                         @foreach($zones as $cityName => $details)
                                             <option value="{{ $cityName }}" {{ old('city', $user->city ?? '') === $cityName ? 'selected' : '' }}>
@@ -207,8 +245,24 @@
         </div>
     </div>
 
+    <!-- JS TomSelect -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+
     <!-- JavaScript for Dynamic Shipping -->
     <script>
+        // Inisialisasi TomSelect pada dropdown kota
+        document.addEventListener('DOMContentLoaded', function() {
+            new TomSelect("#city", {
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+                maxOptions: 15, // Membatasi maksimal 15 tampilan sesuai permintaan
+                placeholder: "Ketik nama kota... (Cth: Lampung)"
+            });
+        });
+
         const couriers = @json($couriers);
         let subtotal = {{ $total }};
         let currentShippingCost = 0;

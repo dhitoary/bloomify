@@ -94,7 +94,7 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $couriers = $this->getAvailableCouriers();
         
-        return view('checkout.index', compact('cartItems', 'total', 'user', 'couriers'));
+        return redirect()->route('checkout.index');
     }
 
     /**
@@ -208,9 +208,13 @@ class CheckoutController extends Controller
             }
 
             // Create order
+            $orderNumber = 'ORD-' . time();
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'order_number' => 'ORD-' . time(),
+                'order_number' => $orderNumber,
+                'order_id' => $orderNumber, // Mengisi kolom lama agar tidak null
+                'customer_name' => Auth::user()->name, // Mengisi kolom lama agar tidak null
+                'customer_phone' => $request->phone, // Mengisi kolom lama agar tidak null
                 'total_price' => $total,
                 'status' => 'pending',
                 'shipping_address' => $fullAddress,
