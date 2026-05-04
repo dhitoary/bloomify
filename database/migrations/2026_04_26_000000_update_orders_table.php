@@ -41,7 +41,7 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             if (Schema::hasColumn('orders', 'user_id')) {
-                $table->dropForeignIdFor('users');
+                $table->dropForeign(['user_id']);
                 $table->dropColumn('user_id');
             }
             if (Schema::hasColumn('orders', 'order_number')) {

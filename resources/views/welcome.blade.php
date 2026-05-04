@@ -150,7 +150,7 @@
         </div>
     </section>
 
-    <script>
+    <!-- Tentang Kami Section -->
     <section id="tentang" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -212,43 +212,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-16">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div>
-                    <h3 class="text-white text-lg font-semibold mb-4">Bloomify</h3>
-                    <p class="font-light leading-relaxed">Toko bunga online premium untuk setiap momen istimewa Anda.</p>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Produk</h4>
-                    <ul class="space-y-2 font-light">
-                        <li><a href="{{ route('products.index') }}" class="hover:text-white transition">Katalog</a></li>
-                        <li><a href="#" class="hover:text-white transition">Promo</a></li>
-                        <li><a href="#" class="hover:text-white transition">Terbaru</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Perusahaan</h4>
-                    <ul class="space-y-2 font-light">
-                        <li><a href="#" class="hover:text-white transition">Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition">Karir</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Hubungi Kami</h4>
-                    <ul class="space-y-2 font-light">
-                        <li><a href="tel:+628123456789" class="hover:text-white transition">+62 812 3456 789</a></li>
-                        <li><a href="mailto:info@bloomify.com" class="hover:text-white transition">info@bloomify.com</a></li>
-                        <li>Jakarta, Indonesia</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 text-center font-light">
-                <p>&copy; 2026 Bloomify. Semua hak dilindungi.</p>
-            </div>
-        </div>
-    </footer>
+    @include('components.footer')
 
 </body>
 </html>

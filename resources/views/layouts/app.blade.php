@@ -36,5 +36,6 @@
                 @endisset
             </main>
         </div>
+        @include('components.footer')
     </body>
 </html>

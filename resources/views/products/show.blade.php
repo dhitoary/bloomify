@@ -1,123 +1,210 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-bloom-ivory min-h-screen">
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        <!-- Breadcrumb -->
-        <div class="mb-8 text-sm">
-            <a href="{{ route('products.index') }}" class="text-bloom-teal hover:text-bloom-coral transition">Katalog</a>
-            <span class="mx-2 text-gray-400">›</span>
-            <a href="{{ route('products.category', $product->category->slug) }}" class="text-bloom-teal hover:text-bloom-coral transition">{{ $product->category->name }}</a>
-            <span class="mx-2 text-gray-400">›</span>
-            <span class="text-gray-700">{{ $product->name }}</span>
+<div class="bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Breadcrumb Navigation -->
+        <div class="mb-12 flex items-center text-sm">
+            <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-bloom-teal transition font-medium">Katalog</a>
+            <svg class="w-4 h-4 mx-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            <a href="{{ route('products.category', $product->category->slug) }}" class="text-gray-600 hover:text-bloom-teal transition font-medium">{{ $product->category->name }}</a>
+            <svg class="w-4 h-4 mx-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            <span class="text-gray-900 font-medium line-clamp-1">{{ $product->name }}</span>
         </div>
 
-        <!-- Product Details -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-            <!-- Product Image -->
-            <div class="flex items-center justify-center">
-                <div class="bg-bloom-cream border border-bloom-mint-light rounded-lg overflow-hidden w-full">
-                    @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-96 object-cover">
-                    @else
-                        <div class="w-full h-96 flex items-center justify-center text-bloom-mint">
-                            <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Product Info -->
-            <div>
-                <div class="mb-6">
-                    <a href="{{ route('products.category', $product->category->slug) }}" class="inline-block text-sm font-medium text-bloom-teal hover:text-bloom-coral transition mb-3">
-                        {{ $product->category->name }}
-                    </a>
-                    <h1 class="text-5xl font-light text-gray-900 mb-4">{{ $product->name }}</h1>
+        <!-- Product Details Section -->
+        <div class="border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+                <!-- Product Image -->
+                <div class="lg:col-span-1 border-r border-gray-200 lg:border-r h-96 bg-white p-6 flex items-center justify-center">
+                    <div class="w-full h-full bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" 
+                                 alt="{{ $product->name }}" 
+                                 class="w-full h-full object-cover">
+                        @else
+                            <div class="flex flex-col items-center justify-center text-gray-400 p-4 text-center">
+                                <svg class="w-20 h-20 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="text-xs">Tidak ada gambar</p>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
-                <!-- Price and Stock -->
-                <div class="mb-8 pb-8 border-b border-bloom-mint-light">
-                    <p class="text-4xl font-light text-gray-900 mb-4">
-                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                    </p>
-
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-gray-600 font-medium">Ketersediaan:</span>
-                        <span class="px-4 py-2 rounded-full text-sm font-medium {{ $product->stock > 5 ? 'bg-bloom-mint/10 text-bloom-mint border border-bloom-mint' : ($product->stock > 0 ? 'bg-bloom-teal/10 text-bloom-teal border border-bloom-teal' : 'bg-red-50 text-red-700 border border-red-200') }}">
-                            @if($product->stock > 0)
-                                Stok: {{ $product->stock }} unit
-                            @else
-                                Habis Terjual
-                            @endif
+                <!-- Product Information Box -->
+                <div class="lg:col-span-2 p-8 bg-white">
+                    <!-- Category Badge -->
+                    <div class="mb-4">
+                        <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-semibold uppercase tracking-wider">
+                            {{ $product->category->name }}
                         </span>
                     </div>
-                </div>
 
-                <!-- Description -->
-                <div class="mb-8">
-                    <h3 class="text-lg font-medium text-gray-900 mb-3">Deskripsi Produk</h3>
-                    <p class="text-gray-600 font-light leading-relaxed">{{ $product->description ?? 'Tidak ada deskripsi tambahan.' }}</p>
-                </div>
+                    <!-- Product Title -->
+                    <h1 class="text-3xl font-light text-gray-900 mb-6 leading-tight">
+                        {{ $product->name }}
+                    </h1>
 
-                <!-- Add to Cart -->
-                @if($product->stock > 0)
-                    <form class="mb-8">
-                        <div class="flex items-center gap-4 mb-6">
-                            <label for="quantity" class="font-medium text-gray-700">Jumlah:</label>
-                            <input type="number" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="1" class="w-24 px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900">
+                    <!-- Price & Stock Section -->
+                    <div class="mb-6 pb-6 border-b border-gray-200">
+                        <div class="mb-4">
+                            <p class="text-4xl font-light text-gray-900">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
+                            </p>
                         </div>
 
-                        <button type="submit" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white font-medium py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            Tambah ke Keranjang
-                        </button>
-                    </form>
-                @else
-                    <div class="mb-8 p-4 bg-red-50 text-red-700 rounded-lg font-medium text-center border border-red-200">
-                        Produk sedang tidak tersedia
+                        <!-- Stock Status -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full {{ $product->stock > 0 ? 'bg-bloom-mint' : 'bg-red-500' }}"></div>
+                            <span class="text-sm font-medium text-gray-900">
+                                @if($product->stock > 0)
+                                    <span class="text-bloom-teal font-semibold">Tersedia</span> • <span class="text-gray-600">{{ $product->stock }} unit</span>
+                                @else
+                                    <span class="text-red-600 font-semibold">Habis Terjual</span>
+                                @endif
+                            </span>
+                        </div>
                     </div>
-                @endif
 
-                <!-- Share -->
-                <div class="border-t border-bloom-mint-light pt-6">
-                    <p class="text-gray-700 font-medium mb-3">Bagikan:</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-bloom-cream text-bloom-teal rounded-full hover:bg-bloom-mint-light transition">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5c-.563-.074-1.396-.146-2.278-.146-2.27 0-3.846 1.481-3.846 4.188v2.158z"/></svg>
-                        </a>
-                        <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-bloom-cream text-bloom-teal rounded-full hover:bg-bloom-mint-light transition">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7z"/></svg>
-                        </a>
+                    <!-- Description -->
+                    <div class="mb-6">
+                        <p class="text-gray-700 font-light leading-relaxed text-sm">
+                            {{ $product->description ?? 'Tidak ada deskripsi tambahan untuk produk ini.' }}
+                        </p>
+                    </div>
+
+                    <!-- Add to Cart Section -->
+                    @auth
+                        @if($product->stock > 0)
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                
+                                <!-- Quantity Selector -->
+                                <div class="mb-6">
+                                    <label for="quantity" class="block text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wider">Jumlah</label>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                            <button type="button" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition" onclick="document.getElementById('quantity').value = Math.max(1, parseInt(document.getElementById('quantity').value) - 1)">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                                </svg>
+                                            </button>
+                                            <input type="number" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="1" class="w-16 px-2 py-2 text-center border-l border-r border-gray-200 focus:outline-none font-medium text-sm" required>
+                                            <button type="button" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition" onclick="document.getElementById('quantity').value = Math.min({{ $product->stock }}, parseInt(document.getElementById('quantity').value) + 1)">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-gray-600">Maks {{ $product->stock }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="space-y-3">
+                                    <button type="submit" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white font-semibold py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Tambah ke Keranjang
+                                    </button>
+
+                                    <a href="{{ route('products.index') }}" class="block text-center w-full border border-gray-200 text-gray-900 font-semibold py-2 rounded-lg hover:border-bloom-teal hover:bg-gray-50 transition duration-300 text-sm">
+                                        Lanjut Belanja
+                                    </a>
+                                </div>
+                            </form>
+                        @else
+                            <div class="p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 text-sm">
+                                <p class="font-semibold mb-3">Produk sedang tidak tersedia</p>
+                                <a href="{{ route('products.index') }}" class="inline-block text-xs font-medium underline hover:no-underline">
+                                    Lihat produk lainnya →
+                                </a>
+                            </div>
+                        @endif
+                    @else
+                        <div class="p-4 bg-gradient-to-br from-bloom-cream to-white border border-bloom-mint/20 rounded-lg mb-4">
+                            <p class="font-semibold text-gray-900 mb-3 text-sm">Daftar untuk berbelanja</p>
+                            <div class="flex gap-2 flex-col sm:flex-row">
+                                <a href="{{ route('login') }}" class="flex-1 bg-bloom-teal hover:bg-bloom-teal/90 text-white font-semibold py-2 rounded-lg transition text-center text-xs">
+                                    Login
+                                </a>
+                                <a href="{{ route('register') }}" class="flex-1 border border-bloom-teal text-bloom-teal hover:bg-bloom-cream font-semibold py-2 rounded-lg transition text-center text-xs">
+                                    Daftar
+                                </a>
+                            </div>
+                        </div>
+                    @endauth
+
+                    <!-- Share -->
+                    <div class="border-t border-gray-200 pt-4 mt-6">
+                        <p class="text-xs font-semibold text-gray-900 mb-3 uppercase tracking-wider">Bagikan</p>
+                        <div class="flex gap-2">
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5c-.563-.074-1.396-.146-2.278-.146-2.27 0-3.846 1.481-3.846 4.188v2.158z"/></svg>
+                            </a>
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7z"/></svg>
+                            </a>
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Related Products -->
+        <!-- Related Products Section -->
         @if($relatedProducts->count() > 0)
-            <div class="mb-20 border-t border-bloom-mint-light pt-16">
-                <h2 class="text-4xl font-light text-gray-900 mb-8">Produk Serupa</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="border-t border-gray-200 pt-20 pb-12">
+                <div class="mb-12">
+                    <p class="text-sm font-semibold text-bloom-teal mb-3 uppercase tracking-widest">Pilihan Lainnya</p>
+                    <h2 class="text-4xl font-light text-gray-900">Produk Serupa</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($relatedProducts as $related)
-                        <a href="{{ route('products.show', $related->slug) }}" class="group block">
-                            <div class="bg-white border border-bloom-mint-light rounded-lg overflow-hidden hover:shadow-lg transition duration-300">
-                                <div class="relative overflow-hidden h-48 bg-bloom-cream">
+                        <a href="{{ route('products.show', $related->slug) }}" class="group block h-full">
+                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-bloom-teal transition duration-300 h-full flex flex-col">
+                                <!-- Image -->
+                                <div class="relative overflow-hidden h-64 bg-gradient-to-br from-gray-50 to-white">
                                     @if($related->image)
                                         <img src="{{ asset('storage/' . $related->image) }}" 
                                              alt="{{ $related->name }}" 
-                                             class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                             class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-gray-300">
+                                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
                                     @endif
                                 </div>
-                                <div class="p-4">
-                                    <h3 class="font-medium text-gray-900 mb-2 line-clamp-2">{{ $related->name }}</h3>
-                                    <p class="text-lg font-light text-gray-900">Rp {{ number_format($related->price, 0, ',', '.') }}</p>
+
+                                <!-- Content -->
+                                <div class="p-5 flex flex-col flex-grow">
+                                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm group-hover:text-bloom-teal transition">{{ $related->name }}</h3>
+                                    
+                                    <div class="border-t border-gray-100 pt-4 mt-auto">
+                                        <p class="text-2xl font-light text-gray-900">
+                                            Rp {{ number_format($related->price, 0, ',', '.') }}
+                                        </p>
+                                        @if($related->stock > 0)
+                                            <p class="text-xs text-gray-600 mt-2">
+                                                Tersedia: {{ $related->stock }} unit
+                                            </p>
+                                        @else
+                                            <p class="text-xs text-red-600 mt-2 font-medium">Habis Terjual</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a>

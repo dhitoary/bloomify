@@ -89,6 +89,45 @@
             @endif
         </div>
 
+        <!-- Delivery Address Section -->
+        <div class="pb-6 border-t border-b border-gray-200">
+            <h3 class="text-base font-medium text-gray-900 mb-4">{{ __('Delivery Address') }}</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <x-input-label for="phone" :value="__('Phone Number')" />
+                    <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full" :value="old('phone', $user->phone)" autocomplete="tel" placeholder="+62 812 3456 7890" />
+                    <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+                </div>
+
+                <div>
+                    <x-input-label for="postal_code" :value="__('Postal Code')" />
+                    <x-text-input id="postal_code" name="postal_code" type="text" class="mt-1 block w-full" :value="old('postal_code', $user->postal_code)" autocomplete="postal-code" placeholder="12345" />
+                    <x-input-error class="mt-2" :messages="$errors->get('postal_code')" />
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <x-input-label for="address" :value="__('Street Address')" />
+                <textarea id="address" name="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-bloom-teal focus:ring-bloom-teal" rows="3" placeholder="Jalan, Nomor, Kompleks, etc." autocomplete="street-address">{{ old('address', $user->address) }}</textarea>
+                <x-input-error class="mt-2" :messages="$errors->get('address')" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div>
+                    <x-input-label for="city" :value="__('City')" />
+                    <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $user->city)" autocomplete="address-level2" placeholder="Jakarta, Bandung, etc." />
+                    <x-input-error class="mt-2" :messages="$errors->get('city')" />
+                </div>
+
+                <div>
+                    <x-input-label for="province" :value="__('Province')" />
+                    <x-text-input id="province" name="province" type="text" class="mt-1 block w-full" :value="old('province', $user->province)" autocomplete="address-level1" placeholder="DKI Jakarta, Jawa Barat, etc." />
+                    <x-input-error class="mt-2" :messages="$errors->get('province')" />
+                </div>
+            </div>
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
