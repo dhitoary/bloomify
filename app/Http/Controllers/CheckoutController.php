@@ -216,6 +216,7 @@ class CheckoutController extends Controller
                 'customer_name' => Auth::user()->name, // Mengisi kolom lama agar tidak null
                 'customer_phone' => $request->phone, // Mengisi kolom lama agar tidak null
                 'total_price' => $total,
+                'shipping_cost' => $shippingCost,
                 'status' => 'pending',
                 'shipping_address' => $fullAddress,
                 'notes' => $request->notes,

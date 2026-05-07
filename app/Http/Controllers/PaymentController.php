@@ -91,6 +91,16 @@ class PaymentController extends Controller
                 ];
             }
 
+            // Tambahkan shipping cost sebagai line item jika ada
+            if ($order->shipping_cost > 0) {
+                $items[] = [
+                    'id' => 'shipping',
+                    'price' => $order->shipping_cost,
+                    'quantity' => 1,
+                    'name' => 'Biaya Pengiriman',
+                ];
+            }
+
             $payload = [
                 'transaction_details' => $transactionDetails,
                 'customer_details' => $customerDetails,

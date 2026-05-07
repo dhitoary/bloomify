@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloomify - Toko Bunga Online</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
 </head>
 <body class="bg-bloom-ivory text-gray-900 font-sans antialiased">
 
@@ -162,7 +163,7 @@
                 <!-- Feature 1 -->
                 <div class="text-center">
                     <div class="mb-6 h-16 w-16 bg-bloom-cream rounded-full flex items-center justify-center mx-auto">
-                        <span class="text-2xl text-bloom-teal font-light">B</span>
+                        <iconify-icon icon="mdi:flower" width="40" height="40" style="color: #0D9488;"></iconify-icon>
                     </div>
                     <h3 class="text-xl font-medium text-gray-900 mb-3">Bunga Premium</h3>
                     <p class="text-gray-600 font-light leading-relaxed">
@@ -173,7 +174,7 @@
                 <!-- Feature 2 -->
                 <div class="text-center">
                     <div class="mb-6 h-16 w-16 bg-bloom-mint-light/20 rounded-full flex items-center justify-center mx-auto">
-                        <span class="text-2xl text-bloom-mint font-light">C</span>
+                        <iconify-icon icon="mdi:truck-fast" width="40" height="40" style="color: #14B8A6;"></iconify-icon>
                     </div>
                     <h3 class="text-xl font-medium text-gray-900 mb-3">Pengiriman Cepat</h3>
                     <p class="text-gray-600 font-light leading-relaxed">
@@ -184,7 +185,7 @@
                 <!-- Feature 3 -->
                 <div class="text-center">
                     <div class="mb-6 h-16 w-16 bg-bloom-coral/10 rounded-full flex items-center justify-center mx-auto">
-                        <span class="text-2xl text-bloom-coral font-light">S</span>
+                        <iconify-icon icon="mdi:headset" width="40" height="40" style="color: #FF6B6B;"></iconify-icon>
                     </div>
                     <h3 class="text-xl font-medium text-gray-900 mb-3">Support 24/7</h3>
                     <p class="text-gray-600 font-light leading-relaxed">

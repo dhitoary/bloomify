@@ -5,9 +5,15 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+// Public pages
+Route::get('/tentang-kami', [PageController::class, 'about'])->name('about');
+Route::get('/privasi', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/syarat-ketentuan', [PageController::class, 'terms'])->name('terms');
 
 // Product routes
 Route::get('/katalog', [ProductController::class, 'index'])->name('products.index');

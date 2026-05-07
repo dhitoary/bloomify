@@ -16,6 +16,7 @@ class Order extends Model
         'customer_phone',
         'status',
         'total_price',
+        'shipping_cost',
         'shipping_address',
         'notes',
         'snap_token',

@@ -25,7 +25,7 @@ class ReviewController extends Controller
         return back()->with('error', 'Anda sudah memberikan ulasan untuk produk ini.');
     }
 
-    /App/Models/Review::create([
+    \App\Models\Review::create([
         'user_id' => auth()->id(),
         'order_id' => $request->order_id,
         'product_id' => $request->product_id,
