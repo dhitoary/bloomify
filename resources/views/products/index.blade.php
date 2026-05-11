@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white min-h-screen">
+<div class="bg-gradient-to-br from-bloom-bg-main to-bloom-primary/5 min-h-screen">
     <!-- Product Card Component Include -->
     @php
         $renderCard = function($product) {
@@ -9,21 +9,21 @@
         };
     @endphp
     <!-- Header Section -->
-    <div class="bg-gradient-to-b from-bloom-cream/50 to-white py-16 mb-12 border-b border-bloom-mint-light">
+    <div class="bg-gradient-to-b from-bloom-fuchsia/15 to-bloom-bg-main py-16 mb-12 border-b-4 border-bloom-fuchsia">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="inline-block bg-white border border-bloom-mint-light rounded-full px-4 py-2 mb-6">
-                <p class="text-bloom-coral text-xs font-semibold tracking-wide uppercase">Koleksi Pilihan Hari Ini</p>
+            <div class="inline-block bg-bloom-bg-card border-2 border-bloom-accent rounded-full px-6 py-2 mb-6 shadow-soft">
+                <p class="text-bloom-accent text-xs font-semibold tracking-widest uppercase">Koleksi Pilihan Hari Ini</p>
             </div>
             
-            <h1 class="text-6xl font-light italic text-gray-900 mb-4" style="letter-spacing: -1px;">Katalog Produk</h1>
-            <p class="text-gray-600 font-light text-lg max-w-2xl mx-auto mb-8">Temukan rangkaian bunga yang dibuat untuk momen paling berarti, dari hadiah manis sampai keluarga yang bersama.</p>
+            <h1 class="text-6xl font-display font-light italic text-bloom-text-primary mb-4" style="letter-spacing: -1px;">Katalog Produk</h1>
+            <p class="text-bloom-text-secondary font-light text-lg max-w-2xl mx-auto mb-8">Temukan rangkaian bunga yang dibuat untuk momen paling berarti, dari hadiah manis sampai keluarga yang bersama.</p>
             
             <!-- CTA Buttons -->
             <div class="flex justify-center gap-4">
-                <button id="viewAllBtn" class="px-8 py-3 bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-semibold transition shadow-sm hover:shadow-md">
+                <button id="viewAllBtn" class="px-8 py-3 bg-bloom-accent hover:bg-bloom-accent-dark text-white rounded-full font-semibold transition-all duration-300 shadow-soft-lg hover:shadow-soft-hover hover:scale-105">
                     Lihat Koleksi
                 </button>
-                <button id="recommendedBtn" class="px-8 py-3 bg-white hover:bg-gray-50 text-gray-900 border-2 border-gray-300 rounded-full font-semibold transition">
+                <button id="recommendedBtn" class="px-8 py-3 bg-white hover:bg-bloom-bg-card text-bloom-accent border-2 border-bloom-accent rounded-full font-semibold transition-all duration-300 hover:shadow-soft">
                     Rekomendasi
                 </button>
             </div>
@@ -35,11 +35,11 @@
         <div class="mb-16">
             <div class="flex gap-2 overflow-x-auto pb-2 justify-center">
                 <form method="GET" action="{{ route('products.index') }}" class="inline-flex gap-2 justify-center">
-                    <button type="submit" name="category" value="" class="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap {{ !$categoryFilter ? 'bg-bloom-teal text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                    <button type="submit" name="category" value="" class="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap {{ !$categoryFilter ? 'bg-bloom-primary text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200' }}">
                         ★ Semua Produk
                     </button>
                     @foreach($categories as $cat)
-                        <button type="submit" name="category" value="{{ $cat->id }}" class="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap {{ $categoryFilter == $cat->id ? 'bg-bloom-teal text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                        <button type="submit" name="category" value="{{ $cat->id }}" class="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap {{ $categoryFilter == $cat->id ? 'bg-bloom-primary text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200' }}">
                             ★ {{ $cat->name }}
                         </button>
                     @endforeach
@@ -51,25 +51,25 @@
         @if(!$filteredProducts)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 <!-- Best Seller Card -->
-                <div class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 uppercase tracking-wide">BEST SELLER</h3>
-                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">BEST SELLER</h3>
+                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
                         Produk favorit dengan tampilan paling menarik.
                     </p>
                 </div>
 
                 <!-- Special Occasion Card -->
-                <div class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
-                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-primary-lighter to-bloom-secondary border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
+                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
                         Pilihan untuk anniversary, wedding, dan hadiah spesial.
                     </p>
                 </div>
 
                 <!-- New Arrivals Card -->
-                <div class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
-                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-bg-cream to-bloom-secondary border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
+                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
                         Rangkaian terbaru dengan nuansa pastel yang lembut dan modern.
                     </p>
                 </div>
@@ -80,9 +80,9 @@
         @if($filteredProducts)
             <section class="mb-20">
                 @if($categoryFilter === 'recommendation')
-                    <h2 class="text-3xl font-semibold text-gray-900 mb-8">Hasil Rekomendasi Kami Untuk Anda</h2>
+                    <h2 class="text-3xl font-semibold text-bloom-text-primary mb-8">Hasil Rekomendasi Kami Untuk Anda</h2>
                 @else
-                    <h2 class="text-3xl font-semibold text-gray-900 mb-8">Hasil Pencarian</h2>
+                    <h2 class="text-3xl font-semibold text-bloom-text-primary mb-8">Hasil Pencarian</h2>
                 @endif
                 
                 @if($filteredProducts->count() > 0)
@@ -107,13 +107,13 @@
                                     <div class="p-6 flex flex-col flex-grow">
                                         @if($product->category)
                                             <div class="mb-3">
-                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-medium">
+                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-primary/10 text-bloom-primary border border-bloom-primary/20 text-xs font-medium font-semibold">
                                                     {{ $product->category->name }}
                                                 </span>
                                             </div>
                                         @endif
 
-                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-teal transition">
+                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-primary transition">
                                             {{ $product->name }}
                                         </h3>
 
@@ -127,7 +127,7 @@
                                                     Rp {{ number_format($product->price, 0, ',', '.') }}
                                                 </p>
                                             </div>
-                                            <button type="button" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white py-3 rounded-lg transition font-semibold text-sm duration-200 shadow-sm hover:shadow-md">
+                                            <button type="button" class="w-full bg-bloom-secondary hover:bg-bloom-secondary-dark text-white py-3 rounded-lg transition font-semibold text-sm duration-200 shadow-md hover:shadow-lg">
                                                 Keranjang
                                             </button>
                                         </div>
@@ -148,7 +148,7 @@
 
                                 @foreach ($filteredProducts->getUrlRange(1, $filteredProducts->lastPage()) as $page => $url)
                                     @if ($page == $filteredProducts->currentPage())
-                                        <span class="px-4 py-2 bg-bloom-teal text-white rounded-lg font-medium">{{ $page }}</span>
+                                        <span class="px-4 py-2 bg-bloom-primary text-white rounded-lg font-medium">{{ $page }}</span>
                                     @else
                                         <a href="{{ $url }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">{{ $page }}</a>
                                     @endif

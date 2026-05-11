@@ -6,7 +6,7 @@
     <title>Edit Profile - Bloomify</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-bloom-ivory">
+<body class="bg-bloom-admin-bg">
     <!-- Navigation -->
     @include('layouts.navigation')
 
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Profile Edit Form -->
-        <div class="bg-white rounded-lg border border-bloom-mint-light p-8 shadow-sm">
+        <div class="bg-white rounded-lg border border-bloom-accent-light p-8 shadow-sm">
             @if($errors->any())
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p class="text-red-700 font-medium mb-2">Terjadi kesalahan:</p>
@@ -52,10 +52,10 @@
                                 <img 
                                     src="{{ asset('storage/' . auth()->user()->profile_picture) }}?t={{ time() }}" 
                                     alt="{{ auth()->user()->name }}'s profile picture"
-                                    class="w-28 h-28 rounded-xl object-cover border-2 border-bloom-mint-light shadow-md"
+                                    class="w-28 h-28 rounded-xl object-cover border-2 border-bloom-accent-light shadow-md"
                                 />
                             @else
-                                <div class="w-28 h-28 rounded-xl flex items-center justify-center text-white font-semibold text-4xl overflow-hidden border-2 border-bloom-mint-light shadow-md bg-gradient-to-br from-bloom-teal to-bloom-coral">
+                                <div class="w-28 h-28 rounded-xl flex items-center justify-center text-white font-semibold text-4xl overflow-hidden border-2 border-bloom-accent-light shadow-md bg-gradient-to-br from-bloom-primary to-bloom-secondary">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                             @endif
@@ -76,8 +76,8 @@
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-lg file:border-0
                                 file:text-sm file:font-medium
-                                file:bg-bloom-cream file:text-bloom-teal
-                                hover:file:bg-bloom-mint-light file:cursor-pointer"
+                                file:bg-bloom-admin-bg file:text-bloom-primary
+                                hover:file:bg-bloom-accent-light file:cursor-pointer"
                             >
                             <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG, WebP (Max 5MB)</p>
                         </div>
@@ -98,7 +98,7 @@
                                 id="name" 
                                 name="name" 
                                 value="{{ old('name', auth()->user()->name) }}"
-                                class="w-full px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900"
+                                class="w-full px-4 py-2 border border-bloom-accent-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-primary text-gray-900"
                                 required
                             >
                         </div>
@@ -110,14 +110,14 @@
                                 id="email" 
                                 name="email" 
                                 value="{{ old('email', auth()->user()->email) }}"
-                                class="w-full px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal text-gray-900"
+                                class="w-full px-4 py-2 border border-bloom-accent-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-primary text-gray-900"
                                 required
                             >
                         </div>
                     </div>
                 </div>
 
-                <hr class="border-bloom-mint-light">
+                <hr class="border-bloom-accent-light">
 
                 <!-- Password Section -->
                 <div>
@@ -131,7 +131,7 @@
                                 type="password" 
                                 id="current_password" 
                                 name="current_password" 
-                                class="w-full px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal"
+                                class="w-full px-4 py-2 border border-bloom-accent-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-primary"
                             >
                         </div>
 
@@ -141,7 +141,7 @@
                                 type="password" 
                                 id="password" 
                                 name="password" 
-                                class="w-full px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal"
+                                class="w-full px-4 py-2 border border-bloom-accent-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-primary"
                             >
                         </div>
 
@@ -151,18 +151,18 @@
                                 type="password" 
                                 id="password_confirmation" 
                                 name="password_confirmation" 
-                                class="w-full px-4 py-2 border border-bloom-mint-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal"
+                                class="w-full px-4 py-2 border border-bloom-accent-light rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-primary"
                             >
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex gap-4 pt-8 border-t border-bloom-mint-light">
-                    <a href="{{ route('admin.dashboard') }}" class="px-8 py-3 border border-bloom-mint-light text-gray-700 rounded-lg hover:bg-bloom-cream transition font-medium">
+                <div class="flex gap-4 pt-8 border-t border-bloom-accent-light">
+                    <a href="{{ route('admin.dashboard') }}" class="px-8 py-3 border border-bloom-accent-light text-gray-700 rounded-lg hover:bg-bloom-admin-bg transition font-medium">
                         Batal
                     </a>
-                    <button type="submit" class="px-8 py-3 bg-bloom-coral hover:bg-bloom-coral/90 text-white rounded-lg transition font-medium ml-auto">
+                    <button type="submit" class="px-8 py-3 bg-bloom-secondary hover:bg-bloom-secondary/90 text-white rounded-lg transition font-medium ml-auto">
                         Simpan Perubahan
                     </button>
                 </div>
@@ -171,3 +171,6 @@
     </div>
 </body>
 </html>
+
+
+

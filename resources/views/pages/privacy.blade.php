@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-bloom-ivory min-h-screen">
+    <div class="py-12 bg-bloom-bg-light min-h-screen">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-12">
@@ -12,7 +12,7 @@
                 
                 <!-- Introduction -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pendahuluan</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pendahuluan</h2>
                     <p class="text-gray-700 leading-relaxed">
                         Bloomify ("kami" atau "Perusahaan") menghormati privasi Anda dan berkomitmen untuk melindungi data pribadi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi Anda.
                     </p>
@@ -20,9 +20,9 @@
 
                 <!-- Data Collection -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Data yang Kami Kumpulkan</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Data yang Kami Kumpulkan</h2>
                     <div class="space-y-4">
-                        <div class="bg-bloom-cream/30 rounded-lg p-4 border border-bloom-mint-light">
+                        <div class="bg-bloom-bg-cream/30 rounded-lg p-4 border border-bloom-accent-light">
                             <h3 class="font-semibold text-gray-900 mb-2">Informasi Pribadi</h3>
                             <ul class="list-disc list-inside text-gray-700 space-y-1">
                                 <li>Nama lengkap</li>
@@ -32,14 +32,14 @@
                             </ul>
                         </div>
 
-                        <div class="bg-bloom-cream/30 rounded-lg p-4 border border-bloom-mint-light">
+                        <div class="bg-bloom-bg-cream/30 rounded-lg p-4 border border-bloom-accent-light">
                             <h3 class="font-semibold text-gray-900 mb-2">Informasi Pembayaran</h3>
                             <p class="text-gray-700">
                                 Data pembayaran diproses melalui gateway pembayaran aman (Midtrans) dan kami tidak menyimpan detail kartu kredit di server kami.
                             </p>
                         </div>
 
-                        <div class="bg-bloom-cream/30 rounded-lg p-4 border border-bloom-mint-light">
+                        <div class="bg-bloom-bg-cream/30 rounded-lg p-4 border border-bloom-accent-light">
                             <h3 class="font-semibold text-gray-900 mb-2">Informasi Penggunaan</h3>
                             <ul class="list-disc list-inside text-gray-700 space-y-1">
                                 <li>Riwayat browsing</li>
@@ -52,7 +52,7 @@
 
                 <!-- Usage -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Penggunaan Data</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Penggunaan Data</h2>
                     <p class="text-gray-700 mb-3">Kami menggunakan data Anda untuk:</p>
                     <ul class="list-disc list-inside text-gray-700 space-y-2">
                         <li>Memproses pesanan dan pengiriman</li>
@@ -66,7 +66,7 @@
 
                 <!-- Security -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Keamanan Data</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Keamanan Data</h2>
                     <p class="text-gray-700 leading-relaxed">
                         Kami menggunakan enkripsi SSL 256-bit dan langkah-langkah keamanan lainnya untuk melindungi data Anda dari akses yang tidak sah. Namun, tidak ada metode transmisi internet yang 100% aman.
                     </p>
@@ -74,7 +74,7 @@
 
                 <!-- Third Party -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Berbagi Data dengan Pihak Ketiga</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Berbagi Data dengan Pihak Ketiga</h2>
                     <p class="text-gray-700 mb-3">Kami dapat membagikan data Anda dengan:</p>
                     <ul class="list-disc list-inside text-gray-700 space-y-2">
                         <li>Mitra pengiriman untuk memproses pesanan Anda</li>
@@ -88,7 +88,7 @@
 
                 <!-- Your Rights -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Hak-Hak Anda</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Hak-Hak Anda</h2>
                     <p class="text-gray-700 mb-3">Anda memiliki hak untuk:</p>
                     <ul class="list-disc list-inside text-gray-700 space-y-2">
                         <li>Mengakses data pribadi Anda</li>
@@ -100,13 +100,13 @@
 
                 <!-- Contact -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Hubungi Kami</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Hubungi Kami</h2>
                     <p class="text-gray-700 mb-4">
                         Jika Anda memiliki pertanyaan tentang kebijakan privasi kami, silakan hubungi:
                     </p>
-                    <div class="bg-bloom-cream/30 rounded-lg p-4 border border-bloom-mint-light">
+                    <div class="bg-bloom-bg-cream/30 rounded-lg p-4 border border-bloom-accent-light">
                         <p class="text-gray-900 font-semibold">Email:</p>
-                        <a href="mailto:privacy@bloomify.com" class="text-bloom-teal hover:underline">bloomify@gmail.com</a>
+                        <a href="mailto:privacy@bloomify.com" class="text-bloom-primary hover:underline">bloomify@gmail.com</a>
                         <p class="text-gray-900 font-semibold mt-3">Alamat:</p>
                         <p class="text-gray-700">Perum Permata Asri, Blok i4 No 30<br>Lampung Selatan, Indonesia</p>
                     </div>
@@ -115,3 +115,4 @@
         </div>
     </div>
 </x-app-layout>
+

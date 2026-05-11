@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-bloom-ivory min-h-screen">
+    <div class="py-12 bg-bloom-bg-light min-h-screen">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-12">
@@ -12,7 +12,7 @@
                 
                 <!-- Introduction -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pendahuluan</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pendahuluan</h2>
                     <p class="text-gray-700 leading-relaxed">
                         Dengan mengakses dan menggunakan situs web Bloomify, Anda menyetujui untuk terikat oleh Syarat dan Ketentuan ini. Jika Anda tidak setuju dengan bagian mana pun dari syarat ini, mohon jangan gunakan situs web kami.
                     </p>
@@ -20,7 +20,7 @@
 
                 <!-- Product Information -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Informasi Produk</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Informasi Produk</h2>
                     <div class="space-y-3 text-gray-700">
                         <p>
                             Kami berusaha keras untuk memberikan deskripsi produk yang akurat, tetapi kami tidak menjamin bahwa deskripsi produk, harga, atau informasi lainnya di situs kami akurat, lengkap, dapat dipercaya, konsisten, atau bebas kesalahan.
@@ -33,7 +33,7 @@
 
                 <!-- Ordering -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pemesanan</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pemesanan</h2>
                     <div class="space-y-3 text-gray-700">
                         <p>
                             Dengan menempatkan pesanan, Anda menawarkan untuk membeli produk dengan harga, deskripsi, dan jumlah yang ditentukan dalam pesanan Anda. Kami berhak untuk menolak pesanan apa pun tanpa alasan apapun.
@@ -46,7 +46,7 @@
 
                 <!-- Shipping & Delivery -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pengiriman & Pengantaran</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pengiriman & Pengantaran</h2>
                     <div class="space-y-3 text-gray-700">
                         <p>
                             Kami bekerja sama dengan mitra pengiriman terpercaya untuk mengirimkan produk Anda. Estimasi waktu pengiriman adalah perkiraan dan bukan jaminan.
@@ -62,7 +62,7 @@
 
                 <!-- Payment -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pembayaran</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pembayaran</h2>
                     <div class="space-y-3 text-gray-700">
                         <p>
                             Kami menerima berbagai metode pembayaran termasuk transfer bank, kartu kredit, dan e-wallet. Pembayaran harus diselesaikan sebelum pesanan diproses.
@@ -75,7 +75,7 @@
 
                 <!-- Returns & Refunds -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pengembalian & Pengembalian Dana</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pengembalian & Pengembalian Dana</h2>
                     <div class="space-y-3 text-gray-700">
                         <p>
                             Karena sifat produk (bunga segar), pengembalian dan pengembalian dana mungkin terbatas.
@@ -91,7 +91,7 @@
 
                 <!-- Intellectual Property -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Hak Kekayaan Intelektual</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Hak Kekayaan Intelektual</h2>
                     <p class="text-gray-700">
                         Semua konten di situs web kami, termasuk teks, gambar, logo, dan desain, adalah milik Bloomify atau pihak lain yang memberi lisensi kepada kami. Anda tidak boleh mereproduksi, mendistribusikan, atau menggunakan konten apa pun tanpa izin tertulis dari kami.
                     </p>
@@ -99,7 +99,7 @@
 
                 <!-- Limitation of Liability -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Pembatasan Tanggung Jawab</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Pembatasan Tanggung Jawab</h2>
                     <p class="text-gray-700">
                         Sejauh yang diizinkan oleh hukum, Bloomify tidak bertanggung jawab atas kerusakan apa pun yang timbul dari penggunaan atau ketidakmampuan menggunakan situs web atau produk kami, meskipun kami telah diberitahu tentang kemungkinan kerusakan tersebut.
                     </p>
@@ -107,7 +107,7 @@
 
                 <!-- Changes to Terms -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Perubahan pada Syarat</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Perubahan pada Syarat</h2>
                     <p class="text-gray-700">
                         Kami berhak untuk mengubah Syarat dan Ketentuan ini kapan saja tanpa pemberitahuan sebelumnya. Penggunaan berkelanjutan terhadap situs web kami setelah perubahan berarti Anda menerima Syarat dan Ketentuan yang diperbarui.
                     </p>
@@ -115,13 +115,13 @@
 
                 <!-- Contact -->
                 <section>
-                    <h2 class="text-2xl font-bold text-bloom-teal mb-4">Hubungi Kami</h2>
+                    <h2 class="text-2xl font-bold text-bloom-primary mb-4">Hubungi Kami</h2>
                     <p class="text-gray-700 mb-4">
                         Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan ini, silakan hubungi:
                     </p>
-                    <div class="bg-bloom-cream/30 rounded-lg p-4 border border-bloom-mint-light">
+                    <div class="bg-bloom-bg-cream/30 rounded-lg p-4 border border-bloom-accent-light">
                         <p class="text-gray-900 font-semibold">Email:</p>
-                        <a href="mailto:support@bloomify.com" class="text-bloom-teal hover:underline">bloomify@gmail.com</a>
+                        <a href="mailto:support@bloomify.com" class="text-bloom-primary hover:underline">bloomify@gmail.com</a>
                         <p class="text-gray-900 font-semibold mt-3">Alamat:</p>
                         <p class="text-gray-700">Perum Permata Asri, Blok i4 No 30<br>Lampung Selatan, Indonesia</p>
                     </div>
@@ -130,3 +130,4 @@
         </div>
     </div>
 </x-app-layout>
+

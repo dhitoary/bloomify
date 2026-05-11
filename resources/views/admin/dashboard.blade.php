@@ -3,19 +3,19 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="bg-bloom-ivory min-h-screen" x-data="{ activeTab: 'overview' }">
+<div class="bg-bloom-bg-main min-h-screen" x-data="{ activeTab: 'overview' }">
     <!-- Header Section -->
-    <div class="bg-white border-b border-bloom-mint-light py-12 mb-8">
+    <div class="bg-gradient-to-r from-bloom-fuchsia via-bloom-primary to-bloom-primary-light border-b-4 border-bloom-fuchsia py-12 mb-8 shadow-soft">
         <div class="max-w-7xl mx-auto px-6">
-            <h1 class="text-5xl font-light text-gray-900 mb-3">Dashboard Admin</h1>
-            <p class="text-gray-600 font-light text-lg">Selamat datang, <span class="text-bloom-teal">{{ Auth::user()->name }}</span></p>
+            <h1 class="text-5xl font-display font-light text-bloom-text-light mb-3">Dashboard Admin</h1>
+            <p class="text-bloom-text-light/90 font-light text-lg">Selamat datang, <span class="text-bloom-accent font-semibold">{{ Auth::user()->name }}</span></p>
         </div>
     </div>
 
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-6 mb-8">
-            <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl flex items-center gap-3 shadow-sm">
-                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="bg-bloom-success/10 border-2 border-bloom-success text-bloom-success px-6 py-4 rounded-xl flex items-center gap-3 shadow-soft">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span class="font-medium">{{ session('success') }}</span>
             </div>
         </div>
@@ -24,12 +24,12 @@
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-6 pb-20">
         <!-- Tab Navigation -->
-        <div class="mb-12 flex space-x-8 border-b border-bloom-mint-light">
-            <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'text-gray-900 border-b-2 border-bloom-teal' : 'text-gray-500 hover:text-gray-700'" class="pb-4 font-medium transition">Overview</button>
-            <button @click="activeTab = 'products'" :class="activeTab === 'products' ? 'text-gray-900 border-b-2 border-bloom-teal' : 'text-gray-500 hover:text-gray-700'" class="pb-4 font-medium transition">Produk</button>
-            <button @click="activeTab = 'categories'" :class="activeTab === 'categories' ? 'text-gray-900 border-b-2 border-bloom-teal' : 'text-gray-500 hover:text-gray-700'" class="pb-4 font-medium transition">Kategori</button>
-            <button @click="activeTab = 'orders'" :class="activeTab === 'orders' ? 'text-gray-900 border-b-2 border-bloom-teal' : 'text-gray-500 hover:text-gray-700'" class="pb-4 font-medium transition">Pesanan</button>
-            <button @click="activeTab = 'users'" :class="activeTab === 'users' ? 'text-gray-900 border-b-2 border-bloom-teal' : 'text-gray-500 hover:text-gray-700'" class="pb-4 font-medium transition">Pengguna</button>
+        <div class="mb-12 flex space-x-8 border-b-2 border-bloom-border pb-4">
+            <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'text-bloom-accent border-b-4 border-bloom-accent font-semibold' : 'text-bloom-text-secondary hover:text-bloom-text-primary'" class="pb-2 font-medium transition duration-300">Overview</button>
+            <button @click="activeTab = 'products'" :class="activeTab === 'products' ? 'text-bloom-accent border-b-4 border-bloom-accent font-semibold' : 'text-bloom-text-secondary hover:text-bloom-text-primary'" class="pb-2 font-medium transition duration-300">Produk</button>
+            <button @click="activeTab = 'categories'" :class="activeTab === 'categories' ? 'text-bloom-accent border-b-4 border-bloom-accent font-semibold' : 'text-bloom-text-secondary hover:text-bloom-text-primary'" class="pb-2 font-medium transition duration-300">Kategori</button>
+            <button @click="activeTab = 'orders'" :class="activeTab === 'orders' ? 'text-bloom-accent border-b-4 border-bloom-accent font-semibold' : 'text-bloom-text-secondary hover:text-bloom-text-primary'" class="pb-2 font-medium transition duration-300">Pesanan</button>
+            <button @click="activeTab = 'users'" :class="activeTab === 'users' ? 'text-bloom-accent border-b-4 border-bloom-accent font-semibold' : 'text-bloom-text-secondary hover:text-bloom-text-primary'" class="pb-2 font-medium transition duration-300">Pengguna</button>
         </div>
 
         <!-- Overview Tab -->
@@ -37,38 +37,38 @@
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <!-- Total Pesanan -->
-                <div class="bg-white rounded-lg p-6 border border-bloom-mint-light hover:shadow-lg transition">
-                    <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Total Pesanan</p>
-                    <p class="text-4xl font-light text-gray-900">{{ $totalOrders ?? 0 }}</p>
-                    <p class="text-bloom-coral text-sm mt-3 font-light">{{ $ordersThisMonth ?? 0 }} bulan ini</p>
+                <div class="bg-gradient-to-br from-bloom-bg-card to-bloom-bg-cream rounded-2xl p-6 border-2 border-bloom-border hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <p class="text-bloom-text-secondary text-sm font-semibold uppercase tracking-widest mb-4">Total Pesanan</p>
+                    <p class="text-4xl font-light text-bloom-accent">{{ $totalOrders ?? 0 }}</p>
+                    <p class="text-bloom-text-secondary text-sm mt-3 font-light">{{ $ordersThisMonth ?? 0 }} bulan ini</p>
                 </div>
 
                 <!-- Total Penjualan -->
-                <div class="bg-white rounded-lg p-6 border border-bloom-mint-light hover:shadow-lg transition">
-                    <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Total Penjualan</p>
-                    <p class="text-3xl font-light text-gray-900">Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</p>
-                    <p class="text-bloom-coral text-sm mt-3 font-light">Bulan ini</p>
+                <div class="bg-gradient-to-br from-bloom-bg-card to-bloom-bg-cream rounded-2xl p-6 border-2 border-bloom-border hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <p class="text-bloom-text-secondary text-sm font-semibold uppercase tracking-widest mb-4">Total Penjualan</p>
+                    <p class="text-3xl font-light text-bloom-accent">Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</p>
+                    <p class="text-bloom-text-secondary text-sm mt-3 font-light">Bulan ini</p>
                 </div>
 
                 <!-- Total Produk -->
-                <div class="bg-white rounded-lg p-6 border border-bloom-mint-light hover:shadow-lg transition">
-                    <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Total Produk</p>
-                    <p class="text-4xl font-light text-gray-900">{{ $totalProducts ?? 0 }}</p>
-                    <p class="text-bloom-coral text-sm mt-3 font-light">Aktif tersedia</p>
+                <div class="bg-gradient-to-br from-bloom-bg-card to-bloom-bg-cream rounded-2xl p-6 border-2 border-bloom-border hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <p class="text-bloom-text-secondary text-sm font-semibold uppercase tracking-widest mb-4">Total Produk</p>
+                    <p class="text-4xl font-light text-bloom-accent">{{ $totalProducts ?? 0 }}</p>
+                    <p class="text-bloom-text-secondary text-sm mt-3 font-light">Aktif tersedia</p>
                 </div>
 
                 <!-- Total Pengguna -->
-                <div class="bg-white rounded-lg p-6 border border-bloom-mint-light hover:shadow-lg transition">
+                <div class="bg-white rounded-lg p-6 border border-bloom-accent-light hover:shadow-lg transition">
                     <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Total Pengguna</p>
                     <p class="text-4xl font-light text-gray-900">{{ $totalUsers ?? 0 }}</p>
-                    <p class="text-bloom-coral text-sm mt-3 font-light">+ {{ $newUsersThisMonth ?? 0 }} baru</p>
+                    <p class="text-bloom-secondary text-sm mt-3 font-light">+ {{ $newUsersThisMonth ?? 0 }} baru</p>
                 </div>
             </div>
 
             <!-- Charts Section -->
             <div class="grid grid-cols-1 gap-8 mb-12">
                 <!-- Sales Chart -->
-                <div class="bg-white rounded-lg p-8 border border-bloom-mint-light">
+                <div class="bg-white rounded-lg p-8 border border-bloom-accent-light">
                     <h2 class="text-xl font-light text-gray-900 mb-6">Penjualan 7 Hari Terakhir</h2>
                     <div class="relative h-72 w-full">
                         <canvas id="salesChart"></canvas>
@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- Category Chart -->
-                <div class="bg-white rounded-lg p-8 border border-bloom-mint-light">
+                <div class="bg-white rounded-lg p-8 border border-bloom-accent-light">
                     <h2 class="text-xl font-light text-gray-900 mb-6">Kategori Terlaris</h2>
                     <div class="relative h-72 w-full">
                         <canvas id="categoryChart"></canvas>
@@ -85,13 +85,13 @@
             </div>
 
             <!-- Recent Orders -->
-            <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-                <div class="px-8 py-6 border-b border-bloom-mint-light">
+            <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+                <div class="px-8 py-6 border-b border-bloom-accent-light">
                     <h2 class="text-xl font-light text-gray-900">Pesanan Terbaru</h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                        <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                             <tr>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">No. Pesanan</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Pelanggan</th>
@@ -103,8 +103,8 @@
                         </thead>
                         <tbody>
                             @forelse($recentOrders ?? [] as $order)
-                                <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
-                                    <td class="px-8 py-4 text-sm font-medium text-bloom-coral">#{{ $order->order_number }}</td>
+                                <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
+                                    <td class="px-8 py-4 text-sm font-medium text-bloom-secondary">#{{ $order->order_number }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-900">{{ $order->user->name ?? 'N/A' }}</td>
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                                     <td class="px-8 py-4 text-sm">
@@ -120,7 +120,7 @@
                                         <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="flex items-center gap-2">
                                             @csrf
                                             @method('PATCH')
-                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-teal focus:border-bloom-teal" onchange="this.form.submit()">
+                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-primary focus:border-bloom-primary" onchange="this.form.submit()">
                                                 <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                                 <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                                 <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
@@ -144,16 +144,16 @@
 
         <!-- Products Tab -->
         <div x-show="activeTab === 'products'" class="tab-content">
-            <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-                <div class="px-8 py-6 border-b border-bloom-mint-light">
+            <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+                <div class="px-8 py-6 border-b border-bloom-accent-light">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-light text-gray-900">Daftar Produk</h2>
-                        <a href="{{ route('admin.products.create') }}" class="text-bloom-coral hover:text-bloom-teal font-medium transition">+ Tambah Produk</a>
+                        <a href="{{ route('admin.products.create') }}" class="text-bloom-secondary hover:text-bloom-primary font-medium transition">+ Tambah Produk</a>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                        <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                             <tr>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Nama Produk</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Kategori</th>
@@ -164,13 +164,13 @@
                         </thead>
                         <tbody>
                             @forelse($products ?? [] as $product)
-                                <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
+                                <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">{{ $product->name }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $product->category->name ?? 'N/A' }}</td>
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $product->stock }} unit</td>
                                     <td class="px-8 py-4 text-sm space-x-2">
-                                        <a href="{{ route('admin.products.edit', $product->id) }}" class="text-bloom-coral hover:text-bloom-teal font-medium">Edit</a>
+                                        <a href="{{ route('admin.products.edit', $product->id) }}" class="text-bloom-secondary hover:text-bloom-primary font-medium">Edit</a>
                                         <form method="POST" action="{{ route('admin.products.destroy', $product->id) }}" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
@@ -187,7 +187,7 @@
                     </table>
                 </div>
                 @if($products && $products->hasPages())
-                <div class="px-8 py-4 border-t border-bloom-mint-light">
+                <div class="px-8 py-4 border-t border-bloom-accent-light">
                     {{ $products->links() }}
                 </div>
                 @endif
@@ -196,16 +196,16 @@
 
         <!-- Categories Tab -->
         <div x-show="activeTab === 'categories'" class="tab-content">
-            <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-                <div class="px-8 py-6 border-b border-bloom-mint-light">
+            <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+                <div class="px-8 py-6 border-b border-bloom-accent-light">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-light text-gray-900">Daftar Kategori</h2>
-                        <a href="{{ route('admin.categories.create') }}" class="text-bloom-coral hover:text-bloom-teal font-medium transition">+ Tambah Kategori</a>
+                        <a href="{{ route('admin.categories.create') }}" class="text-bloom-secondary hover:text-bloom-primary font-medium transition">+ Tambah Kategori</a>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                        <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                             <tr>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Nama Kategori</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Deskripsi</th>
@@ -215,12 +215,12 @@
                         </thead>
                         <tbody>
                             @forelse($categories ?? [] as $category)
-                                <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
+                                <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">{{ $category->name }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ Str::limit($category->description, 50) }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-900 font-medium">{{ $category->products_count ?? 0 }}</td>
                                     <td class="px-8 py-4 text-sm space-x-2">
-                                        <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-bloom-coral hover:text-bloom-teal font-medium">Edit</a>
+                                        <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-bloom-secondary hover:text-bloom-primary font-medium">Edit</a>
                                         <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
@@ -237,7 +237,7 @@
                     </table>
                 </div>
                 @if($categories && $categories->hasPages())
-                <div class="px-8 py-4 border-t border-bloom-mint-light">
+                <div class="px-8 py-4 border-t border-bloom-accent-light">
                     {{ $categories->links() }}
                 </div>
                 @endif
@@ -246,13 +246,13 @@
 
         <!-- Orders Tab -->
         <div x-show="activeTab === 'orders'" class="tab-content">
-            <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-                <div class="px-8 py-6 border-b border-bloom-mint-light">
+            <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+                <div class="px-8 py-6 border-b border-bloom-accent-light">
                     <h2 class="text-xl font-light text-gray-900">Daftar Pesanan</h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                        <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                             <tr>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">No. Pesanan</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Pelanggan</th>
@@ -264,8 +264,8 @@
                         </thead>
                         <tbody>
                             @forelse($orders ?? [] as $order)
-                                <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
-                                    <td class="px-8 py-4 text-sm font-medium text-bloom-coral">#{{ $order->order_number }}</td>
+                                <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
+                                    <td class="px-8 py-4 text-sm font-medium text-bloom-secondary">#{{ $order->order_number }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-900">{{ $order->user->name ?? 'N/A' }}</td>
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                                     <td class="px-8 py-4 text-sm">
@@ -281,7 +281,7 @@
                                         <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="flex items-center gap-2">
                                             @csrf
                                             @method('PATCH')
-                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-teal focus:border-bloom-teal" onchange="this.form.submit()">
+                                            <select name="status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-primary focus:border-bloom-primary" onchange="this.form.submit()">
                                                 <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                                 <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                                 <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
@@ -301,7 +301,7 @@
                     </table>
                 </div>
                 @if($orders && $orders->hasPages())
-                <div class="px-8 py-4 border-t border-bloom-mint-light">
+                <div class="px-8 py-4 border-t border-bloom-accent-light">
                     {{ $orders->links() }}
                 </div>
                 @endif
@@ -310,13 +310,13 @@
 
         <!-- Users Tab -->
         <div x-show="activeTab === 'users'" class="tab-content">
-            <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-                <div class="px-8 py-6 border-b border-bloom-mint-light">
+            <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+                <div class="px-8 py-6 border-b border-bloom-accent-light">
                     <h2 class="text-xl font-light text-gray-900">Daftar Pengguna</h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                        <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                             <tr>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Nama</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
@@ -326,7 +326,7 @@
                         </thead>
                         <tbody>
                             @forelse($users ?? [] as $user)
-                                <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
+                                <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
                                     <td class="px-8 py-4 text-sm font-medium text-gray-900">{{ $user->name }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $user->email }}</td>
                                     <td class="px-8 py-4 text-sm text-gray-600">{{ $user->created_at->format('d M Y') }}</td>
@@ -346,7 +346,7 @@
                     </table>
                 </div>
                 @if($users && $users->hasPages())
-                <div class="px-8 py-4 border-t border-bloom-mint-light">
+                <div class="px-8 py-4 border-t border-bloom-accent-light">
                     {{ $users->links() }}
                 </div>
                 @endif
@@ -461,3 +461,5 @@
     });
 </script>
 @endsection
+
+

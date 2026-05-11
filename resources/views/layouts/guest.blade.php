@@ -14,18 +14,19 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased bg-bloom-ivory">
+    <body class="font-sans text-gray-900 antialiased bg-bloom-bg-light">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div>
                 <a href="/">
-                    <div class="text-3xl font-bold text-bloom-teal">Bloomify</div>
+                    <div class="text-3xl font-bold text-bloom-primary">Bloomify</div>
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg border border-bloom-mint-light">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg border border-bloom-accent-light">
                 {{ $slot }}
             </div>
         </div>
         @include('components.footer')
     </body>
 </html>
+
