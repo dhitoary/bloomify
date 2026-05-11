@@ -28,10 +28,10 @@
                         <img 
                             src="{{ asset('storage/' . $user->profile_picture) }}?t={{ time() }}" 
                             alt="{{ $user->name }}'s profile picture"
-                            class="w-24 h-24 rounded-xl object-cover border-2 border-bloom-mint-light shadow-md"
+                            class="w-24 h-24 rounded-xl object-cover border-2 border-bloom-accent-light shadow-md"
                         />
                     @else
-                        <div class="w-24 h-24 rounded-xl flex items-center justify-center text-white font-semibold text-3xl overflow-hidden border-2 border-bloom-mint-light shadow-md bg-gradient-to-br from-bloom-teal to-bloom-coral">
+                        <div class="w-24 h-24 rounded-xl flex items-center justify-center text-white font-semibold text-3xl overflow-hidden border-2 border-bloom-accent-light shadow-md bg-gradient-to-br from-bloom-primary to-bloom-secondary">
                             {{ strtoupper(substr($user->name, 0, 1)) }}
                         </div>
                     @endif
@@ -50,8 +50,8 @@
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-md file:border-0
                         file:text-sm file:font-medium
-                        file:bg-bloom-cream file:text-bloom-teal
-                        hover:file:bg-bloom-mint-light file:cursor-pointer"
+                        file:bg-bloom-bg-cream file:text-bloom-primary
+                        hover:file:bg-bloom-accent-light file:cursor-pointer"
                     >
                     <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
                     <p class="text-xs text-gray-500 mt-2">{{ __('Format: JPG, PNG, WebP (Max 5MB)') }}</p>
@@ -109,7 +109,7 @@
 
             <div class="mt-6">
                 <x-input-label for="address" :value="__('Street Address')" />
-                <textarea id="address" name="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-bloom-teal focus:ring-bloom-teal" rows="3" placeholder="Jalan, Nomor, Kompleks, etc." autocomplete="street-address">{{ old('address', $user->address) }}</textarea>
+                <textarea id="address" name="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-bloom-primary focus:ring-bloom-primary" rows="3" placeholder="Jalan, Nomor, Kompleks, etc." autocomplete="street-address">{{ old('address', $user->address) }}</textarea>
                 <x-input-error class="mt-2" :messages="$errors->get('address')" />
             </div>
 
@@ -143,3 +143,4 @@
         </div>
     </form>
 </section>
+

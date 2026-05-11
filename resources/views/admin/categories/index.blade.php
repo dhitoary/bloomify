@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-bloom-ivory min-h-screen">
+<div class="bg-bloom-admin-bg min-h-screen">
     <!-- Header Section -->
-    <div class="bg-white border-b border-bloom-mint-light py-12 mb-12">
+    <div class="bg-white border-b border-bloom-accent-light py-12 mb-12">
         <div class="max-w-6xl mx-auto px-6">
-            <a href="{{ route('admin.dashboard') }}" class="text-bloom-teal hover:text-bloom-coral mb-4 inline-block">← Kembali</a>
+            <a href="{{ route('admin.dashboard') }}" class="text-bloom-primary hover:text-bloom-secondary mb-4 inline-block">← Kembali</a>
             <h1 class="text-4xl font-light text-gray-900 mb-3">Daftar Kategori</h1>
         </div>
     </div>
@@ -18,17 +18,17 @@
             </div>
         @endif
 
-        <div class="bg-white rounded-lg border border-bloom-mint-light overflow-hidden">
-            <div class="px-8 py-6 border-b border-bloom-mint-light flex justify-between items-center">
+        <div class="bg-white rounded-lg border border-bloom-accent-light overflow-hidden">
+            <div class="px-8 py-6 border-b border-bloom-accent-light flex justify-between items-center">
                 <h2 class="text-xl font-light text-gray-900">Kategori</h2>
-                <a href="{{ route('admin.categories.create') }}" class="px-4 py-2 bg-bloom-coral hover:bg-bloom-coral/90 text-white font-medium rounded-lg transition">
+                <a href="{{ route('admin.categories.create') }}" class="px-4 py-2 bg-bloom-secondary hover:bg-bloom-secondary/90 text-white font-medium rounded-lg transition">
                     + Tambah Kategori
                 </a>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full">
-                    <thead class="bg-bloom-cream border-b border-bloom-mint-light">
+                    <thead class="bg-bloom-admin-bg border-b border-bloom-accent-light">
                         <tr>
                             <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Nama Kategori</th>
                             <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Slug</th>
@@ -39,13 +39,13 @@
                     </thead>
                     <tbody>
                         @forelse($categories as $category)
-                            <tr class="border-b border-bloom-mint-light hover:bg-bloom-cream transition">
+                            <tr class="border-b border-bloom-accent-light hover:bg-bloom-admin-bg transition">
                                 <td class="px-8 py-4 text-sm font-medium text-gray-900">{{ $category->name }}</td>
                                 <td class="px-8 py-4 text-sm text-gray-600">{{ $category->slug }}</td>
                                 <td class="px-8 py-4 text-sm text-gray-600">{{ Str::limit($category->description, 50) ?? '-' }}</td>
                                 <td class="px-8 py-4 text-sm text-gray-900 font-medium">{{ $category->products_count ?? 0 }}</td>
                                 <td class="px-8 py-4 text-sm space-x-2">
-                                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-bloom-coral hover:text-bloom-teal font-medium">Edit</a>
+                                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-bloom-secondary hover:text-bloom-primary font-medium">Edit</a>
                                     <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
@@ -63,7 +63,7 @@
             </div>
 
             @if($categories->hasPages())
-            <div class="px-8 py-4 border-t border-bloom-mint-light bg-white">
+            <div class="px-8 py-4 border-t border-bloom-accent-light bg-white">
                 {{ $categories->links() }}
             </div>
             @endif
@@ -71,3 +71,6 @@
     </div>
 </div>
 @endsection
+
+
+

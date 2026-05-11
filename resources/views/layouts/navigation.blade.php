@@ -1,35 +1,35 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-bloom-mint-light shadow-sm sticky top-0 z-40">
+<nav x-data="{ open: false }" class="bg-white/80 backdrop-blur-sm border-b-2 border-bloom-primary/20 shadow-soft sticky top-0 z-40">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
-                <a href="{{ route('products.index') }}" class="text-2xl font-bold text-bloom-teal hover:text-bloom-coral transition">
+                <a href="{{ route('products.index') }}" class="text-4xl italic text-transparent bg-gradient-to-r from-bloom-fuchsia via-bloom-primary to-bloom-accent bg-clip-text hover:from-bloom-fuchsia-light hover:via-bloom-primary hover:to-bloom-fuchsia transition duration-300" style="font-family: 'Great Vibes', cursive; font-weight: 400; letter-spacing: 1px;">
                     Bloomify
                 </a>
             </div>
 
             <!-- Navigation Links (Desktop) -->
-            <div class="hidden sm:flex items-center space-x-6">
+            <div class="hidden sm:flex items-center space-x-1">
                 <!-- Beranda -->
-                <a href="/" class="text-sm font-medium text-gray-900 hover:text-bloom-teal transition">
+                <a href="/" class="text-sm font-medium text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10 px-3 py-2 rounded-lg transition duration-300">
                     Beranda
                 </a>
 
                 <!-- Katalog -->
-                <a href="{{ route('products.index') }}" class="text-sm font-medium {{ request()->routeIs('products.*') && !request()->routeIs('dashboard*') ? 'text-bloom-teal' : 'text-gray-900 hover:text-bloom-teal' }} transition">
+                <a href="{{ route('products.index') }}" class="text-sm font-medium {{ request()->routeIs('products.*') && !request()->routeIs('dashboard*') ? 'text-bloom-primary bg-bloom-primary/10 font-semibold' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                     Katalog
                 </a>
 
                 <!-- Keranjang (hanya untuk authenticated user) -->
                 @auth
                     @if(!Auth::user()->is_admin)
-                        <a href="{{ route('cart.index') }}" class="relative text-sm font-medium {{ request()->routeIs('cart.*') ? 'text-bloom-teal' : 'text-gray-900 hover:text-bloom-teal' }} transition">
+                        <a href="{{ route('cart.index') }}" class="relative text-sm font-medium {{ request()->routeIs('cart.*') ? 'text-bloom-primary bg-bloom-primary/10 font-semibold' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                             @if(Auth::user()->carts()->count() > 0)
-                                <span class="absolute -top-2 -right-3 bg-bloom-coral text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                                <span class="absolute -top-2 -right-3 bg-bloom-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold shadow-soft">
                                     {{ Auth::user()->carts()->count() }}
                                 </span>
                             @endif
@@ -40,11 +40,11 @@
                 <!-- Dashboard/Admin Panel -->
                 @auth
                     @if(Auth::user()->is_admin)
-                        <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium {{ request()->routeIs('admin.*') ? 'text-bloom-teal' : 'text-gray-900 hover:text-bloom-teal' }} transition">
+                        <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium {{ request()->routeIs('admin.*') ? 'text-bloom-primary bg-bloom-primary/10 font-semibold' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                             Admin Panel
                         </a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="text-sm font-medium {{ request()->routeIs('dashboard') ? 'text-bloom-teal' : 'text-gray-900 hover:text-bloom-teal' }} transition">
+                        <a href="{{ route('dashboard') }}" class="text-sm font-medium {{ request()->routeIs('dashboard') ? 'text-bloom-primary bg-bloom-primary/10 font-semibold' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                             Dashboard
                         </a>
                     @endif
@@ -55,8 +55,8 @@
                     <!-- Profile Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-900 hover:text-bloom-teal transition">
-                                <div class="w-8 h-8 bg-gradient-to-br from-bloom-teal to-bloom-coral rounded-full flex items-center justify-center text-white font-semibold text-xs overflow-hidden">
+                            <button class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10 rounded-lg transition duration-300">
+                                <div class="w-8 h-8 bg-gradient-to-br from-bloom-primary to-bloom-secondary rounded-full flex items-center justify-center text-white font-semibold text-xs overflow-hidden shadow-soft">
                                     @if(Auth::user()->profile_picture)
                                         <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile" class="w-full h-full object-cover">
                                     @else
@@ -94,14 +94,14 @@
                     </x-dropdown>
                 @else
                     <!-- Login & Daftar -->
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-bloom-teal hover:text-bloom-coral transition">Login</a>
-                    <a href="{{ route('register') }}" class="text-sm font-medium text-bloom-coral hover:text-bloom-teal transition">Daftar</a>
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-bloom-primary hover:text-bloom-secondary transition">Login</a>
+                    <a href="{{ route('register') }}" class="text-sm font-medium text-bloom-secondary hover:text-bloom-primary transition">Daftar</a>
                 @endauth
             </div>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-bloom-teal hover:text-bloom-coral hover:bg-bloom-cream focus:outline-none focus:bg-bloom-cream focus:text-bloom-coral transition duration-150 ease-in-out">
+                <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-bloom-primary hover:text-bloom-secondary hover:bg-bloom-bg-cream focus:outline-none focus:bg-bloom-bg-cream focus:text-bloom-secondary transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -114,21 +114,21 @@
     <!-- Responsive Navigation Menu -->
     <div x-show="open" class="sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                 {{ __('Beranda') }}
             </a>
-            <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+            <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                 {{ __('Katalog') }}
             </a>
             @auth
                 @if(!Auth::user()->is_admin)
-                    <a href="{{ route('cart.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition relative">
+                    <a href="{{ route('cart.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition relative">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                             @if(Auth::user()->carts()->count() > 0)
-                                <span class="bg-bloom-coral text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                                <span class="bg-bloom-secondary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
                                     {{ Auth::user()->carts()->count() }}
                                 </span>
                             @endif
@@ -138,11 +138,11 @@
             @endauth
             @auth
             @if(Auth::user()->is_admin)
-                <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+                <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                     {{ __('Admin Panel') }}
                 </a>
             @else
-                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                     {{ __('Dashboard') }}
                 </a>
             @endif
@@ -153,17 +153,17 @@
         @auth
         <div class="pt-4 pb-1 border-t border-bloom-mint-light">
             <div class="px-4">
-                <div class="font-medium text-base text-bloom-teal">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-base text-bloom-primary">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-700">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
                 @if(Auth::user()->is_admin)
-                    <a href="{{ route('admin.profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+                    <a href="{{ route('admin.profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                         {{ __('Profil') }}
                     </a>
                 @else
-                    <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+                    <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                         {{ __('Profil') }}
                     </a>
                 @endif
@@ -171,17 +171,17 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-teal hover:bg-bloom-cream transition">
+                    <button type="submit" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-bloom-primary hover:bg-bloom-bg-cream transition">
                         {{ __('Logout') }}
                     </button>
                 </form>
             </div>
         </div>
         @else
-        <div class="pt-4 pb-1 border-t border-bloom-mint-light">
+        <div class="pt-4 pb-1 border-t border-bloom-primary-light">
             <div class="px-4 space-y-2">
-                <a href="{{ route('login') }}" class="block text-bloom-teal hover:text-bloom-coral font-medium py-2">Login</a>
-                <a href="{{ route('register') }}" class="block text-bloom-coral hover:text-bloom-teal font-medium py-2">Daftar</a>
+                <a href="{{ route('login') }}" class="block text-bloom-primary hover:text-bloom-secondary font-medium py-2">Login</a>
+                <a href="{{ route('register') }}" class="block text-bloom-secondary hover:text-bloom-primary font-medium py-2">Daftar</a>
             </div>
         </div>
         @endauth

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-bloom-ivory min-h-screen">
+    <div class="py-12 bg-bloom-bg-light min-h-screen">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl border border-yellow-100 shadow-sm overflow-hidden">
                 {{-- Header --}}
@@ -41,11 +41,11 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <a href="{{ route('payment.show', $order->id) }}"
-                           class="bg-bloom-teal hover:bg-bloom-teal/90 text-white font-semibold py-3 rounded-xl text-center text-sm transition-all">
+                           class="bg-bloom-primary hover:bg-bloom-primary/90 text-white font-semibold py-3 rounded-xl text-center text-sm transition-all">
                             Cek Status Bayar
                         </a>
                         <a href="{{ route('products.index') }}"
-                           class="border-2 border-bloom-teal text-bloom-teal hover:bg-bloom-cream font-semibold py-3 rounded-xl text-center text-sm transition-all">
+                           class="border-2 border-bloom-primary text-bloom-primary hover:bg-bloom-bg-cream font-semibold py-3 rounded-xl text-center text-sm transition-all">
                             Belanja Lagi
                         </a>
                     </div>
@@ -54,3 +54,4 @@
         </div>
     </div>
 </x-app-layout>
+

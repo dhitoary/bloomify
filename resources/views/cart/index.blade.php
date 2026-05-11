@@ -73,9 +73,9 @@
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="flex items-center border border-bloom-mint-light rounded-lg">
-                                                        <button type="button" onclick="decreaseQty(this)" class="px-2 py-1 text-gray-600 hover:text-bloom-teal transition">−</button>
+                                                        <button type="button" onclick="decreaseQty(this)" class="px-2 py-1 text-gray-600 hover:text-bloom-primary transition">−</button>
                                                         <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" class="w-12 text-center border-0 border-l border-r border-bloom-mint-light py-1" onchange="this.form.submit()">
-                                                        <button type="button" onclick="increaseQty(this)" class="px-2 py-1 text-gray-600 hover:text-bloom-teal transition">+</button>
+                                                        <button type="button" onclick="increaseQty(this)" class="px-2 py-1 text-gray-600 hover:text-bloom-primary transition">+</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -83,7 +83,7 @@
                                             <!-- Price -->
                                             <div class="text-right">
                                                 <p class="text-sm text-gray-600 font-light item-unit-price" data-price="{{ $item->product->price }}">Rp {{ number_format($item->product->price, 0, ',', '.') }} x <span class="item-qty-display">{{ $item->quantity }}</span></p>
-                                                <p class="text-lg font-semibold text-bloom-teal item-total" data-price="{{ $item->product->price }}" data-qty="{{ $item->quantity }}">Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
+                                                <p class="text-lg font-semibold text-bloom-primary item-total" data-price="{{ $item->product->price }}" data-qty="{{ $item->quantity }}">Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
                                             </div>
 
                                             <!-- Remove -->
@@ -122,7 +122,7 @@
                             <div class="mb-6 pb-6 border-b border-bloom-mint-light">
                                 <div class="flex justify-between text-lg font-semibold text-gray-900">
                                     <span>Total</span>
-                                    <span class="text-bloom-teal" id="total">Rp 0</span>
+                                    <span class="text-bloom-primary" id="total">Rp 0</span>
                                 </div>
                             </div>
 
@@ -131,7 +131,7 @@
                                     Lanjut ke Checkout
                                 </button>
 
-                                <a href="{{ route('products.index') }}" class="block text-center text-bloom-teal hover:text-bloom-coral font-medium py-3 border border-bloom-teal rounded-lg transition bg-white hover:bg-bloom-cream">
+                                <a href="{{ route('products.index') }}" class="block text-center text-bloom-primary hover:text-bloom-coral font-medium py-3 border border-bloom-primary rounded-lg transition bg-white hover:bg-bloom-cream">
                                     Lanjut Belanja
                                 </a>
                             </div>
@@ -292,3 +292,4 @@
         });
     </script>
 </x-app-layout>
+

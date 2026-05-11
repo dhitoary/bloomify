@@ -17,30 +17,30 @@ Bloomify menggunakan **Bloom Color Palette** - versi enhanced dari Lazy Days yan
 | **Mint** | `#8FCB9E` | Bloom Mint | Vibrant secondary - accents, highlights |
 | **Mint Light** | `#C8E6D7` | Bloom Mint Light | Light border, subtle accents |
 | **Cream** | `#F5DDD0` | Bloom Cream | Warm accent - card backgrounds |
-| **Coral** | `#E89B94` | Bloom Coral | Strong accent - CTA buttons, promotions |
-| **Taupe** | `#9D8B7E` | Bloom Taupe | Neutral dark - footer, secondary text |
-| **Ivory** | `#FAF8F5` | Bloom Ivory | Background - page & section backgrounds |
+| **Gold** | `#F59E0B` | Bloom Gold | Featured badges, star ratings |
+| **Sky Blue** | `#0EA5E9` | Bloom Sky | Supporting accents, info states |
+| **Background Light** | `#FFFBF0` | Bloom BG Light | Main page background |
+| **Background Cream** | `#FEF3C7` | Bloom BG Cream | Section backgrounds |
 
 #### Penggunaan Warna dalam Aplikasi
 
-- **Background Page**: Bloom Ivory (#FAF8F5) - warm, clean base
-- **Text Primary**: Dark Gray (#1F2937) - excellent readability on light backgrounds
-- **Text Secondary**: Bloom Taupe (#9D8B7E) - softer secondary text
-- **Navigation & Headers**: Bloom Teal (#6B9A94) - strong, professional, eye-catching
-- **Primary Buttons**: Bloom Teal dengan hover effect ke darker shade
-- **Secondary Buttons**: Bloom Mint untuk gentle, friendly call-to-action
-- **Cards & Sections**: Bloom Cream (#F5DDD0) untuk product cards dan content sections
-- **Borders & Dividers**: Bloom Mint Light (#C8E6D7) untuk subtle separation
-- **Special Highlights**: Bloom Coral (#E89B94) untuk limited offers atau promotions
+- **Background Page**: Bloom BG Light (#FFFBF0) - warm, clean, modern base
+- **Text Primary**: Dark Gray (#1F2937) - excellent readability
+- **Navigation & Headers**: Bloom Primary (#00A86B) - bold, energetic emerald green
+- **Primary Buttons**: Bloom Primary (#00A86B) dengan hover ke Primary Dark (#007C4A)
+- **Secondary Buttons**: Bloom Secondary (#FF6B35) - bold orange untuk strong CTAs
+- **Cards & Sections**: Bloom BG Cream (#FEF3C7) untuk product cards dan content sections
+- **Borders & Dividers**: Bloom Primary Light (#52E0A0) untuk sharp, visible separation
+- **Special Highlights**: Bloom Accent (#FF006E) atau Gold (#F59E0B) untuk promotions & features
 
 #### Filosofi Design
 
-Palette ini dipilih untuk mencerminkan karakteristik Bloomify:
-- **Vibrant & Professional**: Warna lebih saturated namun tetap elegan & pastel
-- **Warm & Inviting**: Tone yang hangat membuat user merasa welcome
-- **Nature-Inspired**: Harmoni dengan tema bunga dan alam
-- **High Contrast**: Readable text dengan warna yang jelas & tidak pucat
-- **Premium Feel**: Sophisticated color combination untuk marketplace terpercaya
+Palette **BOLD & VIBRANT** dipilih untuk mencerminkan karakter Bloomify yang modern:
+- **Bold & Energetic**: Warna-warna saturasi tinggi yang eye-catching & memorable
+- **Modern & Trendy**: Kombinasi warna kontemporer yang appealing untuk all ages
+- **Nature-Inspired**: Emerald green yang harmonis dengan tema bunga & alam
+- **High Contrast & Accessible**: Mudah dibaca dan accessible untuk semua users
+- **Confident & Premium**: Warna berani yang menunjukkan trust & professionalism
 
 ---
 

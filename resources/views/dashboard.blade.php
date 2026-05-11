@@ -6,7 +6,7 @@
     <div class="bg-white border-b border-gray-200 py-12 mb-12">
         <div class="max-w-7xl mx-auto px-6">
             <h1 class="text-5xl font-light text-gray-900 mb-3">Dashboard</h1>
-            <p class="text-gray-600 font-light text-lg">Selamat datang, <span class="text-bloom-teal">{{ Auth::user()->name }}</span></p>
+            <p class="text-gray-600 font-light text-lg">Selamat datang, <span class="text-bloom-primary">{{ Auth::user()->name }}</span></p>
         </div>
     </div>
 
@@ -16,9 +16,9 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <!-- Pesanan Saya -->
             <a href="#pesanan" class="group">
-                <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg hover:border-bloom-teal transition">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg hover:border-bloom-primary transition">
                     <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Pesanan Saya</p>
-                    <p class="text-4xl font-light text-gray-900 group-hover:text-bloom-teal transition">{{ $ordersCount }}</p>
+                    <p class="text-4xl font-light text-gray-900 group-hover:text-bloom-primary transition">{{ $ordersCount }}</p>
                     <p class="text-gray-500 text-sm mt-3 font-light">
                         @if($ordersCount == 0)
                             Belum ada pesanan
@@ -31,9 +31,9 @@
 
             <!-- Keranjang Saya -->
             <a href="{{ route('cart.index') }}" class="group">
-                <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg hover:border-bloom-teal transition">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg hover:border-bloom-primary transition">
                     <p class="text-gray-600 text-sm font-medium uppercase tracking-wide mb-4">Keranjang Saya</p>
-                    <p class="text-4xl font-light text-gray-900 group-hover:text-bloom-teal transition">{{ $cartItemsCount }}</p>
+                    <p class="text-4xl font-light text-gray-900 group-hover:text-bloom-primary transition">{{ $cartItemsCount }}</p>
                     <p class="text-gray-500 text-sm mt-3 font-light">
                         @if($cartItemsCount == 0)
                             Keranjang kosong
@@ -57,7 +57,7 @@
             <div class="mb-16" id="pesanan">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-light text-gray-900">Pesanan Terbaru</h2>
-                    <a href="{{ route('products.index') }}" class="text-bloom-teal hover:text-bloom-coral font-medium transition">
+                    <a href="{{ route('products.index') }}" class="text-bloom-primary hover:text-bloom-coral font-medium transition">
                         Lanjutkan Belanja
                     </a>
                 </div>
@@ -65,10 +65,10 @@
                 <div class="space-y-4">
                     @foreach($recentOrders as $order)
                         <a href="{{ route('order.show', $order) }}" class="group block">
-                            <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-md hover:border-bloom-teal transition">
+                            <div class="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-md hover:border-bloom-primary transition">
                                 <div class="flex justify-between items-start mb-3">
                                     <div>
-                                        <h3 class="text-lg font-medium text-gray-900 group-hover:text-bloom-teal transition">
+                                        <h3 class="text-lg font-medium text-gray-900 group-hover:text-bloom-primary transition">
                                             Pesanan #{{ $order->order_number }}
                                         </h3>
                                         <p class="text-sm text-gray-500 mt-1">
@@ -115,7 +115,7 @@
         <div class="mb-16">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-3xl font-light text-gray-900">Produk Rekomendasi</h2>
-                <a href="{{ route('products.index') }}" class="text-bloom-teal hover:text-bloom-coral font-medium transition">
+                <a href="{{ route('products.index') }}" class="text-bloom-primary hover:text-bloom-coral font-medium transition">
                     Lihat Semua
                 </a>
             </div>
@@ -137,7 +137,7 @@
                                          alt="{{ $product->name }}" 
                                          class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-bloom-teal text-4xl font-light">🌸</div>
+                                    <div class="w-full h-full flex items-center justify-center text-bloom-primary text-4xl font-light">🌸</div>
                                 @endif
                             </div>
                             <div class="p-4">
@@ -160,7 +160,7 @@
             <div class="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white to-gray-50">
                 <div class="flex justify-between items-center">
                     <h2 class="text-2xl font-light text-gray-900">Informasi Profil & Pengiriman</h2>
-                    <a href="{{ route('profile.edit') }}" class="text-bloom-teal hover:text-bloom-coral font-medium transition">
+                    <a href="{{ route('profile.edit') }}" class="text-bloom-primary hover:text-bloom-coral font-medium transition">
                         Edit
                     </a>
                 </div>
@@ -246,3 +246,4 @@
     </div>
 </div>
 @endsection
+

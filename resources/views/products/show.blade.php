@@ -5,11 +5,11 @@
     <div class="max-w-7xl mx-auto px-6 py-8">
         <!-- Breadcrumb Navigation -->
         <div class="mb-12 flex items-center text-sm">
-            <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-bloom-teal transition font-medium">Katalog</a>
+            <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-bloom-primary transition font-medium">Katalog</a>
             <svg class="w-4 h-4 mx-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
-            <a href="{{ route('products.category', $product->category->slug) }}" class="text-gray-600 hover:text-bloom-teal transition font-medium">{{ $product->category->name }}</a>
+            <a href="{{ route('products.category', $product->category->slug) }}" class="text-gray-600 hover:text-bloom-primary transition font-medium">{{ $product->category->name }}</a>
             <svg class="w-4 h-4 mx-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -41,7 +41,7 @@
                 <div class="lg:col-span-2 p-8 bg-white">
                     <!-- Category Badge -->
                     <div class="mb-4">
-                        <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-semibold uppercase tracking-wider">
+                        <span class="inline-block px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent/20 text-xs font-semibold uppercase tracking-wider">
                             {{ $product->category->name }}
                         </span>
                     </div>
@@ -63,7 +63,7 @@
                         </div>
                         <span class="text-sm font-bold text-gray-900">{{ number_format($avg, 1) }}</span>
                         <span class="text-gray-300">|</span>
-                        <a href="#ulasan" class="text-sm text-gray-500 hover:text-bloom-teal transition">{{ $product->totalReviews() }} Ulasan</a>
+                        <a href="#ulasan" class="text-sm text-gray-500 hover:text-bloom-primary transition">{{ $product->totalReviews() }} Ulasan</a>
                     </div>
 
                     <!-- Price & Stock Section -->
@@ -76,10 +76,10 @@
 
                         <!-- Stock Status -->
                         <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 rounded-full {{ $product->stock > 0 ? 'bg-bloom-mint' : 'bg-red-500' }}"></div>
+                            <div class="w-2 h-2 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent' : 'bg-red-500' }}"></div>
                             <span class="text-sm font-medium text-gray-900">
                                 @if($product->stock > 0)
-                                    <span class="text-bloom-teal font-semibold">Tersedia</span> • <span class="text-gray-600">{{ $product->stock }} unit</span>
+                                    <span class="text-bloom-primary font-semibold">Tersedia</span> • <span class="text-gray-600">{{ $product->stock }} unit</span>
                                 @else
                                     <span class="text-red-600 font-semibold">Habis Terjual</span>
                                 @endif
@@ -124,14 +124,14 @@
 
                                 <!-- Buttons -->
                                 <div class="space-y-3">
-                                    <button type="submit" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white font-semibold py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2 text-sm">
+                                    <button type="submit" class="w-full bg-bloom-secondary hover:bg-bloom-secondary/90 text-white font-semibold py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2 text-sm">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                         Tambah ke Keranjang
                                     </button>
 
-                                    <a href="{{ route('products.index') }}" class="block text-center w-full border border-gray-200 text-gray-900 font-semibold py-2 rounded-lg hover:border-bloom-teal hover:bg-gray-50 transition duration-300 text-sm">
+                                    <a href="{{ route('products.index') }}" class="block text-center w-full border border-gray-200 text-gray-900 font-semibold py-2 rounded-lg hover:border-bloom-primary hover:bg-gray-50 transition duration-300 text-sm">
                                         Lanjut Belanja
                                     </a>
                                 </div>
@@ -145,13 +145,13 @@
                             </div>
                         @endif
                     @else
-                        <div class="p-4 bg-gradient-to-br from-bloom-cream to-white border border-bloom-mint/20 rounded-lg mb-4">
+                        <div class="p-4 bg-gradient-to-br from-bloom-bg-cream to-white border border-bloom-accent/20 rounded-lg mb-4">
                             <p class="font-semibold text-gray-900 mb-3 text-sm">Daftar untuk berbelanja</p>
                             <div class="flex gap-2 flex-col sm:flex-row">
-                                <a href="{{ route('login') }}" class="flex-1 bg-bloom-teal hover:bg-bloom-teal/90 text-white font-semibold py-2 rounded-lg transition text-center text-xs">
+                                <a href="{{ route('login') }}" class="flex-1 bg-bloom-primary hover:bg-bloom-primary/90 text-white font-semibold py-2 rounded-lg transition text-center text-xs">
                                     Login
                                 </a>
-                                <a href="{{ route('register') }}" class="flex-1 border border-bloom-teal text-bloom-teal hover:bg-bloom-cream font-semibold py-2 rounded-lg transition text-center text-xs">
+                                <a href="{{ route('register') }}" class="flex-1 border border-bloom-primary text-bloom-primary hover:bg-bloom-bg-cream font-semibold py-2 rounded-lg transition text-center text-xs">
                                     Daftar
                                 </a>
                             </div>
@@ -162,13 +162,13 @@
                     <div class="border-t border-gray-200 pt-4 mt-6">
                         <p class="text-xs font-semibold text-gray-900 mb-3 uppercase tracking-wider">Bagikan</p>
                         <div class="flex gap-2">
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5c-.563-.074-1.396-.146-2.278-.146-2.27 0-3.846 1.481-3.846 4.188v2.158z"/></svg>
                             </a>
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7z"/></svg>
                             </a>
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-teal hover:text-white transition duration-300">
+                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-600 rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                             </a>
                         </div>
@@ -181,7 +181,7 @@
         <div id="ulasan" class="mb-20">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <p class="text-sm font-semibold text-bloom-teal mb-2 uppercase tracking-widest">Suara Pelanggan</p>
+                    <p class="text-sm font-semibold text-bloom-primary mb-2 uppercase tracking-widest">Suara Pelanggan</p>
                     <h2 class="text-4xl font-light text-gray-900">Ulasan Pembeli</h2>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     <!-- Rating Snapshot -->
                     <div class="lg:col-span-1">
-                        <div class="bg-bloom-cream/30 border border-bloom-mint/20 rounded-2xl p-8 sticky top-8">
+                        <div class="bg-bloom-bg-cream/30 border border-bloom-accent/20 rounded-2xl p-8 sticky top-8">
                             <p class="text-gray-600 text-sm mb-2">Rating Rata-rata</p>
                             <div class="flex items-end gap-3 mb-6">
                                 <span class="text-6xl font-light text-gray-900 leading-none">{{ number_format($product->averageRating(), 1) }}</span>
@@ -229,7 +229,7 @@
                             <div class="pb-8 border-b border-gray-100 last:border-0">
                                 <div class="flex justify-between items-start mb-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-bloom-teal/10 rounded-full flex items-center justify-center text-bloom-teal font-bold text-sm">
+                                        <div class="w-10 h-10 bg-bloom-primary/10 rounded-full flex items-center justify-center text-bloom-primary font-bold text-sm">
                                             {{ substr($review->user->name, 0, 1) }}
                                         </div>
                                         <div>
@@ -265,14 +265,14 @@
         @if($relatedProducts->count() > 0)
             <div class="border-t border-gray-200 pt-20 pb-12">
                 <div class="mb-12">
-                    <p class="text-sm font-semibold text-bloom-teal mb-3 uppercase tracking-widest">Pilihan Lainnya</p>
+                    <p class="text-sm font-semibold text-bloom-primary mb-3 uppercase tracking-widest">Pilihan Lainnya</p>
                     <h2 class="text-4xl font-light text-gray-900">Produk Serupa</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($relatedProducts as $related)
                         <a href="{{ route('products.show', $related->slug) }}" class="group block h-full">
-                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-bloom-teal transition duration-300 h-full flex flex-col">
+                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-bloom-primary transition duration-300 h-full flex flex-col">
                                 <!-- Image -->
                                 <div class="relative overflow-hidden h-64 bg-gradient-to-br from-gray-50 to-white">
                                     @if($related->image)
@@ -290,7 +290,7 @@
 
                                 <!-- Content -->
                                 <div class="p-5 flex flex-col flex-grow">
-                                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm group-hover:text-bloom-teal transition">{{ $related->name }}</h3>
+                                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm group-hover:text-bloom-primary transition">{{ $related->name }}</h3>
                                     
                                     <div class="border-t border-gray-100 pt-4 mt-auto">
                                         <p class="text-2xl font-light text-gray-900">
@@ -314,3 +314,4 @@
     </div>
 </div>
 @endsection
+

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-bloom-ivory min-h-screen">
+    <div class="py-12 bg-bloom-bg-light min-h-screen">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
             {{-- Flash Messages --}}
@@ -14,15 +14,15 @@
 
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Pembayaran Pesanan</h1>
-                <p class="text-gray-600 text-sm mt-1">Selesaikan pembayaran untuk pesanan <span class="font-semibold text-bloom-teal">{{ $order->order_number }}</span></p>
+                <p class="text-gray-600 text-sm mt-1">Selesaikan pembayaran untuk pesanan <span class="font-semibold text-bloom-primary">{{ $order->order_number }}</span></p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {{-- Order Summary --}}
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl border border-bloom-mint-light shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 border-b border-bloom-mint-light bg-bloom-cream/40">
+                    <div class="bg-white rounded-2xl border border-bloom-accent-light shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-bloom-accent-light bg-bloom-bg-cream/40">
                             <h2 class="text-lg font-semibold text-gray-900">Ringkasan Pesanan</h2>
                         </div>
                         <div class="p-6 space-y-4">
@@ -32,10 +32,10 @@
                                         @if($item->product->image)
                                             <img src="{{ asset('storage/' . $item->product->image) }}"
                                                  alt="{{ $item->product->name }}"
-                                                 class="w-14 h-14 rounded-lg object-cover border border-bloom-mint-light">
+                                                 class="w-14 h-14 rounded-lg object-cover border border-bloom-accent-light">
                                         @else
-                                            <div class="w-14 h-14 rounded-lg bg-bloom-cream flex items-center justify-center border border-bloom-mint-light">
-                                                <svg class="w-6 h-6 text-bloom-teal/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div class="w-14 h-14 rounded-lg bg-bloom-bg-cream flex items-center justify-center border border-bloom-accent-light">
+                                                <svg class="w-6 h-6 text-bloom-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
                                             </div>
@@ -49,16 +49,16 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="px-6 py-4 bg-bloom-cream/30 border-t border-bloom-mint-light">
+                        <div class="px-6 py-4 bg-bloom-bg-cream/30 border-t border-bloom-accent-light">
                             <div class="flex justify-between items-center">
                                 <span class="font-semibold text-gray-700">Total Pembayaran</span>
-                                <span class="text-xl font-bold text-bloom-teal">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                                <span class="text-xl font-bold text-bloom-primary">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
                     {{-- Shipping Info --}}
-                    <div class="bg-white rounded-2xl border border-bloom-mint-light shadow-sm p-6 mt-4">
+                    <div class="bg-white rounded-2xl border border-bloom-accent-light shadow-sm p-6 mt-4">
                         <h2 class="text-base font-semibold text-gray-900 mb-3">Alamat Pengiriman</h2>
                         <p class="text-sm text-gray-700 leading-relaxed">{{ $order->shipping_address }}</p>
                         @if($order->notes)
@@ -69,8 +69,8 @@
 
                 {{-- Payment Panel --}}
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl border border-bloom-mint-light shadow-sm overflow-hidden sticky top-6">
-                        <div class="px-6 py-4 border-b border-bloom-mint-light bg-gradient-to-r from-bloom-teal/10 to-bloom-mint/10">
+                    <div class="bg-white rounded-2xl border border-bloom-accent-light shadow-sm overflow-hidden sticky top-6">
+                        <div class="px-6 py-4 border-b border-bloom-accent-light bg-gradient-to-r from-bloom-primary/10 to-bloom-accent/10">
                             <h2 class="text-base font-semibold text-gray-900">Detail Pembayaran</h2>
                         </div>
                         <div class="p-6 space-y-4">
@@ -85,17 +85,17 @@
                                 </div>
                             </div>
 
-                            <div class="border-t border-bloom-mint-light pt-4">
+                            <div class="border-t border-bloom-accent-light pt-4">
                                 <div class="flex justify-between text-base font-semibold">
                                     <span>Total</span>
-                                    <span class="text-bloom-teal">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                                    <span class="text-bloom-primary">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
                                 </div>
                             </div>
 
                             {{-- Pay Button --}}
                             <button id="pay-button"
                                     onclick="startPayment()"
-                                    class="w-full bg-bloom-teal hover:bg-bloom-teal/90 active:scale-95 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-2">
+                                    class="w-full bg-bloom-primary hover:bg-bloom-primary/90 active:scale-95 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                 </svg>
@@ -206,3 +206,4 @@
         }
     </script>
 </x-app-layout>
+
