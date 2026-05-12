@@ -1,42 +1,68 @@
 <x-guest-layout>
-    <div class="mb-8 text-center">
-        <h2 class="text-3xl font-bold text-bloom-primary">Selamat Datang Kembali!</h2>
-        <p class="text-gray-700 mt-2">Silakan login untuk melanjutkan pesanan bunga Anda.</p>
+    <!-- Header -->
+    <div class="mb-8">
+        <h2 class="text-4xl font-light text-bloom-text-primary">Hello Again!</h2>
+        <p class="text-bloom-text-secondary mt-2 font-light">Let's get started with your 30 days trial</p>
     </div>
 
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+    <!-- Login Form -->
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
+        <!-- Email Input -->
         <div>
-            <x-input-label for="email" value="Email Address" class="text-bloom-primary font-semibold" />
-            <x-text-input id="email" class="block mt-1 w-full border-bloom-primary-light focus:border-bloom-primary focus:ring-bloom-primary rounded-xl text-gray-900" type="email" name="email" :value="old('email')" required autofocus />
+            <x-text-input 
+                id="email" 
+                class="block w-full border-2 border-bloom-border bg-bloom-bg-card focus:border-bloom-primary focus:ring-0 rounded-xl px-5 py-3 text-bloom-text-primary placeholder-bloom-text-secondary/50 transition" 
+                type="email" 
+                name="email" 
+                :value="old('email')" 
+                placeholder="Email"
+                required 
+                autofocus 
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="mt-4">
-            <x-input-label for="password" value="Password" class="text-bloom-primary font-semibold" />
-            <x-text-input id="password" class="block mt-1 w-full border-bloom-primary-light focus:border-bloom-primary focus:ring-bloom-primary rounded-xl text-gray-900" type="password" name="password" required />
+        <!-- Password Input -->
+        <div>
+            <x-text-input 
+                id="password" 
+                class="block w-full border-2 border-bloom-border bg-bloom-bg-card focus:border-bloom-primary focus:ring-0 rounded-xl px-5 py-3 text-bloom-text-primary placeholder-bloom-text-secondary/50 transition" 
+                type="password" 
+                name="password"
+                placeholder="Password"
+                required 
+            />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-bloom-primary-light text-bloom-primary shadow-sm focus:ring-bloom-primary" name="remember">
-                <span class="ms-2 text-sm text-gray-700">Ingat saya</span>
+            <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
+                <input id="remember_me" type="checkbox" class="rounded border-bloom-border text-bloom-primary focus:ring-bloom-primary shadow-sm" name="remember">
+                <span class="text-sm text-bloom-text-secondary font-light">Remember me</span>
             </label>
             @if (Route::has('password.request'))
-                <a class="text-sm text-bloom-primary hover:text-bloom-secondary underline transition font-medium" href="{{ route('password.request') }}">
-                    Lupa password?
+                <a class="text-sm text-bloom-text-secondary hover:text-bloom-primary underline transition font-light" href="{{ route('password.request') }}">
+                    Recovery Password
                 </a>
             @endif
         </div>
 
-        <div class="mt-6">
-            <button class="w-full bg-bloom-primary hover:bg-bloom-primary-dark text-white font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.02]">
-                MASUK SEKARANG
-            </button>
-        </div>
+        <!-- Sign In Button -->
+        <button type="submit" class="w-full bg-bloom-primary hover:bg-bloom-primary-dark text-white font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.02] mt-6">
+            Sign In
+        </button>
     </form>
+
+    <!-- Register Link -->
+    <p class="text-center text-sm text-bloom-text-secondary mt-8 font-light">
+        Don't have an account? 
+        <a href="{{ route('register') }}" class="text-bloom-primary hover:text-bloom-primary-dark font-semibold underline transition">
+            Sign Up
+        </a>
+    </p>
 </x-guest-layout>

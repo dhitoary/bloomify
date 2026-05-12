@@ -20,15 +20,15 @@
                 <div id="carousel" class="flex transition-transform duration-500 ease-out h-full pointer-events-none" style="transform: translateX(0%);">
                     <!-- Slide 1 -->
                     <div class="w-full h-full flex-shrink-0">
-                        <img src="{{ asset('images/hero/premium-flowers.png') }}" alt="Premium Flowers 1" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/hero/premium-flowers.png') }}?v=" alt="Premium Flowers 1" class="w-full h-full object-cover">
                     </div>
                     <!-- Slide 2 -->
                     <div class="w-full h-full flex-shrink-0">
-                        <img src="{{ asset('images/hero/premium-flowers-2.png') }}" alt="Premium Flowers 2" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/hero/premium-flowers-2.png') }}?v=" alt="Premium Flowers 2" class="w-full h-full object-cover">
                     </div>
                     <!-- Slide 3 -->
                     <div class="w-full h-full flex-shrink-0">
-                        <img src="{{ asset('images/hero/premium-flowers-3.png') }}" alt="Premium Flowers 3" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/hero/premium-flowers-3.png') }}?v=" alt="Premium Flowers 3" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>

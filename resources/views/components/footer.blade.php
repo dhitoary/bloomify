@@ -31,7 +31,7 @@
         <div class="pt-4 border-t border-bloom-text-light/30">
           <p class="text-xs text-bloom-text-light/80 font-light mb-2">Tim:</p>
           <p class="text-sm text-bloom-text-light font-light">
-            <span class="text-bloom-accent font-semibold">Dhito</span> • <span class="text-bloom-accent font-semibold">Cindy</span> • <span class="text-bloom-accent font-semibold">Surya</span>
+            <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Dhito</span> • <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Cindy</span> • <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Surya</span>
           </p>
         </div>
       </div>
@@ -80,12 +80,12 @@
             </a>
           </li>
           <li>
-            <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-bloom-primary transition-colors font-light">
+            <a href="{{ route('products.index') }}" class="text-white hover:text-bloom-accent transition-colors font-light hover:translate-x-1">
               Buket Matahari
             </a>
           </li>
           <li>
-            <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-bloom-primary transition-colors font-light">
+            <a href="{{ route('products.index') }}" class="text-white hover:text-bloom-accent transition-colors font-light hover:translate-x-1">
               Rangkaian Spesial
             </a>
           </li>
@@ -94,24 +94,24 @@
 
       <!-- Contact Info -->
       <div class="space-y-4">
-        <h4 class="text-lg font-semibold text-bloom-primary">Hubungi Kami</h4>
+        <h4 class="text-lg font-semibold text-white">Hubungi Kami</h4>
         <div class="space-y-3 text-sm">
           <div>
-            <p class="text-gray-900 font-medium">Alamat:</p>
-            <p class="text-gray-700 text-xs font-light">
+            <p class="text-white font-medium">Alamat:</p>
+            <p class="text-white/90 text-xs font-light">
               Perum Permata Asri, Blok i4 No 30<br>
               Lampung Selatan, Indonesia
             </p>
           </div>
           <div>
-            <p class="text-gray-900 font-medium">Email:</p>
-            <a href="mailto:bloomify@gmail.com" class="text-bloom-primary hover:text-bloom-secondary transition-colors font-light">
+            <p class="text-white font-medium">Email:</p>
+            <a href="mailto:bloomify@gmail.com" class="text-white hover:text-bloom-accent transition-colors font-light">
               bloomify@gmail.com
             </a>
           </div>
           <div>
-            <p class="text-gray-900 font-medium">Telepon:</p>
-            <a href="tel:+628123456789" class="text-bloom-primary hover:text-bloom-secondary transition-colors font-light">
+            <p class="text-white font-medium">Telepon:</p>
+            <a href="tel:+628123456789" class="text-white hover:text-bloom-accent transition-colors font-light">
               +62 812 345 6789
             </a>
           </div>
@@ -127,7 +127,7 @@
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center md:text-left">
       <!-- Payment Methods -->
       <div class="space-y-3">
-        <p class="text-sm font-semibold text-bloom-primary">Metode Pembayaran</p>
+        <p class="text-sm font-semibold text-bloom-accent">Metode Pembayaran</p>
         <div class="flex items-center space-x-3 justify-center md:justify-start">
           <!-- Visa -->
           <div class="w-12 h-8 bg-white rounded flex items-center justify-center hover:scale-110 transition-transform cursor-pointer shadow-sm" title="Visa">
@@ -164,18 +164,18 @@
 
       <!-- Copyright -->
       <div class="text-center">
-        <p class="text-sm text-gray-700 font-light">
+        <p class="text-sm text-bloom-accent font-light">
           Copyright &copy; 2026 Bloomify. Semua hak dilindungi.
         </p>
       </div>
 
       <!-- Legal Links -->
       <div class="flex justify-center md:justify-end space-x-4">
-        <a href="{{ route('privacy') }}" class="text-sm text-gray-700 hover:text-bloom-primary transition-colors font-light">
+        <a href="{{ route('privacy') }}" class="text-sm text-bloom-accent hover:text-white transition-colors font-light">
           Privasi
         </a>
-        <span class="text-gray-400">•</span>
-        <a href="{{ route('terms') }}" class="text-sm text-gray-700 hover:text-bloom-primary transition-colors font-light">
+        <span class="text-bloom-accent/60">•</span>
+        <a href="{{ route('terms') }}" class="text-sm text-bloom-accent hover:text-white transition-colors font-light">
           Syarat
         </a>
       </div>

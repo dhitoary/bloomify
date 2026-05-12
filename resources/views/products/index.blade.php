@@ -51,25 +51,25 @@
         @if(!$filteredProducts)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 <!-- Best Seller Card -->
-                <div class="bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">BEST SELLER</h3>
-                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-fuchsia/40 to-bloom-accent/40 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">BEST SELLER</h3>
+                    <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Produk favorit dengan tampilan paling menarik.
                     </p>
                 </div>
 
                 <!-- Special Occasion Card -->
-                <div class="bg-gradient-to-br from-bloom-primary-lighter to-bloom-secondary border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
-                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-primary/50 to-bloom-fuchsia/50 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
+                    <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Pilihan untuk anniversary, wedding, dan hadiah spesial.
                     </p>
                 </div>
 
                 <!-- New Arrivals Card -->
-                <div class="bg-gradient-to-br from-bloom-bg-cream to-bloom-secondary border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-lg font-semibold text-bloom-accent mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
-                    <p class="text-bloom-text-secondary font-light text-sm leading-relaxed">
+                <div class="bg-gradient-to-br from-bloom-accent/40 to-bloom-primary/40 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
+                    <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Rangkaian terbaru dengan nuansa pastel yang lembut dan modern.
                     </p>
                 </div>
@@ -88,48 +88,36 @@
                 @if($filteredProducts->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                         @foreach($filteredProducts as $product)
-                            <a href="{{ route('products.show', $product->slug) }}" class="group block h-full">
-                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition duration-300 h-full flex flex-col hover:border-bloom-teal">
-                                    <!-- Image Container -->
-                                    <div class="relative overflow-hidden h-72 bg-gradient-to-br from-bloom-cream to-bloom-ivory">
+                            <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                    <!-- Product Image -->
+                                    <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center">
-                                                <svg class="w-20 h-20 text-bloom-mint/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
                                         @endif
                                     </div>
 
-                                    <!-- Content -->
-                                    <div class="p-6 flex flex-col flex-grow">
+                                    <!-- Product Info -->
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
                                         @if($product->category)
-                                            <div class="mb-3">
-                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-primary/10 text-bloom-primary border border-bloom-primary/20 text-xs font-medium font-semibold">
-                                                    {{ $product->category->name }}
+                                            <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                        @endif
+                                        <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                        
+                                        <div class="border-t border-bloom-border pt-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
+                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
                                                 </span>
                                             </div>
-                                        @endif
-
-                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-primary transition">
-                                            {{ $product->name }}
-                                        </h3>
-
-                                        <p class="text-sm text-gray-600 font-light mb-4 line-clamp-2 flex-grow">
-                                            {{ $product->description }}
-                                        </p>
-
-                                        <div class="border-t border-gray-100 pt-4 mt-auto">
-                                            <div class="flex justify-between items-end mb-4">
-                                                <p class="text-2xl font-light text-gray-900">
-                                                    Rp {{ number_format($product->price, 0, ',', '.') }}
-                                                </p>
-                                            </div>
-                                            <button type="button" class="w-full bg-bloom-secondary hover:bg-bloom-secondary-dark text-white py-3 rounded-lg transition font-semibold text-sm duration-200 shadow-md hover:shadow-lg">
-                                                Keranjang
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -173,51 +161,42 @@
             @if($bestSellers->count() > 0)
                 <section class="mb-20">
                     <div class="flex items-center gap-3 mb-8">
-                        <h2 class="text-2xl font-semibold text-gray-900">BEST SELLER</h2>
-                        <p class="text-sm text-gray-600 font-light">Produk favorit dengan tampilan paling menarik</p>
+                        <h2 class="text-2xl font-semibold text-bloom-text-primary">BEST SELLER</h2>
+                        <p class="text-sm text-bloom-text-secondary font-light">Produk favorit dengan tampilan paling menarik</p>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($bestSellers as $product)
-                            <a href="{{ route('products.show', $product->slug) }}" class="group block h-full">
-                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition duration-300 h-full flex flex-col hover:border-bloom-teal">
-                                    <div class="relative overflow-hidden h-72 bg-gradient-to-br from-bloom-cream to-bloom-ivory">
+                            <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                    <!-- Product Image -->
+                                    <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center">
-                                                <svg class="w-20 h-20 text-bloom-mint/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="p-6 flex flex-col flex-grow">
+
+                                    <!-- Product Info -->
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
                                         @if($product->category)
-                                            <div class="mb-3">
-                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-medium">
-                                                    {{ $product->category->name }}
+                                            <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                        @endif
+                                        <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                        
+                                        <div class="border-t border-bloom-border pt-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
+                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
                                                 </span>
                                             </div>
-                                        @endif
-                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-teal transition">
-                                            {{ $product->name }}
-                                        </h3>
-                                        <p class="text-sm text-gray-600 font-light mb-4 line-clamp-2 flex-grow">
-                                            {{ $product->description }}
-                                        </p>
-                                        <div class="border-t border-gray-100 pt-4 mt-auto">
-                                            <div class="flex justify-between items-end mb-4">
-                                                <p class="text-2xl font-light text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                                <div class="flex gap-1">
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        <span class="text-lg">★</span>
-                                                    @endfor
-                                                </div>
-                                            </div>
-                                            <button type="button" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white py-3 rounded-lg transition font-semibold text-sm duration-200">
-                                                Keranjang
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -231,51 +210,42 @@
             @if($specialOccasion->count() > 0)
                 <section class="mb-20">
                     <div class="flex items-center gap-3 mb-8">
-                        <h2 class="text-2xl font-semibold text-gray-900">SPECIAL OCCASION</h2>
-                        <p class="text-sm text-gray-600 font-light">Pilihan untuk anniversary, wedding, dan hadiah spesial</p>
+                        <h2 class="text-2xl font-semibold text-bloom-text-primary">SPECIAL OCCASION</h2>
+                        <p class="text-sm text-bloom-text-secondary font-light">Pilihan untuk anniversary, wedding, dan hadiah spesial</p>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($specialOccasion as $product)
-                            <a href="{{ route('products.show', $product->slug) }}" class="group block h-full">
-                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition duration-300 h-full flex flex-col hover:border-bloom-teal">
-                                    <div class="relative overflow-hidden h-72 bg-gradient-to-br from-bloom-cream to-bloom-ivory">
+                            <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                    <!-- Product Image -->
+                                    <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center">
-                                                <svg class="w-20 h-20 text-bloom-mint/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="p-6 flex flex-col flex-grow">
+
+                                    <!-- Product Info -->
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
                                         @if($product->category)
-                                            <div class="mb-3">
-                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-medium">
-                                                    {{ $product->category->name }}
+                                            <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                        @endif
+                                        <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                        
+                                        <div class="border-t border-bloom-border pt-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
+                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
                                                 </span>
                                             </div>
-                                        @endif
-                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-teal transition">
-                                            {{ $product->name }}
-                                        </h3>
-                                        <p class="text-sm text-gray-600 font-light mb-4 line-clamp-2 flex-grow">
-                                            {{ $product->description }}
-                                        </p>
-                                        <div class="border-t border-gray-100 pt-4 mt-auto">
-                                            <div class="flex justify-between items-end mb-4">
-                                                <p class="text-2xl font-light text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                                <div class="flex gap-1">
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        <span class="text-lg">★</span>
-                                                    @endfor
-                                                </div>
-                                            </div>
-                                            <button type="button" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white py-3 rounded-lg transition font-semibold text-sm duration-200">
-                                                Keranjang
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -289,15 +259,15 @@
             @if($newArrivals->count() > 0)
                 <section>
                     <div class="flex items-center gap-3 mb-8">
-                        <h2 class="text-2xl font-semibold text-gray-900">NEW ARRIVALS</h2>
-                        <p class="text-sm text-gray-600 font-light">Rangkaian terbaru dengan nuansa pastoral yang terbaru</p>
+                        <h2 class="text-2xl font-semibold text-bloom-text-primary">NEW ARRIVALS</h2>
+                        <p class="text-sm text-bloom-text-secondary font-light">Rangkaian terbaru dengan nuansa pastel yang lembut dan modern</p>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($newArrivals as $product)
-                            <a href="{{ route('products.show', $product->slug) }}" class="group block h-full">
-                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition duration-300 h-full flex flex-col hover:border-bloom-teal">
-                                    <div class="relative overflow-hidden h-72 bg-gradient-to-br from-bloom-cream to-bloom-ivory">
+                            <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                    <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
                                         @if($product->image)
                                             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
                                         @else
@@ -308,32 +278,22 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="p-6 flex flex-col flex-grow">
+
+                                    <!-- Product Info -->
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
                                         @if($product->category)
-                                            <div class="mb-3">
-                                                <span class="inline-block px-3 py-1 rounded-full bg-bloom-mint/10 text-bloom-mint border border-bloom-mint/20 text-xs font-medium">
-                                                    {{ $product->category->name }}
+                                            <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                        @endif
+                                        <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                        
+                                        <div class="border-t border-bloom-border pt-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
+                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
                                                 </span>
                                             </div>
-                                        @endif
-                                        <h3 class="font-semibold text-gray-900 mb-3 line-clamp-2 text-base group-hover:text-bloom-teal transition">
-                                            {{ $product->name }}
-                                        </h3>
-                                        <p class="text-sm text-gray-600 font-light mb-4 line-clamp-2 flex-grow">
-                                            {{ $product->description }}
-                                        </p>
-                                        <div class="border-t border-gray-100 pt-4 mt-auto">
-                                            <div class="flex justify-between items-end mb-4">
-                                                <p class="text-2xl font-light text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                                <div class="flex gap-1">
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        <span class="text-lg">★</span>
-                                                    @endfor
-                                                </div>
-                                            </div>
-                                            <button type="button" class="w-full bg-bloom-coral hover:bg-bloom-coral/90 text-white py-3 rounded-lg transition font-semibold text-sm duration-200">
-                                                Keranjang
-                                            </button>
                                         </div>
                                     </div>
                                 </div>

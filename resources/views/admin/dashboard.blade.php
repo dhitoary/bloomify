@@ -3,7 +3,7 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="bg-bloom-bg-main min-h-screen" x-data="{ activeTab: 'overview' }">
+<div class="bg-bloom-bg-main min-h-screen" x-data="{ activeTab: '{{ request('tab', 'overview') }}' }">
     <!-- Header Section -->
     <div class="bg-gradient-to-r from-bloom-fuchsia via-bloom-primary to-bloom-primary-light border-b-4 border-bloom-fuchsia py-12 mb-8 shadow-soft">
         <div class="max-w-7xl mx-auto px-6">
@@ -322,6 +322,7 @@
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Bergabung</th>
                                 <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -333,13 +334,24 @@
                                     <td class="px-8 py-4 text-sm">
                                         <span class="px-3 py-1 rounded-full text-xs font-medium 
                                             {{ $user->email_verified_at ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700' }}">
-                                            {{ $user->email_verified_at ? 'Verifikasi' : 'Pending' }}
+                                            {{ $user->email_verified_at ? 'Terverifikasi' : 'Pending' }}
                                         </span>
+                                    </td>
+                                    <td class="px-8 py-4 text-sm">
+                                        <form action="{{ route('admin.users.update-verification', ['user' => $user->id, 'page' => $users->currentPage()]) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="verification_status" class="text-sm border-gray-300 rounded-lg focus:ring-bloom-primary focus:border-bloom-primary" onchange="this.form.submit()">
+                                                <option value="pending" {{ !$user->email_verified_at ? 'selected' : '' }}>Pending</option>
+                                                <option value="verified" {{ $user->email_verified_at ? 'selected' : '' }}>Terverifikasi</option>
+                                                <option value="unverified">Batalkan Verifikasi</option>
+                                            </select>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pengguna</td>
+                                    <td colspan="5" class="px-8 py-8 text-center text-gray-500 font-light">Belum ada pengguna</td>
                                 </tr>
                             @endforelse
                         </tbody>

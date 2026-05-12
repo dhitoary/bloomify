@@ -12,12 +12,12 @@
             <!-- Navigation Links (Desktop) -->
             <div class="hidden sm:flex items-center space-x-1">
                 <!-- Beranda -->
-                <a href="/" class="text-sm font-medium text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10 px-3 py-2 rounded-lg transition duration-300">
+                <a href="/" class="text-sm font-bold {{ request()->path() == '/' ? 'text-bloom-primary bg-bloom-primary/10' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                     Beranda
                 </a>
 
                 <!-- Katalog -->
-                <a href="{{ route('products.index') }}" class="text-sm font-medium {{ request()->routeIs('products.*') && !request()->routeIs('dashboard*') ? 'text-bloom-primary bg-bloom-primary/10 font-semibold' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
+                <a href="{{ route('products.index') }}" class="text-sm font-bold {{ request()->routeIs('products.*') && !request()->routeIs('dashboard*') ? 'text-bloom-primary bg-bloom-primary/10' : 'text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10' }} px-3 py-2 rounded-lg transition duration-300">
                     Katalog
                 </a>
 
@@ -93,9 +93,9 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <!-- Login & Daftar -->
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-bloom-primary hover:text-bloom-secondary transition">Login</a>
-                    <a href="{{ route('register') }}" class="text-sm font-medium text-bloom-secondary hover:text-bloom-primary transition">Daftar</a>
+                    <!-- Masuk & Daftar -->
+                    <a href="{{ route('login') }}" class="text-sm font-bold text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10 px-3 py-2 rounded-lg transition duration-300">Masuk</a>
+                    <a href="{{ route('register') }}" class="text-sm font-bold text-bloom-text-primary hover:text-bloom-primary hover:bg-bloom-primary/10 px-3 py-2 rounded-lg transition duration-300 ml-4">Daftar</a>
                 @endauth
             </div>
 

@@ -70,6 +70,9 @@ Route::middleware(['auth', 'verified', 'is_admin'])->prefix('admin-dashboard')->
     // Orders Management
     Route::patch('/orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
 
+    // Users Management
+    Route::patch('/users/{user}/verification', [\App\Http\Controllers\Admin\UserController::class, 'updateVerificationStatus'])->name('users.update-verification');
+
     // Products CRUD
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     
