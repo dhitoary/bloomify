@@ -9,7 +9,7 @@
         };
     @endphp
     <!-- Header Section -->
-    <div class="bg-gradient-to-b from-bloom-fuchsia/15 to-bloom-bg-main py-16 mb-12 border-b-4 border-bloom-fuchsia">
+    <div class="bg-gradient-to-b from-bloom-fuchsia/45 to-bloom-accent/10 py-16 mb-12 border-b-4 border-bloom-fuchsia">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="inline-block bg-bloom-bg-card border-2 border-bloom-accent rounded-full px-6 py-2 mb-6 shadow-soft">
                 <p class="text-bloom-accent text-xs font-semibold tracking-widest uppercase">Koleksi Pilihan Hari Ini</p>

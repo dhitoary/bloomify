@@ -1,27 +1,27 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
-<div class="bg-gradient-to-br from-bloom-primary/15 via-bloom-fuchsia/10 to-bloom-fuchsia/15 min-h-screen">
+<div style="background: linear-gradient(to bottom right, #e2d0d0, #F5E6E6); background-attachment: fixed;" class="min-h-screen">
     <div class="max-w-7xl mx-auto px-6 py-8">
         <!-- Breadcrumb Navigation -->
         <div class="mb-12 flex items-center text-sm">
-            <a href="{{ route('products.index') }}" class="text-bloom-text-secondary hover:text-bloom-primary transition font-bold">Katalog</a>
-            <svg class="w-4 h-4 mx-3 text-bloom-border" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('products.index') }}" style="color: #b78493;" class="hover:opacity-80 transition font-bold">Katalog</a>
+            <svg style="color: #cc93a2;" class="w-4 h-4 mx-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
-            <a href="{{ route('products.category', $product->category->slug) }}" class="text-bloom-text-secondary hover:text-bloom-primary transition font-bold">{{ $product->category->name }}</a>
-            <svg class="w-4 h-4 mx-3 text-bloom-border" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('products.category', $product->category->slug) }}" style="color: #b78493;" class="hover:opacity-80 transition font-bold">{{ $product->category->name }}</a>
+            <svg style="color: #cc93a2;" class="w-4 h-4 mx-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
-            <span class="text-bloom-text-primary font-bold line-clamp-1">{{ $product->name }}</span>
+            <span style="color: #aa6778;" class="font-bold line-clamp-1">{{ $product->name }}</span>
         </div>
 
         <!-- Product Details Section -->
-        <div class="border-2 border-bloom-primary bg-gradient-to-br from-bloom-primary/60 to-bloom-fuchsia/55 rounded-2xl shadow-soft overflow-hidden mb-20">
+        <div style="background: linear-gradient(to bottom right, #d6acad, #cc93a2); border-color: #aa6778;" class="border-2 rounded-2xl shadow-soft overflow-hidden mb-20">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
                 <!-- Product Image -->
-                <div class="lg:col-span-1 border-r-2 border-bloom-primary lg:border-r h-96 bg-gradient-to-br from-bloom-primary-lighter to-bloom-fuchsia-light/40 p-6 flex items-center justify-center">
-                    <div class="w-full h-full bg-gradient-to-br from-bloom-bg-cream to-bloom-fuchsia/10 border-2 border-bloom-primary/40 rounded-xl overflow-hidden flex items-center justify-center shadow-soft">
+                <div style="background: linear-gradient(to bottom right, #e2d0d0, #d6acad); border-right-color: #aa6778;" class="lg:col-span-1 border-r-2 lg:border-r h-96 p-6 flex items-center justify-center">
+                    <div style="background: linear-gradient(to bottom right, #e2d0d0, #F5E6E6); border-color: #cc93a2;" class="w-full h-full border-2 rounded-xl overflow-hidden flex items-center justify-center shadow-soft">
                         @if($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" 
                                  alt="{{ $product->name }}" 
@@ -38,22 +38,22 @@
                 </div>
 
                 <!-- Product Information Box -->
-                <div class="lg:col-span-2 p-8 bg-gradient-to-br from-bloom-fuchsia/50 to-bloom-primary/55 border-l-2 border-bloom-primary">
+                <div style="background: linear-gradient(to bottom right, #cc93a2, #d6acad); border-left-color: #aa6778;" class="lg:col-span-2 p-8 border-l-2">
                     <!-- Category Badge -->
                     <div class="mb-4">
-                        <span class="inline-block px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent/20 text-xs font-semibold uppercase tracking-wider">
+                        <span style="background: #d6acad; border-color: #aa6778; color: #ffffff;" class="inline-block px-3 py-1 rounded-full border text-xs font-semibold uppercase tracking-wider">
                             {{ $product->category->name }}
                         </span>
                     </div>
 
                     <!-- Product Title -->
-                    <h1 class="text-3xl font-semibold text-bloom-text-primary mb-2 leading-tight">
+                    <h1 style="color: #ffffff;" class="text-3xl font-semibold mb-2 leading-tight">
                         {{ $product->name }}
                     </h1>
 
                     <!-- Rating Summary -->
                     <div class="flex items-center gap-2 mb-6">
-                        <div class="flex text-bloom-fuchsia">
+                        <div class="flex style="color: #cc93a2;"">
                             @php $avg = $product->averageRating(); @endphp
                             @for($i = 1; $i <= 5; $i++)
                                 <svg class="w-4 h-4 {{ $i <= round($avg) ? 'fill-current' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
@@ -61,15 +61,15 @@
                                 </svg>
                             @endfor
                         </div>
-                        <span class="text-sm font-bold text-bloom-text-primary">{{ number_format($avg, 1) }}</span>
-                        <span class="text-bloom-text-secondary">|</span>
-                        <a href="#ulasan" class="text-sm text-bloom-text-secondary hover:text-bloom-primary transition font-medium">{{ $product->totalReviews() }} Ulasan</a>
+                        <span class="text-sm font-bold style="color: #aa6778;"">{{ number_format($avg, 1) }}</span>
+                        <span class="style="color: #b78493;"">|</span>
+                        <a href="#ulasan" class="text-sm style="color: #b78493;" hover:text-bloom-primary transition font-medium">{{ $product->totalReviews() }} Ulasan</a>
                     </div>
 
                     <!-- Price & Stock Section -->
-                    <div class="mb-6 pb-6 border-b-2 border-bloom-primary/40">
+                    <div class="mb-6 pb-6 border-b-2 style="border-color: #aa6778;"/40">
                         <div class="mb-4">
-                            <p class="text-4xl font-semibold text-bloom-text-primary">
+                            <p class="text-4xl font-semibold style="color: #aa6778;"">
                                 Rp {{ number_format($product->price, 0, ',', '.') }}
                             </p>
                         </div>
@@ -77,9 +77,9 @@
                         <!-- Stock Status -->
                         <div class="flex items-center gap-3">
                             <div class="w-2 h-2 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent' : 'bg-red-500' }}"></div>
-                            <span class="text-sm font-medium text-bloom-text-primary">
+                            <span class="text-sm font-medium style="color: #aa6778;"">
                                 @if($product->stock > 0)
-                                    <span class="text-bloom-primary font-bold">Tersedia</span> • <span class="text-bloom-text-secondary font-medium">{{ $product->stock }} unit</span>
+                                    <span class="text-bloom-primary font-bold">Tersedia</span> • <span class="style="color: #b78493;" font-medium">{{ $product->stock }} unit</span>
                                 @else
                                     <span class="text-red-600 font-semibold">Habis Terjual</span>
                                 @endif
@@ -103,22 +103,22 @@
                                 
                                 <!-- Quantity Selector -->
                                 <div class="mb-6">
-                                    <label for="quantity" class="block text-xs font-bold text-bloom-text-primary mb-2 uppercase tracking-wider">Jumlah</label>
+                                    <label for="quantity" class="block text-xs font-bold style="color: #aa6778;" mb-2 uppercase tracking-wider">Jumlah</label>
                                     <div class="flex items-center gap-3">
-                                        <div class="flex items-center border-2 border-bloom-primary/50 rounded-lg overflow-hidden bg-bloom-primary/15 hover:border-bloom-primary hover:bg-bloom-primary/25 transition">
-                                            <button type="button" class="px-3 py-2 text-bloom-text-primary hover:bg-bloom-primary hover:text-white transition" onclick="document.getElementById('quantity').value = Math.max(1, parseInt(document.getElementById('quantity').value) - 1)">
+                                        <div class="flex items-center border-2 style="border-color: #aa6778;"/50 rounded-lg overflow-hidden bg-rgba(170, 103, 120, 0.15) hover:style="border-color: #aa6778;" hover:bg-rgba(170, 103, 120, 0.25) transition">
+                                            <button type="button" class="px-3 py-2 style="color: #aa6778;" hover:bg-bloom-primary hover:text-white transition" onclick="document.getElementById('quantity').value = Math.max(1, parseInt(document.getElementById('quantity').value) - 1)">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                                                 </svg>
                                             </button>
-                                            <input type="number" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="1" class="w-16 px-2 py-2 text-center border-l-2 border-r-2 border-bloom-primary/50 focus:outline-none focus:ring-2 focus:ring-bloom-primary focus:ring-offset-1 font-medium text-sm bg-white" required>
-                                            <button type="button" class="px-3 py-2 text-bloom-text-primary hover:bg-bloom-primary hover:text-white transition" onclick="document.getElementById('quantity').value = Math.min({{ $product->stock }}, parseInt(document.getElementById('quantity').value) + 1)">
+                                            <input type="number" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="1" class="w-16 px-2 py-2 text-center border-l-2 border-r-2 style="border-color: #aa6778;"/50 focus:outline-none focus:ring-2 focus:ring-bloom-primary focus:ring-offset-1 font-medium text-sm bg-white" required>
+                                            <button type="button" class="px-3 py-2 style="color: #aa6778;" hover:bg-bloom-primary hover:text-white transition" onclick="document.getElementById('quantity').value = Math.min({{ $product->stock }}, parseInt(document.getElementById('quantity').value) + 1)">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                                 </svg>
                                             </button>
                                         </div>
-                                    <p class="text-xs text-bloom-text-secondary\">Maks {{ $product->stock }}</p>
+                                    <p class="text-xs style="color: #b78493;"\">Maks {{ $product->stock }}</p>
                                     </div>
                                 </div>
 
@@ -131,7 +131,7 @@
                                         Tambah ke Keranjang
                                     </button>
 
-                                    <a href="{{ route('products.index') }}" class="block text-center w-full border-2 border-bloom-border text-bloom-text-primary font-semibold py-2 rounded-lg hover:border-bloom-primary hover:bg-bloom-bg-cream transition duration-300 text-sm">
+                                    <a href="{{ route('products.index') }}" class="block text-center w-full border-2 border-bloom-border style="color: #aa6778;" font-semibold py-2 rounded-lg hover:style="border-color: #aa6778;" hover:bg-bloom-bg-cream transition duration-300 text-sm">
                                         Lanjut Belanja
                                     </a>
                                 </div>
@@ -151,28 +151,12 @@
                                 <a href="{{ route('login') }}" class="flex-1 bg-bloom-primary hover:bg-bloom-primary/90 text-white font-semibold py-2 rounded-lg transition text-center text-xs">
                                     Login
                                 </a>
-                                <a href="{{ route('register') }}" class="flex-1 border border-bloom-primary text-bloom-primary hover:bg-bloom-bg-cream font-semibold py-2 rounded-lg transition text-center text-xs">
+                                <a href="{{ route('register') }}" class="flex-1 border style="border-color: #aa6778;" text-bloom-primary hover:bg-bloom-bg-cream font-semibold py-2 rounded-lg transition text-center text-xs">
                                     Daftar
                                 </a>
                             </div>
                         </div>
                     @endauth
-
-                    <!-- Share -->
-                    <div class="border-t-2 border-bloom-primary/40 pt-4 mt-6">
-                        <p class="text-xs font-bold text-bloom-text-primary mb-3 uppercase tracking-wider">Bagikan</p>
-                        <div class="flex gap-2">
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-bloom-primary/10 border border-bloom-border text-bloom-primary rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5c-.563-.074-1.396-.146-2.278-.146-2.27 0-3.846 1.481-3.846 4.188v2.158z"/></svg>
-                            </a>
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-bloom-primary/10 border border-bloom-border text-bloom-primary rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7z"/></svg>
-                            </a>
-                            <a href="#" class="inline-flex items-center justify-center w-10 h-10 bg-bloom-primary/10 border border-bloom-border text-bloom-primary rounded-lg hover:bg-bloom-primary hover:text-white transition duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -182,7 +166,7 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <p class="text-sm font-semibold text-bloom-primary mb-2 uppercase tracking-widest">Suara Pelanggan</p>
-                    <h2 class="text-4xl font-light text-bloom-text-primary">Ulasan Pembeli</h2>
+                    <h2 class="text-4xl font-light style="color: #aa6778;"">Ulasan Pembeli</h2>
                 </div>
             </div>
 
@@ -190,17 +174,17 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     <!-- Rating Snapshot -->
                     <div class="lg:col-span-1">
-                        <div class="bg-gradient-to-br from-bloom-primary/20 to-bloom-fuchsia/15 border-2 border-bloom-primary/40 rounded-2xl p-8 sticky top-8 shadow-soft">
-                            <p class="text-bloom-text-secondary text-sm mb-2">Rating Rata-rata</p>
+                        <div class="bg-gradient-to-br from-rgba(170, 103, 120, 0.20) to-bloom-fuchsia/15 border-2 style="border-color: #aa6778;"/40 rounded-2xl p-8 sticky top-8 shadow-soft">
+                            <p class="style="color: #b78493;" text-sm mb-2">Rating Rata-rata</p>
                             <div class="flex items-end gap-3 mb-6">
-                                <span class="text-6xl font-light text-bloom-text-primary leading-none">{{ number_format($product->averageRating(), 1) }}</span>
+                                <span class="text-6xl font-light style="color: #aa6778;" leading-none">{{ number_format($product->averageRating(), 1) }}</span>
                                 <div class="flex flex-col">
-                                    <div class="flex text-bloom-fuchsia mb-1">
+                                    <div class="flex style="color: #cc93a2;" mb-1">
                                         @for($i = 1; $i <= 5; $i++)
                                             <svg class="w-5 h-5 {{ $i <= round($product->averageRating()) ? 'fill-current' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                                         @endfor
                                     </div>
-                                    <span class="text-sm text-bloom-text-secondary font-medium">Dari {{ $product->totalReviews() }} Ulasan</span>
+                                    <span class="text-sm style="color: #b78493;" font-medium">Dari {{ $product->totalReviews() }} Ulasan</span>
                                 </div>
                             </div>
 
@@ -212,11 +196,11 @@
                                         $percent = $product->totalReviews() > 0 ? ($count / $product->totalReviews()) * 100 : 0;
                                     @endphp
                                     <div class="flex items-center gap-3">
-                                        <span class="text-xs font-bold text-bloom-text-primary w-2">{{ $i }}</span>
-                                        <div class="flex-1 h-2 bg-bloom-primary/25 rounded-full overflow-hidden">
+                                        <span class="text-xs font-bold style="color: #aa6778;" w-2">{{ $i }}</span>
+                                        <div class="flex-1 h-2 bg-rgba(170, 103, 120, 0.25) rounded-full overflow-hidden">
                                             <div class=\"h-full bg-bloom-fuchsia rounded-full\" style=\"width: {{ $percent }}%\"></div>
                                         </div>
-                                        <span class="text-xs text-bloom-text-secondary w-8">{{ $count }}</span>
+                                        <span class="text-xs style="color: #b78493;" w-8">{{ $count }}</span>
                                     </div>
                                 @endfor
                             </div>
@@ -226,24 +210,24 @@
                     <!-- Review List -->
                     <div class="lg:col-span-2 space-y-8">
                         @foreach($product->reviews()->latest()->get() as $review)
-                            <div class="pb-8 border-b-2 border-bloom-primary/40 last:border-0">
+                            <div class="pb-8 border-b-2 style="border-color: #aa6778;"/40 last:border-0">
                                 <div class="flex justify-between items-start mb-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-bloom-primary/20 rounded-full flex items-center justify-center text-bloom-primary font-bold text-sm border border-bloom-primary/30">
+                                        <div class="w-10 h-10 bg-rgba(170, 103, 120, 0.20) rounded-full flex items-center justify-center text-bloom-primary font-bold text-sm border style="border-color: #aa6778;"/30">
                                             {{ substr($review->user->name, 0, 1) }}
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-bold text-bloom-text-primary">{{ $review->user->name }}</h4>
-                                            <p class="text-xs text-bloom-text-secondary">{{ $review->created_at->diffForHumans() }}</p>
+                                            <h4 class="text-sm font-bold style="color: #aa6778;"">{{ $review->user->name }}</h4>
+                                            <p class="text-xs style="color: #b78493;"">{{ $review->created_at->diffForHumans() }}</p>
                                         </div>
                                     </div>
-                                    <div class="flex text-bloom-fuchsia">
+                                    <div class="flex style="color: #cc93a2;"">
                                         @for($i = 1; $i <= 5; $i++)
                                             <svg class="w-4 h-4 {{ $i <= $review->rating ? 'fill-current' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                                         @endfor
                                     </div>
                                 </div>
-                                <p class="text-bloom-text-secondary font-light leading-relaxed">
+                                <p class="style="color: #b78493;" font-light leading-relaxed">
                                     {{ $review->comment }}
                                 </p>
                             </div>
@@ -263,22 +247,22 @@
 
         <!-- Related Products Section -->
         @if($relatedProducts->count() > 0)
-            <div class="border-t border-bloom-primary/40 pt-20 pb-12">
+            <div class="border-t style="border-color: #aa6778;"/40 pt-20 pb-12">
                 <div class="mb-12">
                     <p class="text-sm font-semibold text-bloom-primary mb-3 uppercase tracking-widest">Pilihan Lainnya</p>
-                    <h2 class="text-4xl font-light text-bloom-text-primary">Produk Serupa</h2>
+                    <h2 class="text-4xl font-light style="color: #aa6778;"">Produk Serupa</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($relatedProducts as $related)
                         <a href="{{ route('products.show', $related->slug) }}" class="group">
-                            <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                            <div class="style="background: #d6acad;" border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:style="border-color: #aa6778;"">
                                 <!-- Product Image -->
                                 <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
                                     @if($related->image)
                                         <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                     @else
-                                        <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                        <div class="w-full h-full flex items-center justify-center style="color: #b78493;"">
                                             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
@@ -288,16 +272,16 @@
 
                                 <!-- Product Info -->
                                 <div class="p-5 flex flex-col flex-grow">
-                                    <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $related->name }}</h3>
+                                    <h3 class="font-medium style="color: #aa6778;" mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $related->name }}</h3>
                                     @if($related->category)
-                                        <p class="text-xs text-bloom-text-secondary mb-3">{{ $related->category->name }}</p>
+                                        <p class="text-xs style="color: #b78493;" mb-3">{{ $related->category->name }}</p>
                                     @endif
-                                    <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $related->description }}</p>
+                                    <p class="text-xs style="color: #b78493;" font-light mb-4 line-clamp-2 flex-grow">{{ $related->description }}</p>
                                     
                                     <div class="border-t border-bloom-border pt-4">
                                         <div class="flex justify-between items-center">
                                             <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($related->price, 0, ',', '.') }}</span>
-                                            <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $related->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
+                                            <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $related->stock > 0 ? 'style="background: rgba(170, 103, 120, 0.1);" text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
                                                 {{ $related->stock > 0 ? 'Tersedia' : 'Habis' }}
                                             </span>
                                         </div>
@@ -312,4 +296,8 @@
     </div>
 </div>
 @endsection
+
+
+
+
 
