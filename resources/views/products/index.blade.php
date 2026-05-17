@@ -9,7 +9,7 @@
         };
     @endphp
     <!-- Header Section -->
-    <div class="bg-gradient-to-b from-bloom-fuchsia/45 to-bloom-accent/10 py-16 mb-12 border-b-4 border-bloom-fuchsia">
+    <div style="background: linear-gradient(to bottom, #DA4582, #EC91C3, #FECEEE, #FFF5FA); border-bottom: 3px solid #EC91C3;" class="py-16 mb-12">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="inline-block bg-bloom-bg-card border-2 border-bloom-accent rounded-full px-6 py-2 mb-6 shadow-soft">
                 <p class="text-bloom-accent text-xs font-semibold tracking-widest uppercase">Koleksi Pilihan Hari Ini</p>
@@ -52,7 +52,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 <!-- Best Seller Card -->
                 <div class="bg-gradient-to-br from-bloom-fuchsia/40 to-bloom-accent/40 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">BEST SELLER</h3>
+                    <h3 class="text-xl font-bold text-bloom-text-primary mb-3 uppercase tracking-wide">BEST SELLER</h3>
                     <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Produk favorit dengan tampilan paling menarik.
                     </p>
@@ -60,7 +60,7 @@
 
                 <!-- Special Occasion Card -->
                 <div class="bg-gradient-to-br from-bloom-primary/50 to-bloom-fuchsia/50 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
+                    <h3 class="text-xl font-bold text-bloom-text-primary mb-3 uppercase tracking-wide">SPECIAL OCCASION</h3>
                     <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Pilihan untuk anniversary, wedding, dan hadiah spesial.
                     </p>
@@ -68,7 +68,7 @@
 
                 <!-- New Arrivals Card -->
                 <div class="bg-gradient-to-br from-bloom-accent/40 to-bloom-primary/40 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-bloom-accent mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
+                    <h3 class="text-xl font-bold text-bloom-text-primary mb-3 uppercase tracking-wide">NEW ARRIVALS</h3>
                     <p class="text-bloom-text-primary font-medium text-sm leading-relaxed">
                         Rangkaian terbaru dengan nuansa pastel yang lembut dan modern.
                     </p>
@@ -86,7 +86,7 @@
                 @endif
                 
                 @if($filteredProducts->count() > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 mb-12">
                         @foreach($filteredProducts as $product)
                             <a href="{{ route('products.show', $product->slug) }}" class="group">
                                 <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
@@ -165,7 +165,7 @@
                         <p class="text-sm text-bloom-text-secondary font-light">Produk favorit dengan tampilan paling menarik</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
                         @foreach($bestSellers as $product)
                             <a href="{{ route('products.show', $product->slug) }}" class="group">
                                 <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
@@ -214,7 +214,7 @@
                         <p class="text-sm text-bloom-text-secondary font-light">Pilihan untuk anniversary, wedding, dan hadiah spesial</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
                         @foreach($specialOccasion as $product)
                             <a href="{{ route('products.show', $product->slug) }}" class="group">
                                 <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
@@ -263,7 +263,7 @@
                         <p class="text-sm text-bloom-text-secondary font-light">Rangkaian terbaru dengan nuansa pastel yang lembut dan modern</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
                         @foreach($newArrivals as $product)
                             <a href="{{ route('products.show', $product->slug) }}" class="group">
                                 <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">

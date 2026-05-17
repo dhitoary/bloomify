@@ -18,43 +18,43 @@ export default {
             colors: {
                 // Soft Pastel Elegant Florist Palette
                 'bloom': {
-                    // Main Colors
-                    'primary': '#DDB1B7',           // Powder Pink
-                    'primary-light': '#E8C5CC',    // Crystal Rose
-                    'primary-lighter': '#F5E5E8',  // Very light pink
+                    // Main Colors - New Pink Palette
+                    'primary': '#EC91C3',           // Medium Pink
+                    'primary-light': '#FECEEE',     // Light Pink
+                    'primary-lighter': '#FFF0F8',   // Very light pink
                     
-                    'secondary': '#E8C5CC',        // Crystal Rose
-                    'secondary-light': '#F5E5E8',  // Light crystal rose
+                    'secondary': '#DA4582',         // Hot Pink
+                    'secondary-light': '#EC91C3',   // Medium Pink
                     
-                    // Accent / CTA
-                    'accent': '#DFA54A',           // Jurassic Gold
-                    'accent-dark': '#C99035',      // Hover gold
-                    'accent-light': '#E6BE73',     // Buff Yellow
+                    // Accent / CTA - Gold
+                    'accent': '#F0CD87',            // Warm Gold
+                    'accent-dark': '#D4B06A',       // Hover gold
+                    'accent-light': '#F5DCA6',      // Light Gold
                     
-                    // Fuchsia / Vibrant Pink
-                    'fuchsia': '#E71E63',          // Vibrant Fuchsia Pink
-                    'fuchsia-light': '#F54A92',    // Light Fuchsia
-                    'fuchsia-dark': '#C41853',     // Dark Fuchsia
+                    // Fuchsia / Deep Pink
+                    'fuchsia': '#DA4582',           // Hot Pink
+                    'fuchsia-light': '#EC91C3',     // Medium Pink
+                    'fuchsia-dark': '#9F254F',      // Deep Wine
                     
                     // Backgrounds
-                    'bg-main': '#F8F3EE',          // Light cream background
-                    'bg-cream': '#EADCC8',         // Cream Beige
-                    'bg-card': '#FFF9F6',          // Card background
-                    'bg-footer': '#DDB1B7',        // Footer dusty pink
+                    'bg-main': '#FFF5FA',           // Near-white pink
+                    'bg-cream': '#FECEEE',          // Light pink
+                    'bg-card': '#FFFFFF',           // White card
+                    'bg-footer': '#9F254F',         // Deep wine footer
                     
                     // Text Colors
-                    'text-primary': '#3D312C',     // Dark brown
-                    'text-secondary': '#7A6A63',   // Light brown
-                    'text-light': '#F8F3EE',       // Light cream text
+                    'text-primary': '#9F254F',      // Deep wine
+                    'text-secondary': '#DA4582',    // Hot pink
+                    'text-light': '#FFFFFF',        // White text
                     
                     // Borders & Dividers
-                    'border': '#E7D6CF',           // Soft border
-                    'border-light': '#F0E8E3',     // Very light border
+                    'border': '#EC91C3',            // Medium pink border
+                    'border-light': '#FECEEE',      // Light pink border
                     
-                    // Support Colors (Soft & Muted)
-                    'success': '#C4B5A0',          // Muted green
-                    'error': '#D4A9a0',            // Muted red
-                    'warning': '#E8C589',          // Muted yellow
+                    // Support Colors
+                    'success': '#22c55e',           // Green
+                    'error': '#ef4444',             // Red
+                    'warning': '#F0CD87',           // Gold
                 },
             },
             backgroundColor: {

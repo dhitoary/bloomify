@@ -30,8 +30,8 @@
         <!-- Team -->
         <div class="pt-4 border-t border-bloom-text-light/30">
           <p class="text-xs text-bloom-text-light/80 font-light mb-2">Tim:</p>
-          <p class="text-sm text-bloom-text-light font-light">
-            <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Dhito</span> • <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Cindy</span> • <span class="font-bold text-bloom-fuchsia drop-shadow-lg" style="text-shadow: 0 0 10px rgba(231, 30, 99, 0.8), 0 0 20px rgba(231, 30, 99, 0.5);">Surya</span>
+          <p class="text-sm text-bloom-text-light font-medium">
+            <span class="text-white drop-shadow-sm">Dhito</span> • <span class="text-white drop-shadow-sm">Cindy</span> • <span class="text-white drop-shadow-sm">Surya</span>
           </p>
         </div>
       </div>
@@ -127,7 +127,7 @@
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center md:text-left">
       <!-- Payment Methods -->
       <div class="space-y-3">
-        <p class="text-sm font-semibold text-bloom-accent">Metode Pembayaran</p>
+        <p class="text-sm font-bold text-bloom-text-primary">Metode Pembayaran</p>
         <div class="flex items-center space-x-3 justify-center md:justify-start">
           <!-- Visa -->
           <div class="w-12 h-8 bg-white rounded flex items-center justify-center hover:scale-110 transition-transform cursor-pointer shadow-sm" title="Visa">
@@ -164,18 +164,18 @@
 
       <!-- Copyright -->
       <div class="text-center">
-        <p class="text-sm text-bloom-accent font-light">
+        <p class="text-sm text-bloom-text-primary font-medium">
           Copyright &copy; 2026 Bloomify. Semua hak dilindungi.
         </p>
       </div>
 
       <!-- Legal Links -->
       <div class="flex justify-center md:justify-end space-x-4">
-        <a href="{{ route('privacy') }}" class="text-sm text-bloom-accent hover:text-white transition-colors font-light">
+        <a href="{{ route('privacy') }}" class="text-sm text-bloom-text-secondary hover:text-bloom-text-primary transition-colors font-medium">
           Privasi
         </a>
-        <span class="text-bloom-accent/60">•</span>
-        <a href="{{ route('terms') }}" class="text-sm text-bloom-accent hover:text-white transition-colors font-light">
+        <span class="text-bloom-text-secondary/60">•</span>
+        <a href="{{ route('terms') }}" class="text-sm text-bloom-text-secondary hover:text-bloom-text-primary transition-colors font-medium">
           Syarat
         </a>
       </div>

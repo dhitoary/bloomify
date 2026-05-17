@@ -21,7 +21,7 @@ class ProductController extends Controller
             ->with('reviews')
             ->withCount('reviews')
             ->orderBy('reviews_count', 'desc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         // Get special occasion products (dengan rating tertinggi)
@@ -29,13 +29,13 @@ class ProductController extends Controller
             ->with(['reviews', 'category'])
             ->withAvg('reviews', 'rating')
             ->orderBy('reviews_avg_rating', 'desc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         // Get new arrivals
         $newArrivals = Product::where('stock', '>', 0)
             ->orderBy('created_at', 'desc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         // Filter by category if selected
