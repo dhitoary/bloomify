@@ -171,6 +171,55 @@
                         <a href="{{ route('admin.products.create') }}" style="color: #EC91C3;" class="hover:opacity-80 font-medium transition">+ Tambah Produk</a>
                     </div>
                 </div>
+
+                <!-- Simple Search & Filter Bar -->
+                <form method="GET" action="{{ route('admin.dashboard') }}" class="px-8 py-4 border-b-2 border-bloom-accent-light bg-blue-50" style="background: rgba(255,255,255,0.5);">
+                    <input type="hidden" name="tab" value="products">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                        <!-- Search -->
+                        <div>
+                            <label class="block text-xs font-semibold" style="color: #9F254F; margin-bottom: 0.5rem;">CARI PRODUK</label>
+                            <input type="text" name="search" placeholder="Nama produk..." 
+                                value="{{ request('search') }}" 
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2" style="focus:ring-color: #EC91C3;">
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div>
+                            <label class="block text-xs font-semibold" style="color: #9F254F; margin-bottom: 0.5rem;">KATEGORI</label>
+                            <select name="category" class="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2" style="focus:ring-color: #EC91C3;">
+                                <option value="">Semua</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Stock Status Filter -->
+                        <div>
+                            <label class="block text-xs font-semibold" style="color: #9F254F; margin-bottom: 0.5rem;">STATUS STOK</label>
+                            <select name="stock_status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2" style="focus:ring-color: #EC91C3;">
+                                <option value="">Semua</option>
+                                <option value="available" {{ request('stock_status') == 'available' ? 'selected' : '' }}>Tersedia</option>
+                                <option value="limited" {{ request('stock_status') == 'limited' ? 'selected' : '' }}>Terbatas</option>
+                                <option value="out_of_stock" {{ request('stock_status') == 'out_of_stock' ? 'selected' : '' }}>Habis</option>
+                            </select>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-2">
+                            <button type="submit" class="flex-1 px-3 py-2 text-white text-sm font-medium rounded transition" style="background: #DA4582; hover:background: #9F254F;">
+                                Cari
+                            </button>
+                            <a href="{{ route('admin.dashboard') }}?tab=products" class="flex-1 px-3 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded transition text-center">
+                                Reset
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse">
                         <thead>

@@ -48,7 +48,7 @@
         </div>
 
         <!-- Category Description Cards -->
-        @if(!$filteredProducts)
+        @if(!$filteredProducts || $showAllProducts)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 <!-- Best Seller Card -->
                 <div class="bg-gradient-to-br from-bloom-fuchsia/40 to-bloom-accent/40 border-2 border-bloom-border rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
@@ -88,40 +88,77 @@
                 @if($filteredProducts->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 mb-12">
                         @foreach($filteredProducts as $product)
-                            <a href="{{ route('products.show', $product->slug) }}" class="group">
-                                <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
-                                    <!-- Product Image -->
-                                    <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
-                                        @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                        @else
-                                            <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
-                                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                </svg>
-                                            </div>
-                                        @endif
-                                    </div>
+                            @if($product->stock > 0)
+                                <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                    <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                        <!-- Product Image -->
+                                        <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
+                                            @if($product->image)
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                        </div>
 
-                                    <!-- Product Info -->
-                                    <div class="p-5 flex flex-col flex-grow">
-                                        <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
-                                        @if($product->category)
-                                            <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
-                                        @endif
-                                        <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
-                                        
-                                        <div class="border-t border-bloom-border pt-4">
-                                            <div class="flex justify-between items-center">
-                                                <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
-                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
-                                                </span>
+                                        <!-- Product Info -->
+                                        <div class="p-5 flex flex-col flex-grow">
+                                            <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
+                                            @if($product->category)
+                                                <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                            @endif
+                                            <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                            
+                                            <div class="border-t border-bloom-border pt-4">
+                                                <div class="flex justify-between items-center">
+                                                    <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent">Tersedia</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="group">
+                                    <div class="bg-bloom-bg-card border-2 border-gray-300 rounded-2xl overflow-hidden h-full flex flex-col opacity-60 cursor-not-allowed relative">
+                                        <!-- Product Image -->
+                                        <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
+                                            @if($product->image)
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            <!-- SOLD Overlay -->
+                                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                                <div style="background: rgba(220, 38, 38, 0.9); transform: rotate(-15deg);" class="px-4 py-2 rounded-lg font-bold text-white">SOLD</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Product Info -->
+                                        <div class="p-5 flex flex-col flex-grow">
+                                            <h3 class="font-medium text-gray-500 mb-1 line-clamp-2 text-sm">{{ $product->name }}</h3>
+                                            @if($product->category)
+                                                <p class="text-xs text-gray-400 mb-3">{{ $product->category->name }}</p>
+                                            @endif
+                                            <p class="text-xs text-gray-400 font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                            
+                                            <div class="border-t border-gray-300 pt-4">
+                                                <div class="flex justify-between items-center">
+                                                    <span class="font-semibold text-gray-400 text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-red-100 text-red-600 border border-red-300">SOLD</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            @endif
                         @endforeach
                     </div>
 
@@ -193,9 +230,7 @@
                                         <div class="border-t border-bloom-border pt-4">
                                             <div class="flex justify-between items-center">
                                                 <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
-                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
-                                                </span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent">Tersedia</span>
                                             </div>
                                         </div>
                                     </div>
@@ -242,9 +277,7 @@
                                         <div class="border-t border-bloom-border pt-4">
                                             <div class="flex justify-between items-center">
                                                 <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
-                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
-                                                </span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent">Tersedia</span>
                                             </div>
                                         </div>
                                     </div>
@@ -290,9 +323,7 @@
                                         <div class="border-t border-bloom-border pt-4">
                                             <div class="flex justify-between items-center">
                                                 <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <span class="text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-bloom-accent/10 text-bloom-accent border border-bloom-accent' : 'bg-red-100 text-red-600 border border-red-200' }}">
-                                                    {{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}
-                                                </span>
+                                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent">Tersedia</span>
                                             </div>
                                         </div>
                                     </div>
@@ -300,6 +331,117 @@
                             </a>
                         @endforeach
                     </div>
+                </section>
+            @endif
+
+            <!-- Semua Produk Section (shown when Semua Produk button is clicked) -->
+            @if($showAllProducts && $filteredProducts)
+                <section class="mb-20">
+                    <h2 class="text-3xl font-semibold text-bloom-text-primary mb-8">Semua Produk</h2>
+                    
+                    @if($filteredProducts->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 mb-12">
+                            @foreach($filteredProducts as $product)
+                                @if($product->stock > 0)
+                                    <a href="{{ route('products.show', $product->slug) }}" class="group">
+                                        <div class="bg-bloom-bg-card border-2 border-bloom-border rounded-2xl overflow-hidden hover:shadow-soft-hover transition-all duration-300 h-full flex flex-col hover:-translate-y-1 hover:border-bloom-primary">
+                                            <!-- Product Image -->
+                                            <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
+                                                @if($product->image)
+                                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                                @else
+                                                    <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            </div>
+
+                                            <!-- Product Info -->
+                                            <div class="p-5 flex flex-col flex-grow">
+                                                <h3 class="font-medium text-bloom-text-primary mb-1 line-clamp-2 text-sm group-hover:text-bloom-accent transition duration-300">{{ $product->name }}</h3>
+                                                @if($product->category)
+                                                    <p class="text-xs text-bloom-text-secondary mb-3">{{ $product->category->name }}</p>
+                                                @endif
+                                                <p class="text-xs text-bloom-text-secondary font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                                
+                                                <div class="border-t border-bloom-border pt-4">
+                                                    <div class="flex justify-between items-center">
+                                                        <span class="font-semibold text-bloom-accent text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-bloom-accent/10 text-bloom-accent border border-bloom-accent">Tersedia</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @else
+                                    <div class="group">
+                                        <div class="bg-bloom-bg-card border-2 border-gray-300 rounded-2xl overflow-hidden h-full flex flex-col opacity-60 cursor-not-allowed relative">
+                                            <!-- Product Image -->
+                                            <div class="relative overflow-hidden h-48 bg-gradient-to-br from-bloom-bg-cream to-bloom-primary-lighter">
+                                                @if($product->image)
+                                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                    <div class="w-full h-full flex items-center justify-center text-bloom-text-secondary">
+                                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                    </div>
+                                                @endif
+                                                <!-- SOLD Overlay -->
+                                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                                    <div style="background: rgba(220, 38, 38, 0.9); transform: rotate(-15deg);" class="px-4 py-2 rounded-lg font-bold text-white">SOLD</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Product Info -->
+                                            <div class="p-5 flex flex-col flex-grow">
+                                                <h3 class="font-medium text-gray-500 mb-1 line-clamp-2 text-sm">{{ $product->name }}</h3>
+                                                @if($product->category)
+                                                    <p class="text-xs text-gray-400 mb-3">{{ $product->category->name }}</p>
+                                                @endif
+                                                <p class="text-xs text-gray-400 font-light mb-4 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                                                
+                                                <div class="border-t border-gray-300 pt-4">
+                                                    <div class="flex justify-between items-center">
+                                                        <span class="font-semibold text-gray-400 text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-red-100 text-red-600 border border-red-300">SOLD</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        @if($filteredProducts->hasPages())
+                            <div class="mt-12 flex justify-center">
+                                <div class="inline-flex gap-2 border border-gray-200 rounded-lg p-2 bg-white">
+                                    @if($filteredProducts->onFirstPage())
+                                        <span class="px-4 py-2 text-gray-400 rounded-lg">←</span>
+                                    @else
+                                        <a href="{{ $filteredProducts->previousPageUrl() }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">←</a>
+                                    @endif
+
+                                    @foreach ($filteredProducts->getUrlRange(1, $filteredProducts->lastPage()) as $page => $url)
+                                        @if ($page == $filteredProducts->currentPage())
+                                            <span class="px-4 py-2 bg-bloom-primary text-white rounded-lg font-medium">{{ $page }}</span>
+                                        @else
+                                            <a href="{{ $url }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">{{ $page }}</a>
+                                        @endif
+                                    @endforeach
+
+                                    @if($filteredProducts->hasMorePages())
+                                        <a href="{{ $filteredProducts->nextPageUrl() }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">→</a>
+                                    @else
+                                        <span class="px-4 py-2 text-gray-400">→</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                 </section>
             @endif
         @endif
@@ -318,55 +460,50 @@
     });
 
     function showRecommendationModal() {
+        const categories = @json($categories);
         const modal = document.createElement('div');
         modal.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in';
+        
+        let categoryOptions = `
+            <label class="flex items-center cursor-pointer group">
+                <input type="radio" name="rec_category" value="all" class="w-4 h-4" style="accent-color: #DA4582;">
+                <span class="ml-3 text-gray-700 group-hover:text-bloom-accent transition">Semua Kategori</span>
+            </label>
+        `;
+        
+        categories.forEach(cat => {
+            categoryOptions += `
+                <label class="flex items-center cursor-pointer group">
+                    <input type="radio" name="rec_category" value="${cat.id}" class="w-4 h-4" style="accent-color: #DA4582;">
+                    <span class="ml-3 text-gray-700 group-hover:text-bloom-accent transition">${cat.name}</span>
+                </label>
+            `;
+        });
+        
         modal.innerHTML = `
             <div class="bg-white rounded-2xl max-w-md w-full shadow-xl max-h-[90vh] overflow-y-auto">
-                <div class="sticky top-0 bg-gradient-to-r from-bloom-teal/10 to-bloom-mint/10 px-6 py-4 border-b border-bloom-mint-light flex items-center justify-between">
-                    <h2 class="text-xl font-semibold text-gray-900">Rekomendasi Produk</h2>
-                    <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                <div class="sticky top-0 px-6 py-4 border-b-2 flex items-center justify-between" style="background: linear-gradient(to right, #DA4582, #EC91C3); border-color: #9F254F;">
+                    <h2 class="text-lg font-semibold text-white">🌸 Rekomendasi Produk</h2>
+                    <button onclick="this.closest('.fixed').remove()" class="text-white hover:opacity-80 text-2xl" style="line-height: 1;">&times;</button>
                 </div>
                 
                 <div class="p-6 space-y-6">
-                    <div class="space-y-4">
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="anniversary" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Ultah / Anniversary</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="wedding" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Pernikahan / Wedding</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="congratulations" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Ucapan Selamat</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="condolence" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Duka Cita</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="love" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Ungkapan Cinta</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer group">
-                            <input type="radio" name="occasion" value="random" class="w-4 h-4 text-bloom-teal">
-                            <span class="ml-3 text-gray-700 group-hover:text-bloom-teal transition">Surprise Random</span>
-                        </label>
+                    <div class="space-y-3">
+                        ${categoryOptions}
                     </div>
 
-                    <div class="border-t border-gray-200 pt-4 space-y-4">
+                    <div style="border-top: 2px solid #EC91C3;" class="pt-4 space-y-4">
                         <label class="block">
-                            <span class="text-sm font-semibold text-gray-700 mb-2 block">Budget Maksimal (Rp)</span>
-                            <input type="number" id="budgetInput" placeholder="Masukkan budget" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-bloom-teal">
+                            <span style="color: #9F254F;" class="text-sm font-semibold mb-2 block">💰 Budget Maksimal (Rp)</span>
+                            <input type="number" id="budgetInput" placeholder="Tidak ada batas" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2" style="focus:border-color: #EC91C3; focus:ring-color: #EC91C3;">
                         </label>
                     </div>
 
                     <div class="flex gap-3 pt-4">
-                        <button onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
+                        <button onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                             Batal
                         </button>
-                        <button onclick="submitRecommendation()" class="flex-1 px-4 py-2 bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-lg transition font-medium">
+                        <button onclick="submitRecommendation()" class="flex-1 px-4 py-2 text-white rounded-lg transition font-medium" style="background: #DA4582;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
                             Lihat Rekomendasi
                         </button>
                     </div>
@@ -381,16 +518,21 @@
     }
 
     function submitRecommendation() {
-        const occasion = document.querySelector('input[name="occasion"]:checked');
+        const category = document.querySelector('input[name="rec_category"]:checked');
         const budget = document.getElementById('budgetInput').value;
         
-        if (!occasion) {
-            alert('Silakan pilih acara terlebih dahulu');
+        if (!category) {
+            alert('Silakan pilih kategori terlebih dahulu');
             return;
         }
 
-        // Redirect ke halaman produk dengan filter
-        window.location.href = `{{ route('products.index') }}?occasion=${occasion.value}&budget=${budget}`;
+        // Build URL with category and optional budget
+        let url = `{{ route('products.index') }}?rec_category=${category.value}`;
+        if (budget) {
+            url += `&budget=${budget}`;
+        }
+        
+        window.location.href = url;
     }
 </script>
 

@@ -21,7 +21,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
                 <!-- Product Image -->
                 <div style="background: #ffffff; border-right-color: #9F254F;" class="lg:col-span-1 border-r-2 lg:border-r h-96 p-6 flex items-center justify-center">
-                    <div style="background: #FFF5FA; border-color: #EC91C3;" class="w-full h-full border-2 rounded-xl overflow-hidden flex items-center justify-center shadow-soft">
+                    <div style="background: #FFF5FA; border-color: #EC91C3;" class="w-full h-full border-2 rounded-xl overflow-hidden flex items-center justify-center shadow-soft relative {{ $product->stock <= 0 ? 'opacity-50' : '' }}">
                         @if($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" 
                                  alt="{{ $product->name }}" 
@@ -32,6 +32,15 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                                 <p class="text-xs">Tidak ada gambar</p>
+                            </div>
+                        @endif
+                        
+                        <!-- SOLD Overlay -->
+                        @if($product->stock <= 0)
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div style="background: rgba(220, 38, 38, 0.9);" class="px-6 py-3 rounded-lg transform -rotate-12">
+                                    <p style="color: #ffffff;" class="text-3xl font-bold tracking-widest">SOLD</p>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -138,23 +147,27 @@
 
                                 <!-- Buttons -->
                                 <div class="space-y-3">
-                                    <button type="submit" class="w-full bg-bloom-primary hover:bg-bloom-primary/90 text-white font-bold py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2 text-sm">
+                                    <button type="submit" style="background: #DA4582; color: #ffffff;" class="w-full hover:opacity-90 font-semibold py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2 text-sm">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                         Tambah ke Keranjang
                                     </button>
 
-                                    <a href="{{ route('products.index') }}" class="block text-center w-full border-2 border-bloom-border style="color: #9F254F;" font-semibold py-2 rounded-lg hover:style="border-color: #9F254F;" hover:bg-bloom-bg-cream transition duration-300 text-sm">
+                                    <a href="{{ route('products.index') }}" style="border: 2px solid #EC91C3; color: #9F254F;" class="block text-center w-full font-semibold py-2.5 rounded-lg hover:bg-pink-50 transition duration-300 text-sm hover:opacity-80">
                                         Lanjut Belanja
                                     </a>
                                 </div>
                             </form>
                         @else
-                            <div class="p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 text-sm">
-                                <p class="font-semibold mb-3">Produk sedang tidak tersedia</p>
-                                <a href="{{ route('products.index') }}" class="inline-block text-xs font-medium underline hover:no-underline">
-                                    Lihat produk lainnya â†’
+                            <div style="background: rgba(220, 38, 38, 0.1); border: 2px solid #DC2626;" class="p-6 rounded-lg">
+                                <div class="text-center mb-6">
+                                    <p style="color: #DC2626;" class="text-lg font-bold mb-2">🔴 PRODUK TERJUAL HABIS</p>
+                                    <p style="color: #991B1B;" class="text-sm">Produk ini sedang tidak tersedia karena stok telah habis terjual.</p>
+                                </div>
+                                
+                                <a href="{{ route('products.index') }}" style="background: #EC91C3; color: #ffffff;" class="block text-center w-full font-semibold py-2.5 rounded-lg hover:opacity-90 transition duration-300 text-sm">
+                                    ← Lihat Produk Lainnya
                                 </a>
                             </div>
                         @endif

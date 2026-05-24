@@ -8,10 +8,11 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         // Statistics
         $totalOrders = Order::count();
@@ -35,8 +36,35 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-        // Products & Categories
-        $products = Product::with('category')->paginate(10);
+        // Products & Categories with search/filter
+        $productsQuery = Product::with('category');
+        
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $productsQuery->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        if ($request->filled('category')) {
+            $productsQuery->where('category_id', $request->input('category'));
+        }
+
+        if ($request->filled('stock_status')) {
+            $status = $request->input('stock_status');
+            switch ($status) {
+                case 'available':
+                    $productsQuery->where('stock', '>', 0);
+                    break;
+                case 'limited':
+                    $productsQuery->whereBetween('stock', [1, 5]);
+                    break;
+                case 'out_of_stock':
+                    $productsQuery->where('stock', '=', 0);
+                    break;
+            }
+        }
+
+        $products = $productsQuery->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::withCount('products')->paginate(10);
         
         // Sales data (7 days)

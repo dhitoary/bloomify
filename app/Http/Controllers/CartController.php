@@ -29,6 +29,11 @@ class CartController extends Controller
 
         $product = Product::findOrFail($request->product_id);
 
+        // Check if product is sold out
+        if ($product->stock <= 0) {
+            return back()->with('error', 'Produk ini sudah terjual habis!');
+        }
+
         // Check if product is in stock
         if ($product->stock < $request->quantity) {
             return back()->with('error', 'Stok produk tidak cukup!');

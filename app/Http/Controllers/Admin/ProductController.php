@@ -13,12 +13,47 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of products
+     * Display a listing of products with search and filter
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::with('category')->paginate(10);
-        return view('admin.products.index', compact('products'));
+        $query = Product::with('category');
+
+        // Search by product name
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->input('category'));
+        }
+
+        // Filter by stock status
+        if ($request->filled('stock_status')) {
+            $status = $request->input('stock_status');
+            switch ($status) {
+                case 'available':
+                    $query->where('stock', '>', 0);
+                    break;
+                case 'limited':
+                    $query->whereBetween('stock', [1, 5]);
+                    break;
+                case 'out_of_stock':
+                    $query->where('stock', '=', 0);
+                    break;
+            }
+        }
+
+        // Sort by newest by default
+        $query->orderBy('created_at', 'desc');
+
+        $products = $query->paginate(15);
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     /**

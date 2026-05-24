@@ -41,44 +41,49 @@ class ProductController extends Controller
         // Filter by category if selected
         $categoryFilter = null;
         $filteredProducts = null;
+        $showAllProducts = false; // Flag untuk menampilkan "Semua Produk" section
+        
         if ($request->filled('category')) {
             $categoryFilter = $request->category;
-            $query = Product::where('stock', '>', 0)->with('category');
-            if ($categoryFilter) {
+            $query = Product::with('category');
+            
+            // If "Semua Produk" (empty category), show section dengan all products di bawah
+            if ($categoryFilter === '' || $categoryFilter === '0') {
+                // Don't filter, just show all products in a separate section
+                $allProductsPaginated = $query
+                    ->orderBy('stock', 'desc')  // Available products first (stock > 0), sold last (stock = 0)
+                    ->orderBy('created_at', 'desc')  // Then by created date
+                    ->paginate(12)
+                    ->appends($request->query());
+                $filteredProducts = $allProductsPaginated;
+                $showAllProducts = true;
+            } else {
+                // For specific category, show all products (available first, then sold)
                 $query->where('category_id', $categoryFilter);
+                $filteredProducts = $query
+                    ->orderBy('stock', 'desc')  // Available products first (stock > 0), sold last (stock = 0)
+                    ->orderBy('created_at', 'desc')  // Then by created date
+                    ->paginate(12)
+                    ->appends($request->query());
             }
-            $filteredProducts = $query->paginate(12);
         }
 
-        // Filter by occasion (rekomendasi)
-        if ($request->filled('occasion')) {
-            $query = Product::where('stock', '>', 0)->with('category');
+        // Filter by category (using recommendation feature)
+        if ($request->filled('rec_category')) {
+            $recCategory = $request->rec_category;
+            $query = Product::with('category');
+            
+            if ($recCategory !== 'all') {
+                $query->where('category_id', $recCategory);
+            }
             
             // Filter by budget if provided
             if ($request->filled('budget')) {
                 $budget = (int) $request->budget;
                 $query->where('price', '<=', $budget);
             }
-
-            // Apply occasion-based filtering (you can expand this based on your product categories)
-            $occasion = $request->occasion;
-            switch($occasion) {
-                case 'anniversary':
-                case 'wedding':
-                    // Select premium and romantic products
-                    $query->orderBy('price', 'desc');
-                    break;
-                case 'congratulations':
-                    // Select vibrant colored products
-                    break;
-                case 'love':
-                    // Select red/pink themed products
-                    break;
-                default:
-                    $query->orderBy('created_at', 'desc');
-            }
-
-            $filteredProducts = $query->paginate(12);
+            
+            $filteredProducts = $query->orderBy('created_at', 'desc')->paginate(12)->appends($request->query());
             $categoryFilter = 'recommendation';
         }
 
@@ -88,18 +93,19 @@ class ProductController extends Controller
             'specialOccasion', 
             'newArrivals',
             'categoryFilter',
-            'filteredProducts'
+            'filteredProducts',
+            'showAllProducts'
         ));
     }
 
     /**
-     * Display a specific product
+     * Display a specific product (including sold products)
      */
     public function show(Product $product): View
     {
+        // Allow viewing all products, including sold ones
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
-            ->where('stock', '>', 0)
             ->take(4)
             ->get();
 
